@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Моя стратегия — Лёня</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f1f4f8;
+      --card: #ffffff;
+      --border: #dde3ec;
+      --accent: #c0392b;
+      --accent-light: #fdf2f1;
+      --text: #111827;
+      --muted: #5a6a80;
+      --green: #15803d;
+      --green-bg: #f0fdf4;
+      --green-bd: #bbf7d0;
+      --blue: #0369a1;
+      --blue-bg: #eff8ff;
+      --orange: #c2410c;
+      --orange-bg: #fff7ed;
+      --red: #dc2626;
+      --red-bg: #fef2f2;
+      --red-bd: #fecaca;
+      --shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      min-height: 100vh;
+    }
+
+    .back-bar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 48px;
+      display: flex; align-items: center;
+    }
+
+    .back-link {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #c0392b 0%, #8e44ad 120%);
+      padding: 44px 48px;
+      color: #fff;
+    }
+
+    .hero-inner { max-width: 1000px; margin: 0 auto; }
+
+    .hero h1 { font-size: 32px; font-weight: 900; letter-spacing: -0.5px; }
+    .hero .sub { font-size: 16px; opacity: 0.9; margin-top: 8px; max-width: 680px; line-height: 1.6; }
+
+    .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+
+    .hero-badge {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 6px 14px; border-radius: 9px;
+      font-size: 13px; font-weight: 600;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .main { max-width: 1000px; margin: 0 auto; padding: 36px 24px 64px; }
+
+    /* Stat cards */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px;
+    }
+    .stat-box {
+      background: var(--card); border: 1.5px solid var(--border);
+      border-radius: 14px; padding: 18px 20px; box-shadow: var(--shadow);
+    }
+    .stat-box .s-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.6px; color: var(--muted); margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .stat-box .s-value { font-size: 22px; font-weight: 900; line-height: 1.1; }
+    .stat-box .s-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* Section blocks */
+    .section-block {
+      background: var(--card); border: 1.5px solid var(--border);
+      border-radius: 16px; padding: 28px 30px; margin-bottom: 20px; box-shadow: var(--shadow);
+    }
+    .section-title {
+      font-size: 19px; font-weight: 800; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title svg { color: var(--accent); flex-shrink: 0; }
+
+    /* Pros/Cons */
+    .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .pc-block { border-radius: 12px; padding: 20px; }
+    .pc-pros { background: var(--green-bg); border: 1.5px solid var(--green-bd); }
+    .pc-cons { background: var(--orange-bg); border: 1.5px solid #fed7aa; }
+    .pc-block h3 {
+      font-size: 14px; font-weight: 800; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .pc-pros h3 { color: var(--green); }
+    .pc-cons h3 { color: var(--orange); }
+    .pc-item { display: flex; gap: 11px; margin-bottom: 13px; font-size: 14px; line-height: 1.55; }
+    .pc-item:last-child { margin-bottom: 0; }
+    .pc-item .ic { flex-shrink: 0; margin-top: 1px; }
+    .pc-pros .ic { color: var(--green); }
+    .pc-cons .ic { color: var(--orange); }
+    .pc-item strong { font-weight: 700; }
+
+    /* Scholarship chances */
+    .scholar-list { display: flex; flex-direction: column; gap: 14px; }
+    .scholar {
+      border: 1.5px solid var(--border); border-radius: 13px; padding: 18px 20px;
+      background: var(--bg);
+    }
+    .scholar-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 16px; margin-bottom: 12px;
+    }
+    .scholar-name { font-size: 16px; font-weight: 800; }
+    .scholar-name .cn { font-size: 13px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+    .chance-tag {
+      font-size: 12px; font-weight: 800; padding: 5px 12px; border-radius: 7px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .ch-high { background: var(--green-bg); color: var(--green); }
+    .ch-mid { background: var(--orange-bg); color: var(--orange); }
+    .ch-low { background: var(--red-bg); color: var(--red); }
+    .chance-bar-track {
+      height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 10px;
+    }
+    .chance-bar-fill { height: 100%; border-radius: 4px; }
+    .cf-high { background: var(--green); }
+    .cf-mid { background: var(--orange); }
+    .cf-low { background: var(--red); }
+    .scholar-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .scholar-desc strong { color: var(--text); font-weight: 700; }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 8px; }
+    .tl-item { display: flex; gap: 18px; padding-bottom: 26px; position: relative; }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-item::before {
+      content: ''; position: absolute; left: 17px; top: 38px; bottom: -4px;
+      width: 2px; background: var(--border);
+    }
+    .tl-item:last-child::before { display: none; }
+    .tl-dot {
+      width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+      background: var(--accent); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 800; z-index: 1; position: relative;
+    }
+    .tl-content { flex: 1; padding-top: 2px; }
+    .tl-period {
+      font-size: 12px; font-weight: 800; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;
+    }
+    .tl-content h4 { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
+    .tl-tasks { display: flex; flex-direction: column; gap: 7px; }
+    .tl-task { display: flex; gap: 10px; font-size: 14px; line-height: 1.5; color: var(--muted); }
+    .tl-task .ic { flex-shrink: 0; margin-top: 2px; color: var(--accent); }
+    .tl-task strong { color: var(--text); font-weight: 700; }
+
+    /* Target universities */
+    .target-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .target-col { border-radius: 13px; padding: 20px; }
+    .tc-reach { background: var(--red-bg); border: 1.5px solid var(--red-bd); }
+    .tc-target { background: var(--green-bg); border: 1.5px solid var(--green-bd); }
+    .tc-safe { background: var(--blue-bg); border: 1.5px solid #bae6fd; }
+    .target-col h3 {
+      font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+      margin-bottom: 6px; display: flex; align-items: center; gap: 7px;
+    }
+    .tc-reach h3 { color: var(--red); }
+    .tc-target h3 { color: var(--green); }
+    .tc-safe h3 { color: var(--blue); }
+    .target-col .tc-sub { font-size: 12px; color: var(--muted); margin-bottom: 14px; line-height: 1.5; }
+    .target-uni {
+      background: rgba(255,255,255,0.7); border-radius: 9px; padding: 10px 12px;
+      margin-bottom: 8px; font-size: 14px; font-weight: 700;
+    }
+    .target-uni:last-child { margin-bottom: 0; }
+    .target-uni span { display: block; font-size: 12px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+    /* Verdict */
+    .verdict {
+      background: linear-gradient(135deg, #1a202c, #2d3748);
+      color: #fff; border-radius: 16px; padding: 28px 30px;
+    }
+    .verdict h3 { font-size: 18px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+    .verdict p { font-size: 15px; line-height: 1.7; opacity: 0.92; }
+    .verdict p + p { margin-top: 12px; }
+    .verdict strong { color: #fbbf24; }
+
+    .note-box {
+      background: var(--blue-bg); border: 1.5px solid #bae6fd; border-radius: 11px;
+      padding: 14px 16px; font-size: 13px; color: var(--blue); line-height: 1.6; margin-top: 14px;
+      display: flex; gap: 10px;
+    }
+    .note-box .ic { flex-shrink: 0; margin-top: 1px; }
+
+    /* Roadmap to excellent CSC profile */
+    .roadmap { display: flex; flex-direction: column; gap: 16px; }
+    .rm-intro { font-size: 15px; line-height: 1.7; color: var(--muted); margin-bottom: 6px; }
+    .rm-intro strong { color: var(--text); font-weight: 700; }
+    .rm-block {
+      display: flex; gap: 18px; padding: 20px;
+      border: 1.5px solid var(--border); border-radius: 13px; background: var(--bg);
+    }
+    .rm-num {
+      width: 42px; height: 42px; border-radius: 11px; flex-shrink: 0;
+      background: var(--accent); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 900;
+    }
+    .rm-body { flex: 1; }
+    .rm-head { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+    .rm-sub { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+    .rm-list { display: flex; flex-direction: column; gap: 9px; }
+    .rm-item { display: flex; gap: 11px; font-size: 14px; line-height: 1.55; }
+    .rm-item .ic { flex-shrink: 0; margin-top: 2px; color: var(--accent); }
+    .rm-item strong { font-weight: 700; }
+    .rm-weight {
+      display: inline-block; font-size: 11px; font-weight: 800; padding: 2px 8px;
+      border-radius: 5px; margin-left: 8px; vertical-align: middle;
+      background: var(--accent-light); color: var(--accent);
+    }
+
+    @media (max-width: 760px) {
+      .back-bar { padding: 14px 20px; }
+      .hero { padding: 32px 20px; }
+      .hero h1 { font-size: 24px; }
+      .main { padding: 24px 16px 48px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .pros-cons, .target-grid { grid-template-columns: 1fr; }
+      .section-block { padding: 22px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a href="index.html" class="back-link">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+    </svg>
+    К списку университетов
+  </a>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>Моя стратегия поступления</h1>
+    <p class="sub">Персональный разбор портфолио, шансов на стипендии и план действий до поступления на бакалавриат по экономике в Китае.</p>
+    <div class="hero-badges">
+      <span class="hero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20a8 8 0 0116 0"/></svg>
+        20 лет, Екатеринбург
+      </span>
+      <span class="hero-badge">Гражданство РФ</span>
+      <span class="hero-badge">Цель: экономика / межд. торговля</span>
+      <span class="hero-badge">Старт: сентябрь 2027</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- Quick stats -->
+  <div class="stats-grid">
+    <div class="stat-box">
+      <div class="s-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h12M9 3v2m1.5 13.5L6 14l-3 3"/><path d="M12 20l4-9 4 9M17.5 17h-3"/></svg>
+        Китайский
+      </div>
+      <div class="s-value">HSK 3</div>
+      <div class="s-sub">→ HSK 5 за языковой год</div>
+    </div>
+    <div class="stat-box">
+      <div class="s-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 010 20 15 15 0 010-20"/></svg>
+        Английский
+      </div>
+      <div class="s-value">A2–B1</div>
+      <div class="s-sub">нужен сертификат</div>
+    </div>
+    <div class="stat-box">
+      <div class="s-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        Математика
+      </div>
+      <div class="s-value">80+</div>
+      <div class="s-sub">ЕГЭ профиль → 100</div>
+    </div>
+    <div class="stat-box">
+      <div class="s-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+        Публикации
+      </div>
+      <div class="s-value">1 → 2</div>
+      <div class="s-sub">на китайском, РИНЦ</div>
+    </div>
+  </div>
+
+  <!-- Pros and cons -->
+  <div class="section-block">
+    <div class="section-title">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Сильные стороны и зоны роста
+    </div>
+    <div class="pros-cons">
+      <div class="pc-block pc-pros">
+        <h3>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Козыри
+        </h3>
+        <div class="pc-item">
+          <svg class="ic" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <div><strong>Научная статья на китайском.</strong> Редкость даже у магистров. Для экономических специальностей — огромный вес в портфолио. Вторая статья удвоит эффект.</div>
+        </div>
+        <div class="pc-item">
+          <svg class="ic" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <div><strong>Гражданство РФ.</strong> Прямой доступ к «Шёлковому пути» (Belt and Road) и провинциальным квотам для стран-участниц — отдельный пул денег с меньшей конкуренцией.</div>
+        </div>
+        <div class="pc-item">
+          <svg class="ic" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <div><strong>Аттестат почти не важен.</strong> Для иностранца вуз смотрит факт диплома, HSK и портфолио — школьные оценки не рассматривают. А с грантом CSC берут охотнее: за тебя платит государство.</div>
+        </div>
+        <div class="pc-item">
+          <svg class="ic" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <div><strong>Опыт BLCU (北京语言大学).</strong> Ты уже внутри системы, знаешь как всё устроено в Пекине.</div>
+        </div>
+        <div class="pc-item">
+          <svg class="ic" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <div><strong>Сильная математика.</strong> Важна для экономики — и на вступительных некоторых вузов, и в учёбе.</div>
+        </div>
+      </div>
+      <div class="pc-block pc-cons">
+        <h3>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+          Над чем работать
+        </h3>
+        <div class="pc-item">
+          <svg class="ic" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <div><strong>HSK 3 → нужен HSK 5 (280+) + лексика по экономике.</strong> Главная задача — на языковом году. HSK 6 не нужен (уровень лингвиста). Твоя фора: стартуешь с HSK 3, а остальные с нуля — это ~полгода изучения, которые ты уже прошёл.</div>
+        </div>
+        <div class="pc-item">
+          <svg class="ic" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <div><strong>Английский без сертификата.</strong> Закрывает англоязычные программы (CUHK-Shenzhen хочет IELTS 6.0+). Решение: сдать IELTS ~6.0 или идти на китаеязычные программы.</div>
+        </div>
+        <div class="pc-item">
+          <svg class="ic" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <div><strong>Легализация документов.</strong> Диплом колледжа → апостиль + нотариальный перевод на китайский. Китай в Апостильной конвенции с конца 2023 — стало проще, но детали под вуз проверить.</div>
+        </div>
+        <div class="pc-item">
+          <svg class="ic" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <div><strong>Мотивационное письмо и study plan.</strong> Для CSC это решает больше, чем оценки. Сделать упор на публикацию, план исследований и почему именно Китай — вот где ты можешь выделиться.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scholarship chances -->
+  <div class="section-block">
+    <div class="section-title">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+      Шансы на стипендии
+    </div>
+    <div class="scholar-list">
+
+      <div class="scholar">
+        <div class="scholar-head">
+          <div class="scholar-name">Стипендия Института Конфуция (на языковой год)<div class="cn">孔子学院奖学金 · Confucius Institute Scholarship</div></div>
+          <span class="chance-tag ch-high">Высокий шанс</span>
+        </div>
+        <div class="chance-bar-track"><div class="chance-bar-fill cf-high" style="width:85%"></div></div>
+        <div class="scholar-desc">Покрывает <strong>именно языковой год</strong>: обучение, общежитие, страховку и стипендию ~3000¥/мес. Требует HSK 3 — у тебя уже есть. Это твой самый реалистичный грант на 2027–2028. Подавать через Институт Конфуция или напрямую в вуз.</div>
+      </div>
+
+      <div class="scholar">
+        <div class="scholar-head">
+          <div class="scholar-name">«Шёлковый путь» / провинциальные гранты<div class="cn">丝绸之路 · Belt and Road Scholarship</div></div>
+          <span class="chance-tag ch-high">Высокий шанс</span>
+        </div>
+        <div class="chance-bar-track"><div class="chance-bar-fill cf-high" style="width:75%"></div></div>
+        <div class="scholar-desc">Россия — участник инициативы. Провинции (Гуандун, Цзянсу, Фуцзянь) дают целевые стипендии студентам стран ОПОП. <strong>Меньше конкуренции, чем за общий CSC.</strong> Особенно сильный вариант для вузов Гуанчжоу, Шэньчжэня, Сямэня.</div>
+      </div>
+
+      <div class="scholar">
+        <div class="scholar-head">
+          <div class="scholar-name">CSC в вузах среднего уровня<div class="cn">中国政府奖学金 · UIBE, XMU, WHU, SZU, GDUFS, NUFE</div></div>
+          <span class="chance-tag ch-mid">Средний-высокий</span>
+        </div>
+        <div class="chance-bar-track"><div class="chance-bar-fill cf-mid" style="width:62%"></div></div>
+        <div class="scholar-desc">Полная стипендия: обучение + общежитие + 2500¥/мес. С твоей <strong>публикацией и HSK 5</strong> ты конкурентен. Реалистичная цель — подавать на 3–4 таких вуза одновременно, чтобы поднять шансы.</div>
+      </div>
+
+      <div class="scholar">
+        <div class="scholar-head">
+          <div class="scholar-name">Собственные стипендии вузов<div class="cn">University Scholarship — частичные и полные</div></div>
+          <span class="chance-tag ch-high">Высокий шанс</span>
+        </div>
+        <div class="chance-bar-track"><div class="chance-bar-fill cf-high" style="width:70%"></div></div>
+        <div class="scholar-desc">Почти каждый вуз даёт свои стипендии за хорошую успеваемость в языковой год (например, NUFE: 70+ баллов = покрытие обучения, CUHK-SZ: до полного покрытия). <strong>Это запасной аэродром</strong>, если CSC не дадут.</div>
+      </div>
+
+      <div class="scholar">
+        <div class="scholar-head">
+          <div class="scholar-name">CSC в топ-вузах<div class="cn">RUC (人大), SYSU (中山), WHU (武大)</div></div>
+          <span class="chance-tag ch-mid">Средний → высокий с прокачкой</span>
+        </div>
+        <div class="chance-bar-track"><div class="chance-bar-fill cf-mid" style="width:55%"></div></div>
+        <div class="scholar-desc">CSC — не олимпиада чемпионов: тысячи «обычных» студентов получают полный грант каждый год. Решает не гениальность, а <strong>правильно собранная заявка</strong>: pre-admission от вуза, сильный study plan, рекомендации и козырь Belt&Road (РФ сейчас в приоритете). С прокачкой профиля (дорожная карта ниже) даже топ-вузы реальны.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="section-block">
+    <div class="section-title">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      План действий по времени
+    </div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot">СЕЙЧАС</div>
+        <div class="tl-content">
+          <div class="tl-period">Май 2026 — Сентябрь 2027 · до отъезда</div>
+          <h4>Подготовительный этап (~16 месяцев)</h4>
+          <div class="tl-tasks">
+            <div class="tl-task"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Китайский:</strong> удержать HSK 3 в форме. Даже без роста это фора в ~полгода перед теми, кто стартует с нуля</div></div>
+            <div class="tl-task"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Английский:</strong> подтянуть до уверенного B1 и сдать IELTS ~6.0 (откроет англоязычные программы)</div></div>
+            <div class="tl-task"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Диплом колледжа:</strong> получить (через месяц) и сразу легализовать — апостиль + нотариальный перевод на китайский</div></div>
+            <div class="tl-task"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Грант:</strong> подать на стипендию Института Конфуция на языковой год (дедлайны весна 2027)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot">ЯЗЫК</div>
+        <div class="tl-content">
+          <div class="tl-period">Сентябрь 2027 — Лето 2028 · языковой год в Китае</div>
+          <h4>Языковой год + подача на бакалавриат</h4>
+          <div class="tl-tasks">
+            <div class="tl-task"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Китайский:</strong> HSK 3 → 5 (280+) + профильная лексика по экономике. Без HSK 5 хорошие программы закрыты. Цель напряжённая, но фора в 3 уровня даёт реальный запас времени на год</div></div>
+            <div class="tl-task"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Вторая статья:</strong> дописать и официально опубликовать — желательно в китайском издании, не только РИНЦ</div></div>
+            <div class="tl-task"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Подача на CSC и Belt and Road:</strong> дедлайны декабрь 2027 — март 2028. Подавать на 4–5 вузов сразу</div></div>
+            <div class="tl-task"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Нетворкинг:</strong> связаться с приёмными комиссиями целевых вузов, познакомиться с преподавателями</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot">ВУЗ</div>
+        <div class="tl-content">
+          <div class="tl-period">Сентябрь 2028 · поступление</div>
+          <h4>Бакалавриат по экономике / международной торговле</h4>
+          <div class="tl-tasks">
+            <div class="tl-task"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div>Зачисление с грантом, 4 года обучения. К этому моменту тебе 22–23 — в лимит CSC (25 лет) укладываешься спокойно</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Target universities -->
+  <div class="section-block">
+    <div class="section-title">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      Цели под твой профиль
+    </div>
+    <div class="target-grid">
+      <div class="target-col tc-reach">
+        <h3>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg>
+          Мечта
+        </h3>
+        <div class="tc-sub">Подать стоит, но не рассчитывать. Если возьмут — отлично.</div>
+        <div class="target-uni">RUC · 人大<span>Лучший по экономике в C9</span></div>
+        <div class="target-uni">SYSU · 中山<span>Топ-10, час от Шэньчжэня</span></div>
+        <div class="target-uni">Цинхуа<span>Если статья выстрелит</span></div>
+      </div>
+      <div class="target-col tc-target">
+        <h3>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          Реальные цели
+        </h3>
+        <div class="tc-sub">Сюда целиться основным фокусом. Шансы хорошие.</div>
+        <div class="target-uni">UIBE · 对外经贸<span>Лучший по межд. торговле</span></div>
+        <div class="target-uni">XMU · 厦门<span>Топ-15, реальная стипендия</span></div>
+        <div class="target-uni">SUSTech · 南科大<span>Шэньчжэнь, молодой, амбициозный</span></div>
+        <div class="target-uni">CUFE · 中央财经<span>Финансовый «Гарвард» Китая</span></div>
+      </div>
+      <div class="target-col tc-safe">
+        <h3>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Надёжный вариант
+        </h3>
+        <div class="tc-sub">Сюда поступишь почти наверняка, со стипендией.</div>
+        <div class="target-uni">SZU · 深圳大学<span>Главный вуз Шэньчжэня</span></div>
+        <div class="target-uni">GDUFS · 广外<span>UIBE Южного Китая</span></div>
+        <div class="target-uni">NUFE · 南京财经<span>Дёшево, грант покрывает</span></div>
+      </div>
+    </div>
+    <div class="note-box">
+      <svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <div>Стратегия «3 уровня»: подавать одновременно на 1–2 «мечты», 3–4 «реальных» и 1–2 «надёжных». Так ты гарантированно поступишь со стипендией, но оставишь шанс на прыжок выше.</div>
+    </div>
+  </div>
+
+  <!-- Roadmap to excellent CSC -->
+  <div class="section-block">
+    <div class="section-title">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+      Дорожная карта: профиль «Отлично» для CSC
+    </div>
+    <div class="rm-intro">
+      CSC оценивает не «гениальность», а <strong>силу и полноту заявки</strong>. Тысячи обычных студентов получают полный грант, потому что грамотно собрали пакет и попали в приоритетную страну. Вот что превратит твой профиль в «отлично» в глазах комиссии — по порядку важности.
+    </div>
+    <div class="roadmap">
+
+      <div class="rm-block">
+        <div class="rm-num">1</div>
+        <div class="rm-body">
+          <div class="rm-head">Pre-admission letter от вуза <span class="rm-weight">РЕШАЕТ БОЛЬШЕ ВСЕГО</span></div>
+          <div class="rm-sub">Письмо о предварительном зачислении — твой главный рычаг</div>
+          <div class="rm-list">
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Это не экзамен.</strong> Решают по документам (CV, транскрипт, study plan, статья, HSK). Всё дистанционно — email или онлайн-портал, ехать не надо</div></div>
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Шаг 1 — неформальный email</strong> на международный офис: представиться, приложить CV, упомянуть статью, спросить о поступлении и грантах. Создаёт живой контакт</div></div>
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Шаг 2 — официальная онлайн-заявка</strong> → conditional offer (часто условный: «возьмём при HSK на нужный балл»). Собеседование не всегда: у средних вузов нет, у топовых — онлайн 15–30 мин</div></div>
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div>С pre-admission вуз сам номинирует тебя на свою CSC-квоту (Type B) — снимает 80% неопределённости</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rm-block">
+        <div class="rm-num">2</div>
+        <div class="rm-body">
+          <div class="rm-head">Study Plan, который запоминается <span class="rm-weight">800–1000 СЛОВ</span></div>
+          <div class="rm-sub">Мотивационное письмо — половина успеха заявки</div>
+          <div class="rm-list">
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Чёткий нарратив:</strong> «будущий специалист по китайско-российской торговле» — попадает прямо в политическую повестку Belt&Road</div></div>
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div>Конкретика: почему Китай, почему этот вуз, какие курсы, кем станешь через 5 лет</div></div>
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div>Сослаться на свою статью как доказательство, что ты уже в теме китайской экономики</div></div>
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div>Написать на китайском (хотя бы версию) — резко выделит на фоне англоязычных шаблонов</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rm-block">
+        <div class="rm-num">3</div>
+        <div class="rm-body">
+          <div class="rm-head">Сильные рекомендации и связи</div>
+          <div class="rm-sub">Два письма, и желательно с китайским следом</div>
+          <div class="rm-list">
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Уже есть:</strong> письмо от твоей преподавательницы китайского (соавтор статьи) — на китайском, с печатями вуза. Сильный «китайский след». Но она аспирант — CSC предпочитает доцента+, поэтому держать как поддерживающий документ</div></div>
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Лучший ход:</strong> выйти через неё на её научного руководителя (профессора). Письмо от него = попадание в требования CSC по титулу</div></div>
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div>Второе письмо — от преподавателя экономики/права из колледжа с конкретикой о твоих успехах</div></div>
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div>За языковой год — наладить контакт с профессором в целевом вузе</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rm-block">
+        <div class="rm-num">4</div>
+        <div class="rm-body">
+          <div class="rm-head">Усилить академический вес</div>
+          <div class="rm-sub">То, что добивает профиль до «отлично»</div>
+          <div class="rm-list">
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Вторая публикация</strong> — желательно в китайском издании, не только РИНЦ. Две статьи на бакалавриате — это уже уровень аспиранта</div></div>
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div>Официальный сертификат HSK на руках к подаче (даже HSK 4 — главное документ, а не обещание)</div></div>
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div>Идеально оформленный пакет — тысячи заявок отсеивают за неполноту. Аккуратность = преимущество</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rm-block">
+        <div class="rm-num">5</div>
+        <div class="rm-body">
+          <div class="rm-head">Тактика подачи</div>
+          <div class="rm-sub">Как играть, чтобы не упустить шанс</div>
+          <div class="rm-list">
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Выбрать один канал — дубли запрещены.</strong> CSC дисквалифицирует за подачу и через вуз, и через посольство сразу. Тебе выгоднее Type B (через вуз) — если есть pre-admission, он решает. Type A (посольство/Россотрудничество) — запасной вариант, если квоты РФ большие</div></div>
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div>Подавать рано, за месяцы до дедлайна — поздние заявки рассматривают по остаточному принципу</div></div>
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div>Подавать на 4–5 вузов с pre-admission. Выбирать топ с большими квотами (WHU, XMU, SYSU), а не только перегруженные Пекином</div></div>
+            <div class="rm-item"><svg class="ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div>Подавать уже из Китая, с языкового года — с поддержкой языкового вуза это весомее</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="note-box">
+      <svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <div>Если закроешь пункты 1–3, ты уже сильнее 90% аппликантов. Большинство подаёт сырой шаблон без pre-admission и без внятного study plan — на их фоне твой профиль с публикацией и чётким нарративом выглядит «отлично».</div>
+    </div>
+  </div>
+
+  <!-- Verdict -->
+  <div class="verdict">
+    <h3>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Итог
+    </h3>
+    <p>Лёня, у тебя <strong>сильнее профиль, чем у среднего абитуриента-иностранца</strong>. Научная публикация на китайском + гражданство РФ + чёткий план — это редкое сочетание. Слабый школьный аттестат почти полностью нейтрализуется дипломом колледжа.</p>
+    <p>Твоя главная задача на ближайшие 2 года — <strong>китайский до HSK 5 (280+)</strong> и <strong>вторая публикация</strong>. Если закроешь эти два пункта, реальная цель — поступить на бакалавриат уровня <strong>UIBE / XMU / SUSTech с полной стипендией</strong>. А с удачей — прыгнуть в C9.</p>
+    <p>Стипендию на языковой год (Институт Конфуция) ты получаешь почти наверняка уже сейчас. Так что финансово путь реалистичный с самого старта.</p>
+  </div>
+
+</div>
+
+</body>
+</html>

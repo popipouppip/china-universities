@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Университеты Китая</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f1f4f8;
+      --card: #ffffff;
+      --border: #dde3ec;
+      --accent: #c0392b;
+      --accent-light: #fdf2f1;
+      --text: #111827;
+      --muted: #5a6a80;
+      --tag-bg: #eef2ff;
+      --tag-color: #3730a3;
+      --green: #15803d;
+      --green-bg: #f0fdf4;
+      --blue-bg: #eff8ff;
+      --blue: #0369a1;
+      --orange: #c2410c;
+      --orange-bg: #fff7ed;
+      --shadow: 0 2px 6px rgba(0,0,0,0.07);
+      --shadow-hover: 0 10px 32px rgba(0,0,0,0.13);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 16px;
+    }
+
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    header > svg { color: var(--accent); flex-shrink: 0; }
+    header h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.4px; }
+    header p { font-size: 14px; color: var(--muted); margin-top: 2px; }
+
+    .profile-btn {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 8px;
+      background: var(--accent); color: #fff;
+      font-size: 14px; font-weight: 700;
+      padding: 11px 20px; border-radius: 10px;
+      text-decoration: none; transition: background 0.15s; flex-shrink: 0;
+    }
+    .profile-btn:hover { background: #a93226; }
+    .profile-btn svg { color: #fff; }
+
+    .controls {
+      padding: 20px 40px 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-btn {
+      padding: 9px 20px;
+      border-radius: 24px;
+      border: 1.5px solid var(--border);
+      background: var(--card);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+
+    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    .count { margin-left: auto; font-size: 14px; color: var(--muted); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      padding: 24px 40px 56px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-4px);
+    }
+
+    .campus-photo {
+      width: 100%; height: 150px;
+      object-fit: cover; display: block;
+      background: var(--border);
+    }
+
+    .card-body { padding: 16px; display: flex; flex-direction: column; gap: 13px; }
+
+    .card-header { display: flex; align-items: flex-start; gap: 12px; }
+
+    .uni-logo {
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+      flex-shrink: 0;
+      border-radius: 9px;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      padding: 4px;
+    }
+
+    .card-title { flex: 1; }
+    .card-title h2 { font-size: 15px; font-weight: 800; line-height: 1.3; }
+    .card-title .cn { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+    .card-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
+
+    .city-badge {
+      display: flex; align-items: center; gap: 4px;
+      background: var(--accent-light); color: var(--accent);
+      font-size: 11px; font-weight: 600;
+      padding: 3px 8px; border-radius: 6px; white-space: nowrap;
+    }
+
+    .site-link {
+      display: flex; align-items: center; gap: 4px;
+      font-size: 11px; color: var(--blue); text-decoration: none; font-weight: 500;
+    }
+
+    .site-link:hover { text-decoration: underline; }
+
+    .ratings { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .rating-pill {
+      display: flex; align-items: center; gap: 5px;
+      background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: 7px; padding: 5px 9px;
+      font-size: 12px; color: var(--muted);
+    }
+
+    .rating-pill strong { color: var(--text); font-weight: 700; font-size: 13px; }
+
+    .prices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+    .price-box { background: var(--bg); border-radius: 10px; padding: 10px 12px; }
+    .price-box .label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .price-box .value { font-size: 17px; font-weight: 800; color: var(--text); }
+    .price-box .sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+    .section { display: flex; flex-direction: column; gap: 7px; }
+
+    .section-label {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.6px; color: var(--muted);
+    }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+
+    .tag {
+      background: var(--tag-bg); color: var(--tag-color);
+      font-size: 12px; padding: 3px 9px; border-radius: 5px; font-weight: 500;
+    }
+
+    .tag.partner { background: var(--blue-bg); color: var(--blue); }
+
+    /* Grant block */
+    .grants-block {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 11px 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .grant-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+
+    .grant-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+    .csc-badge { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 5px; }
+    .csc-yes { background: var(--green-bg); color: var(--green); }
+    .csc-no { background: #fef2f2; color: #dc2626; }
+
+    .difficulty { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 5px; }
+    .diff-easy { background: var(--green-bg); color: var(--green); }
+    .diff-medium { background: var(--orange-bg); color: var(--orange); }
+    .diff-hard { background: #fef2f2; color: #dc2626; }
+    .diff-veryhard { background: #fdf2f8; color: #9d174d; }
+
+    .grant-note { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+    .level-bar { display: flex; align-items: center; gap: 10px; }
+
+    .bar-track { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #e74c3c); border-radius: 3px; }
+    .bar-label { font-size: 12px; font-weight: 800; color: var(--text); min-width: 46px; text-align: right; }
+
+    .divider { height: 1px; background: var(--border); }
+
+    .card-footer { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+
+    .note { font-size: 12px; color: var(--muted); line-height: 1.5; flex: 1; }
+
+    .one-plus-one {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 700; padding: 4px 9px; border-radius: 6px; white-space: nowrap;
+    }
+
+    .one-plus-one.yes { background: var(--green-bg); color: var(--green); }
+    .one-plus-one.no { background: #fef2f2; color: #dc2626; }
+
+    .detail-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent); color: #fff;
+      font-size: 13px; font-weight: 600;
+      padding: 9px 15px; border-radius: 8px;
+      text-decoration: none; transition: background 0.15s;
+      margin-top: 2px;
+    }
+
+    .detail-btn:hover { background: #a93226; }
+
+    @media (max-width: 1200px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      header { padding: 20px; }
+      .controls { padding: 16px 20px 0; }
+      .grid { padding: 16px 20px 40px; grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+    <path d="M2 17l10 5 10-5"/>
+    <path d="M2 12l10 5 10-5"/>
+  </svg>
+  <div>
+    <h1>Университеты Китая</h1>
+    <p>Экономика и международная торговля — бакалавриат для иностранных студентов</p>
+  </div>
+  <a href="profile.html" class="profile-btn">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+    </svg>
+    Моя стратегия
+  </a>
+</header>
+
+<div class="controls">
+  <button class="filter-btn active" onclick="filter('all', this)">Все</button>
+  <button class="filter-btn" onclick="filter('shenzhen', this)">Шэньчжэнь</button>
+  <button class="filter-btn" onclick="filter('guangzhou', this)">Гуанчжоу</button>
+  <button class="filter-btn" onclick="filter('beijing', this)">Пекин</button>
+  <button class="filter-btn" onclick="filter('nanjing', this)">Нанкин</button>
+  <button class="filter-btn" onclick="filter('other', this)">Другие</button>
+  <button class="filter-btn" onclick="filter('csc', this)">CSC грант</button>
+  <span class="count" id="count"></span>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+const diffLabel = { easy: 'Легко', medium: 'Умеренно', hard: 'Сложно', veryhard: 'Очень сложно' };
+const diffClass = { easy: 'diff-easy', medium: 'diff-medium', hard: 'diff-hard', veryhard: 'diff-veryhard' };
+// Вузы, у которых exchange-партнёры подтверждены по официальным источникам
+const verifiedExch = ['tsinghua', 'ruc', 'cuhksz'];
+
+const universities = [
+  {
+    id: "tsinghua",
+    name: "Университет Цинхуа",
+    cn: "清华大学 · Tsinghua University",
+    city: "Пекин", cityKey: "beijing",
+    rankChina: "#1–2", rankWorld: "Топ-20 QS",
+    tuition: "26 000–30 000", housing: "8 000–15 000",
+    onePlusOne: true,
+    partners: ["Stanford", "UC Berkeley", "Michigan Ross", "Duke", "McGill", "Kyoto", "Waseda"],
+    specialities: ["Экономика", "Финансы", "Менеджмент", "Международный бизнес", "Статистика"],
+    level: 88,
+    levelText: "Топ-1 Китая, но исторически технический — экономика сильная, не профильная",
+    grants: {
+      csc: true,
+      cscDiff: "veryhard",
+      cscNote: "Нужен GPA 3.8+, сильное портфолио, рекомендации топ-преподавателей",
+      local: "Частичные стипендии — конкурс очень высокий",
+      localDiff: "veryhard"
+    },
+    note: "Самый престижный бренд Китая. Бренд диплома открывает любые двери, но экономика сильнее в технических вузах",
+    logo: "img/logo_tsinghua.svg",
+    campus: "img/campus_tsinghua.jpg",
+    site: "https://www.tsinghua.edu.cn/en/"
+  },
+  {
+    id: "nju",
+    name: "Нанкинский университет",
+    cn: "南京大学 · Nanjing University",
+    city: "Нанкин", cityKey: "nanjing",
+    rankChina: "Топ-5", rankWorld: "#103 QS (2026)",
+    tuition: "21 000–42 000", housing: "8 000–12 000",
+    onePlusOne: true,
+    partners: ["Johns Hopkins", "UC Berkeley", "Toronto", "Melbourne", "Edinburgh", "Leiden"],
+    specialities: ["Экономика", "Финансы", "Международная торговля", "Бухучёт", "Менеджмент"],
+    level: 83,
+    levelText: "Один из ведущих в Китае по общественным наукам, входит в C9",
+    grants: {
+      csc: true,
+      cscDiff: "hard",
+      cscNote: "Тип B — университет сам выдвигает кандидатов. Нужен GPA 3.5+, HSK 5",
+      local: "НГУ стипендия для иностранцев, правительство провинции Цзянсу",
+      localDiff: "hard"
+    },
+    note: "Основан в 1902 году, член C9. Один из самых уважаемых вузов страны",
+    logo: "img/logo_nju.png",
+    campus: "img/campus_nju.jpg",
+    site: "https://www.nju.edu.cn/en/"
+  },
+  {
+    id: "uibe",
+    name: "Университет международной торговли и экономики",
+    cn: "对外经济贸易大学 · UIBE",
+    city: "Пекин", cityKey: "beijing",
+    rankChina: "Топ-50", rankWorld: "501–550 QS",
+    tuition: "49 750", housing: "8 000–12 000",
+    onePlusOne: true,
+    partners: ["LSE", "Warwick", "HEC Paris", "Maastricht", "Vienna WU", "Copenhagen BS"],
+    specialities: ["Международная экономика и торговля", "Международный бизнес", "Финансы", "Маркетинг", "Бухучёт", "E-Commerce"],
+    level: 95,
+    levelText: "Лучший в Китае именно по международной торговле — создан под эту специальность",
+    grants: {
+      csc: true,
+      cscDiff: "medium",
+      cscNote: "Умеренная конкуренция, нужен GPA 3.2+, HSK 4–5, достаточно реально",
+      local: "UIBE Excellence Scholarship — частичное и полное покрытие",
+      localDiff: "medium"
+    },
+    note: "Единственный в Китае бизнес-вуз с 4 аккредитациями: AACSB, EQUIS, AMBA, CAMEA",
+    logo: "img/logo_uibe.png",
+    campus: "img/campus_uibe.jpg",
+    site: "https://english.uibe.edu.cn/"
+  },
+  {
+    id: "cuhksz",
+    name: "Китайский университет Гонконга (Шэньчжэнь)",
+    cn: "香港中文大学（深圳）· CUHK-Shenzhen",
+    city: "Шэньчжэнь", cityKey: "shenzhen",
+    rankChina: "Топ-40", rankWorld: "~47 QS (бренд CUHK)",
+    tuition: "140 000", housing: "10 000–20 000",
+    onePlusOne: true,
+    partners: ["Columbia", "UC San Diego", "UC Irvine", "Warwick", "Queensland", "Syracuse"],
+    specialities: ["Экономика", "Финансы", "Бизнес-администрирование", "Международный бизнес", "Статистика"],
+    level: 90,
+    levelText: "Международный стандарт, гонконгская система, обучение на английском",
+    grants: {
+      csc: true,
+      cscDiff: "medium",
+      cscNote: "Принимает CSC, конкуренция умеренная, обучение на английском — плюс для иностранцев",
+      local: "Honor: 165 000 ¥/год · Full Tuition: 140 000 ¥ · Half: 70 000 ¥ · Inspirational: 30 000 ¥",
+      localDiff: "easy"
+    },
+    note: "Самый дорогой, но лучшая стипендиальная система в списке — 30–40% студентов получают помощь",
+    logo: "img/logo_cuhksz.png",
+    campus: "img/campus_cuhksz.jpg",
+    site: "https://intladmissions.cuhk.edu.cn/en/"
+  },
+  {
+    id: "nufe",
+    name: "Нанкинский университет финансов и экономики",
+    cn: "南京财经大学 · NUFE",
+    city: "Нанкин", cityKey: "nanjing",
+    rankChina: "Топ-100 (экономика)", rankWorld: "Региональный уровень",
+    tuition: "17 000", housing: "4 000",
+    onePlusOne: true,
+    partners: ["Kansas State", "TH Nürnberg", "Universidad de Alcalá", "Keimyung University"],
+    specialities: ["Финансы", "Экономика", "Международная торговля", "Бухгалтерский учёт", "Логистика", "Электронная коммерция"],
+    level: 68,
+    levelText: "Топ-10 Китая по экономике (Shanghai Ranking) — сильнее чем рейтинг QS показывает",
+    grants: {
+      csc: true,
+      cscDiff: "easy",
+      cscNote: "Один из самых доступных вузов для CSC — меньше конкуренции, реальный шанс",
+      local: "Academic Scholarship 17 000 ¥ · Цзянсу правительство 18 000 ¥ · Нанкин-сити 5 000–20 000 ¥",
+      localDiff: "easy"
+    },
+    note: "Самый доступный по цене в списке. Специализирован на экономике с 1956 года — отраслевой авторитет",
+    logo: "img/logo_nufe.png",
+    campus: "img/campus_nufe.jpg",
+    site: "http://english.nufe.edu.cn/"
+  },
+
+  // ── ШЭНЬЧЖЭНЬ ──────────────────────────────────────────────────────────
+  {
+    id: "szu",
+    name: "Шэньчжэньский университет",
+    cn: "深圳大学 · Shenzhen University",
+    city: "Шэньчжэнь", cityKey: "shenzhen",
+    rankChina: "100–150", rankWorld: "601–650 QS",
+    tuition: "25 000–35 000", housing: "8 000–15 000",
+    onePlusOne: true,
+    partners: ["UC San Diego", "Waseda", "Monash", "KAIST", "Politecnico di Milano"],
+    specialities: ["Международная экономика и торговля", "Финансы", "Логистика", "Маркетинг", "Электронная коммерция"],
+    level: 70,
+    levelText: "Главный местный вуз Шэньчжэня, активно растёт",
+    grants: {
+      csc: true,
+      cscDiff: "easy",
+      cscNote: "Конкуренция низкая, GPA 3.0+ достаточно — один из самых доступных CSC",
+      local: "Стипендия Шэньчжэньского правительства, университетская стипендия",
+      localDiff: "easy"
+    },
+    note: "Основан в 1983-м при личном участии Дэн Сяопина. Растёт вместе с городом — в него вложено почти столько же, сколько в сам Шэньчжэнь",
+    logo: "img/logo_szu.png",
+    campus: "img/campus_szu.jpg",
+    site: "https://en.szu.edu.cn/"
+  },
+  {
+    id: "sustech",
+    name: "Южный университет науки и технологий",
+    cn: "南方科技大学 · SUSTech",
+    city: "Шэньчжэнь", cityKey: "shenzhen",
+    rankChina: "Топ-40", rankWorld: "301–350 QS",
+    tuition: "35 000–45 000", housing: "10 000–15 000",
+    onePlusOne: true,
+    partners: ["Imperial College", "UC San Diego", "Lausanne", "Queensland", "Bristol"],
+    specialities: ["Экономика", "Финансы", "Бизнес-администрирование", "Data Science"],
+    level: 75,
+    levelText: "Самый быстро растущий вуз Китая за последние 10 лет",
+    grants: {
+      csc: true,
+      cscDiff: "medium",
+      cscNote: "Молодой вуз — квоты CSC шире относительно числа заявок, шанс выше чем в C9",
+      local: "SUSTech International Scholarship — до полного покрытия",
+      localDiff: "medium"
+    },
+    note: "Основан в 2011 году — моложе большинства студентов. Строился как китайский Caltech. В топ-40 Китая за 12 лет — рекорд",
+    logo: "img/logo_sustech.png",
+    campus: "img/campus_sustech.jpg",
+    site: "https://www.sustech.edu.cn/en/"
+  },
+  {
+    id: "hit_sz",
+    name: "Харбинский политех (кампус Шэньчжэнь)",
+    cn: "哈尔滨工业大学（深圳）· HIT-Shenzhen",
+    city: "Шэньчжэнь", cityKey: "shenzhen",
+    rankChina: "Топ-10 (HIT)", rankWorld: "~400 QS (HIT)",
+    tuition: "25 000–32 000", housing: "8 000–12 000",
+    onePlusOne: true,
+    partners: ["MIT", "Georgia Tech", "Edinburgh", "KAIST", "Tohoku"],
+    specialities: ["Экономика и управление", "Финансы", "Логистика", "Международный бизнес"],
+    level: 78,
+    levelText: "Диплом топ-10 вуза Китая + жизнь в Шэньчжэне — редкое сочетание",
+    grants: {
+      csc: true,
+      cscDiff: "medium",
+      cscNote: "CSC по квотам головного вуза (HIT) — реалистичнее чем поступить в главный кампус",
+      local: "HIT Scholarship — частичное покрытие для лучших студентов",
+      localDiff: "medium"
+    },
+    note: "Шэньчжэньский кампус одного из старейших технических вузов Китая. Диплом HIT, жизнь в Шэньчжэне",
+    logo: "img/logo_hit.gif",
+    campus: "img/campus_hit.jpg",
+    site: "https://www.hitsz.edu.cn/enindex.html"
+  },
+
+  // ── РЯДОМ С ШЭНЬЧЖЭНЕМ (Гуанчжоу, 1 час) ────────────────────────────
+  {
+    id: "sysu",
+    name: "Университет Сунь Ятсена",
+    cn: "中山大学 · Sun Yat-sen University",
+    city: "Гуанчжоу", cityKey: "guangzhou",
+    rankChina: "Топ-10", rankWorld: "~285 QS",
+    tuition: "26 000–30 000", housing: "10 000–15 000",
+    onePlusOne: true,
+    partners: ["Yale", "Michigan", "Edinburgh", "Melbourne", "Osaka", "NUS"],
+    specialities: ["Экономика", "Финансы", "Международный бизнес", "Торговая политика", "Менеджмент"],
+    level: 85,
+    levelText: "Топ-10 Китая, сильнейший вуз Южного Китая по экономике",
+    grants: {
+      csc: true,
+      cscDiff: "hard",
+      cscNote: "C9-уровень конкуренции, нужен GPA 3.5+, HSK 5 — но шансы реальнее чем в Пекине",
+      local: "SYSU Scholarship for Outstanding International Students",
+      localDiff: "hard"
+    },
+    note: "1 час от Шэньчжэня на скоростном поезде. Сильнейший вуз Южного Китая, топ-10 национально",
+    logo: "",
+    campus: "img/campus_sysu.jpg",
+    site: "https://www.sysu.edu.cn/en/"
+  },
+  {
+    id: "gdufs",
+    name: "Гуандунский университет иностранных языков и международной торговли",
+    cn: "广东外语外贸大学 · GDUFS",
+    city: "Гуанчжоу", cityKey: "guangzhou",
+    rankChina: "100–150", rankWorld: "Региональный",
+    tuition: "20 000–25 000", housing: "6 000–10 000",
+    onePlusOne: true,
+    partners: ["Westminster", "Bath", "Bordeaux", "Maastricht", "RMIT"],
+    specialities: ["Международная экономика и торговля", "Международный бизнес", "Финансы", "Таможня и ВЭД"],
+    level: 72,
+    levelText: "Специализирован на международной торговле — как UIBE, но в Гуандуне",
+    grants: {
+      csc: true,
+      cscDiff: "easy",
+      cscNote: "Менее известен, конкуренция за CSC ниже — хороший шанс для целеустремлённых",
+      local: "Guangdong Government Scholarship, GDUFS Scholarship",
+      localDiff: "easy"
+    },
+    note: "Аналог UIBE для Южного Китая. Специализация на международной торговле, близко к Гонконгу и Шэньчжэню",
+    logo: "",
+    campus: "",
+    site: "https://eng.gdufs.edu.cn/"
+  },
+
+  // ── ПЕКИН (помимо Цинхуа и UIBE) ────────────────────────────────────
+  {
+    id: "ruc",
+    name: "Народный университет Китая",
+    cn: "中国人民大学 · Renmin University",
+    city: "Пекин", cityKey: "beijing",
+    rankChina: "Топ-5", rankWorld: "~401 QS",
+    tuition: "26 000–32 000", housing: "10 000–15 000",
+    onePlusOne: true,
+    partners: ["Чикаго", "Columbia", "Princeton", "Yale", "Michigan", "King's College", "HKU", "Melbourne"],
+    specialities: ["Экономика", "Финансы", "Международная торговля", "Статистика", "Налогообложение", "Бухучёт"],
+    level: 92,
+    levelText: "Лучший в Китае по экономике и общественным наукам в C9",
+    grants: {
+      csc: true,
+      cscDiff: "hard",
+      cscNote: "C9, конкуренция высокая. GPA 3.5+, HSK 5, мотивационное письмо — но реально",
+      local: "RUC International Students Scholarship — несколько категорий",
+      localDiff: "hard"
+    },
+    note: "Если UIBE лучший в международной торговле, то RUC лучший в чистой экономике. C9, Пекин, топ-5",
+    logo: "",
+    campus: "",
+    site: "https://www.ruc.edu.cn/en"
+  },
+  {
+    id: "cufe",
+    name: "Центральный университет финансов и экономики",
+    cn: "中央财经大学 · CUFE",
+    city: "Пекин", cityKey: "beijing",
+    rankChina: "Топ-30 (финансы)", rankWorld: "601+ QS",
+    tuition: "25 000–28 000", housing: "8 000–12 000",
+    onePlusOne: true,
+    partners: ["Warwick", "Illinois", "Queensland", "Manchester", "Vienna WU"],
+    specialities: ["Финансы", "Бухгалтерский учёт", "Страхование", "Инвестиции", "Международная экономика"],
+    level: 88,
+    levelText: "Топ-5 в Китае по финансам и бухучёту — «финансовый Гарвард Китая»",
+    grants: {
+      csc: true,
+      cscDiff: "medium",
+      cscNote: "Специализированный вуз — конкуренция за CSC умеренная, реальный шанс",
+      local: "CUFE Scholarship для иностранных студентов, Пекинская стипендия",
+      localDiff: "medium"
+    },
+    note: "Называют «финансовым Гарвардом Китая». Выпускники возглавляют банки и Минфин. Если хочешь в финансы — это топ",
+    logo: "",
+    campus: "",
+    site: "http://en.cufe.edu.cn/"
+  },
+  {
+    id: "bfsu",
+    name: "Пекинский университет иностранных языков",
+    cn: "北京外国语大学 · BFSU",
+    city: "Пекин", cityKey: "beijing",
+    rankChina: "50–80", rankWorld: "601+ QS",
+    tuition: "23 000–27 000", housing: "8 000–12 000",
+    onePlusOne: true,
+    partners: ["Oxford", "King's College", "Sciences Po", "FU Berlin", "Waseda"],
+    specialities: ["Международная торговля", "Международный бизнес", "ВЭД", "Международные отношения", "Экономика"],
+    level: 74,
+    levelText: "Сильнейший в Китае по международным языкам — плюс торговля и бизнес",
+    grants: {
+      csc: true,
+      cscDiff: "medium",
+      cscNote: "Языковой профиль вуза — иностранцам проще конкурировать, умеренная сложность",
+      local: "BFSU Scholarship, Пекинская городская стипендия",
+      localDiff: "medium"
+    },
+    note: "Готовит дипломатов и специалистов ВЭД. Русский язык — одна из сильнейших кафедр в Китае",
+    logo: "",
+    campus: "img/campus_bfsu.jpg",
+    site: "https://www.bfsu.edu.cn/en/"
+  },
+
+  // ── ЛУЧШИЕ ДЛЯ СТИПЕНДИИ (другие регионы) ───────────────────────────
+  {
+    id: "xmu",
+    name: "Сямэньский университет",
+    cn: "厦门大学 · Xiamen University",
+    city: "Сямэнь", cityKey: "xiamen",
+    rankChina: "Топ-15", rankWorld: "~301 QS",
+    tuition: "22 000–26 000", housing: "8 000–12 000",
+    onePlusOne: true,
+    partners: ["Michigan", "Edinburgh", "Waseda", "NUS", "KAIST", "Queensland"],
+    specialities: ["Международная экономика и торговля", "Финансы", "Экономика", "Бухучёт", "Международный бизнес"],
+    level: 86,
+    levelText: "Топ-15 Китая — один из лучших для CSC с умеренной конкуренцией",
+    grants: {
+      csc: true,
+      cscDiff: "medium",
+      cscNote: "Топ-15 Китая, но конкуренция ниже чем в Пекине/Шанхае — один из лучших вариантов для CSC",
+      local: "XMU Scholarship — несколько категорий, активно поддерживают иностранных студентов",
+      localDiff: "medium"
+    },
+    note: "Красивейший кампус Китая на берегу моря. Входит в C9? Нет, но академически близко. Идеальный баланс: топ-15 + реальная стипендия",
+    logo: "",
+    campus: "",
+    site: "https://en.xmu.edu.cn/"
+  },
+  {
+    id: "whu",
+    name: "Уханьский университет",
+    cn: "武汉大学 · Wuhan University",
+    city: "Ухань", cityKey: "wuhan",
+    rankChina: "Топ-10", rankWorld: "~261 QS",
+    tuition: "24 000–28 000", housing: "8 000–12 000",
+    onePlusOne: true,
+    partners: ["Stanford", "Columbia", "Paris Sorbonne", "Manchester", "Kyoto", "Melbourne"],
+    specialities: ["Экономика", "Международная торговля", "Финансы", "Менеджмент", "Бухучёт"],
+    level: 84,
+    levelText: "Топ-10 Китая, при этом один из наиболее доступных C9-уровней для CSC",
+    grants: {
+      csc: true,
+      cscDiff: "medium",
+      cscNote: "Топ-10 Китая, но менее известен за рубежом — конкуренция за CSC ниже пекинских вузов",
+      local: "WHU International Students Scholarship, провинция Хубэй",
+      localDiff: "medium"
+    },
+    note: "Один из красивейших кампусов Китая — вишнёвые деревья и исторические здания. Топ-10, реальная стипендия, ниже конкуренция",
+    logo: "img/logo_whu.png",
+    campus: "",
+    site: "https://en.whu.edu.cn/"
+  }
+];
+
+function render(list) {
+  const grid = document.getElementById('grid');
+  document.getElementById('count').textContent = `Показано: ${list.length} из ${universities.length}`;
+
+  grid.innerHTML = list.map(u => `
+    <a class="card" href="detail.html?id=${u.id}">
+      <img class="campus-photo" src="${u.campus}" alt="" loading="lazy">
+      <div class="card-body">
+
+        <div class="card-header">
+          ${u.logo
+            ? `<img class="uni-logo" src="${u.logo}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+            : ''}
+          <div class="uni-logo-fb" style="display:${u.logo ? 'none' : 'flex'};width:46px;height:46px;border-radius:9px;border:1.5px solid var(--border);background:var(--accent-light);color:var(--accent);font-weight:800;font-size:13px;align-items:center;justify-content:center;flex-shrink:0;text-align:center;line-height:1.2">${u.id.toUpperCase().slice(0,4)}</div>
+          <div class="card-title">
+            <h2>${u.name}</h2>
+            <div class="cn">${u.cn}</div>
+          </div>
+          <div class="card-meta">
+            <div class="city-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+              ${u.city}
+            </div>
+            <span class="site-link" onclick="event.preventDefault();event.stopPropagation();window.open('${u.site}','_blank')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>
+              </svg>
+              Официальный сайт
+            </span>
+          </div>
+        </div>
+
+        <div class="ratings">
+          <div class="rating-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+            </svg>
+            Китай: <strong>${u.rankChina}</strong>
+          </div>
+          <div class="rating-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>
+            </svg>
+            Мир: <strong>${u.rankWorld}</strong>
+          </div>
+        </div>
+
+        <div class="prices">
+          <div class="price-box">
+            <div class="label">Обучение / год</div>
+            <div class="value">${u.tuition}</div>
+            <div class="sub">юаней (CNY)</div>
+          </div>
+          <div class="price-box">
+            <div class="label">Проживание / год</div>
+            <div class="value">${u.housing}</div>
+            <div class="sub">юаней (CNY)</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+          <div class="section-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+            Специальности
+          </div>
+          <div class="tags">${u.specialities.map(s => `<span class="tag">${s}</span>`).join('')}</div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+            </svg>
+            Обмен — где можно поучиться семестр
+            ${verifiedExch.includes(u.id)
+              ? '<span style="background:var(--green-bg);color:var(--green);font-size:9px;font-weight:800;padding:1px 6px;border-radius:4px;margin-left:4px">ПРОВЕРЕНО</span>'
+              : '<span style="background:var(--orange-bg);color:var(--orange);font-size:9px;font-weight:800;padding:1px 6px;border-radius:4px;margin-left:4px">ОРИЕНТИР</span>'}
+          </div>
+          <div class="tags">${u.partners.map(p => `<span class="tag partner">${p}</span>`).join('')}</div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+            Уровень экономического образования
+          </div>
+          <div class="level-bar">
+            <div class="bar-track"><div class="bar-fill" style="width:${u.level}%"></div></div>
+            <span class="bar-label">${u.level}/100</span>
+          </div>
+          <div style="font-size:13px;color:var(--muted);margin-top:2px;">${u.levelText}</div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+            </svg>
+            Гранты и стипендии
+          </div>
+          <div class="grants-block">
+            <div class="grant-row">
+              <span class="grant-label">CSC (Правительство КНР)</span>
+              <span class="csc-badge ${u.grants.csc ? 'csc-yes' : 'csc-no'}">${u.grants.csc ? 'Доступен' : 'Нет'}</span>
+            </div>
+            <div class="grant-row">
+              <span class="grant-label">Сложность получения CSC</span>
+              <span class="difficulty ${diffClass[u.grants.cscDiff]}">${diffLabel[u.grants.cscDiff]}</span>
+            </div>
+            <div class="grant-note">${u.grants.cscNote}</div>
+            <div style="height:1px;background:var(--border)"></div>
+            <div class="grant-row">
+              <span class="grant-label">Локальные стипендии</span>
+              <span class="difficulty ${diffClass[u.grants.localDiff]}">${diffLabel[u.grants.localDiff]}</span>
+            </div>
+            <div class="grant-note">${u.grants.local}</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card-footer">
+          <div class="note">${u.note}</div>
+          <span class="one-plus-one ${u.onePlusOne ? 'yes' : 'no'}">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              ${u.onePlusOne ? '<polyline points="20 6 9 17 4 12"/>' : '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>'}
+            </svg>
+            1+1 ${u.onePlusOne ? 'есть' : 'нет'}
+          </span>
+        </div>
+
+        <div class="detail-btn">
+          Подробнее
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </div>
+
+      </div>
+    </a>
+  `).join('');
+}
+
+function filter(type, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  let list = universities;
+  if (type === 'shenzhen') list = universities.filter(u => u.cityKey === 'shenzhen');
+  if (type === 'guangzhou') list = universities.filter(u => u.cityKey === 'guangzhou');
+  if (type === 'beijing') list = universities.filter(u => u.cityKey === 'beijing');
+  if (type === 'nanjing') list = universities.filter(u => u.cityKey === 'nanjing');
+  if (type === 'other') list = universities.filter(u => !['beijing','shenzhen','nanjing','guangzhou'].includes(u.cityKey));
+  if (type === 'csc') list = universities.filter(u => u.grants.csc);
+  render(list);
+}
+
+render(universities);
+</script>
+</body>
+</html>

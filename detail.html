@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Университет — подробно</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f1f4f8;
+      --card: #ffffff;
+      --border: #dde3ec;
+      --accent: #c0392b;
+      --accent-light: #fdf2f1;
+      --text: #111827;
+      --muted: #5a6a80;
+      --tag-bg: #eef2ff;
+      --tag-color: #3730a3;
+      --green: #15803d;
+      --green-bg: #f0fdf4;
+      --blue: #0369a1;
+      --blue-bg: #eff8ff;
+      --orange: #c2410c;
+      --orange-bg: #fff7ed;
+      --shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      min-height: 100vh;
+    }
+
+    .back-bar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 48px;
+      display: flex;
+      align-items: center;
+    }
+
+    .back-link {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500;
+      transition: color 0.15s;
+    }
+
+    .back-link:hover { color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      height: 340px;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.72) 100%);
+      display: flex;
+      align-items: flex-end;
+      padding: 36px 48px;
+      gap: 24px;
+    }
+
+    .hero-logo {
+      width: 80px; height: 80px;
+      object-fit: contain;
+      background: rgba(255,255,255,0.95);
+      border-radius: 14px;
+      padding: 8px;
+      flex-shrink: 0;
+    }
+
+    .hero-text { flex: 1; }
+
+    .hero-text h1 {
+      font-size: 32px; font-weight: 900; color: #fff;
+      line-height: 1.2; letter-spacing: -0.5px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .hero-text .cn {
+      font-size: 16px; color: rgba(255,255,255,0.8); margin-top: 5px;
+    }
+
+    .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+
+    .hero-badge {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(6px);
+      color: #fff;
+      font-size: 13px; font-weight: 600;
+      padding: 5px 12px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.3);
+      display: flex; align-items: center; gap: 5px;
+    }
+
+    /* Main layout */
+    .main { max-width: 960px; margin: 0 auto; padding: 36px 24px 60px; }
+
+    /* Quick stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .stat-box {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-box .s-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.6px; color: var(--muted); margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .stat-box .s-value { font-size: 22px; font-weight: 900; color: var(--text); line-height: 1.1; }
+    .stat-box .s-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* Sections */
+    .section-block {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 30px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-title {
+      font-size: 18px; font-weight: 800; margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
+      color: var(--text);
+    }
+
+    .section-title svg { color: var(--accent); flex-shrink: 0; }
+
+    .desc { font-size: 15px; line-height: 1.75; color: #2d3748; }
+
+    /* Specialities */
+    .spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+
+    .spec-item {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 11px;
+      padding: 14px 16px;
+    }
+
+    .spec-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .spec-item p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* Partners */
+    .partners-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .partner-tag {
+      background: var(--blue-bg); color: var(--blue);
+      font-size: 14px; font-weight: 600;
+      padding: 6px 14px; border-radius: 8px;
+    }
+
+    /* Grants */
+    .grants-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .grant-card {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .grant-card h4 {
+      font-size: 15px; font-weight: 700; margin-bottom: 10px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .grant-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    .grant-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+
+    .grant-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; line-height: 1.5;
+    }
+
+    .grant-item::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0; margin-top: 7px;
+    }
+
+    .diff-badge {
+      font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 6px;
+    }
+
+    .diff-easy { background: var(--green-bg); color: var(--green); }
+    .diff-medium { background: var(--orange-bg); color: var(--orange); }
+    .diff-hard { background: #fef2f2; color: #dc2626; }
+    .diff-veryhard { background: #fdf2f8; color: #9d174d; }
+
+    /* Pros/cons */
+    .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .pro-block, .con-block {
+      border-radius: 12px; padding: 18px;
+    }
+
+    .pro-block { background: var(--green-bg); border: 1.5px solid #bbf7d0; }
+    .con-block { background: #fef2f2; border: 1.5px solid #fecaca; }
+
+    .pro-block h4 { color: var(--green); font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+    .con-block h4 { color: #dc2626; font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+
+    .pro-block li, .con-block li {
+      font-size: 14px; line-height: 1.6; margin-left: 16px; margin-bottom: 4px;
+    }
+
+    /* Apply steps */
+    .steps { display: flex; flex-direction: column; gap: 14px; }
+
+    .step {
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      font-size: 15px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+    .step-content p { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+    /* Site button */
+    .site-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: #fff;
+      font-size: 15px; font-weight: 700;
+      padding: 13px 24px; border-radius: 10px;
+      text-decoration: none; transition: background 0.15s;
+    }
+
+    .site-btn:hover { background: #a93226; }
+
+    @media (max-width: 680px) {
+      .back-bar { padding: 14px 20px; }
+      .hero { height: 260px; }
+      .hero-overlay { padding: 24px 20px; flex-direction: column; gap: 14px; }
+      .hero-text h1 { font-size: 22px; }
+      .main { padding: 24px 16px 48px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .grants-grid, .pros-cons { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a href="index.html" class="back-link">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Назад к списку
+  </a>
+</div>
+
+<div id="app"></div>
+
+<script>
+const diffLabel = { easy: 'Легко', medium: 'Умеренно', hard: 'Сложно', veryhard: 'Очень сложно' };
+const diffClass = { easy: 'diff-easy', medium: 'diff-medium', hard: 'diff-hard', veryhard: 'diff-veryhard' };
+
+const data = {
+  tsinghua: {
+    name: "Университет Цинхуа",
+    cn: "清华大学 · Tsinghua University",
+    city: "Пекин", founded: "1911", students: "≈ 37 000",
+    rankChina: "#1–2", rankWorld: "Топ-20 QS",
+    tuition: "26 000–30 000", housing: "8 000–15 000",
+    site: "https://www.tsinghua.edu.cn/en/",
+    logo: "img/logo_tsinghua.svg",
+    campus: "img/campus_tsinghua.jpg",
+    onePlusOne: true,
+    description: "Цинхуа — абсолютный флагман китайского высшего образования. Основан в 1911 году на территории бывших императорских садов в северо-западном Пекине. Входит в C9 — элитную девятку лучших университетов Китая — и в международный топ-20. Исторически технический вуз, но за последние десятилетия вырастил сильные факультеты экономики, менеджмента и права. Бренд диплома Цинхуа открывает двери в любую китайскую и международную компанию.",
+    specialities: [
+      { name: "Экономика", desc: "Фундаментальная и прикладная экономическая теория, макро- и микроэкономика" },
+      { name: "Финансы", desc: "Корпоративные финансы, инвестиции, финансовые рынки и риск-менеджмент" },
+      { name: "Менеджмент", desc: "Стратегический менеджмент, организационное поведение, управление проектами" },
+      { name: "Международный бизнес", desc: "Глобальные рынки, международные переговоры, ВЭД" },
+      { name: "Статистика", desc: "Математическая статистика, анализ данных, эконометрика" }
+    ],
+    partners: ["Stanford (STEP)", "UC Berkeley", "Michigan Ross", "Duke", "McGill", "Kyoto University", "Waseda"],
+    grants: {
+      csc: true,
+      cscDiff: "veryhard",
+      cscDetail: [
+        "GPA 3.8+ (из 4.0) — строгое требование",
+        "HSK 5 или 6 — нужен высокий балл",
+        "Рекомендательные письма от известных преподавателей",
+        "Чёткий мотивационный план исследований",
+        "Конкуренция: сотни претендентов на каждое место"
+      ],
+      local: [
+        { name: "Tsinghua International Students Scholarship", amount: "Частичное покрытие", cond: "Высокая академическая успеваемость, конкурс" },
+        { name: "Стипендия декана", amount: "Разовая выплата", cond: "Лучшие результаты в потоке" }
+      ],
+      localDiff: "veryhard",
+      note: "Самый конкурентный вуз для получения любого гранта. Без гранта — один из дешёвых вариантов по цене обучения для своего уровня"
+    },
+    pros: [
+      "Лучший бренд в Китае — признаётся везде",
+      "Сеть выпускников по всему миру",
+      "Кампус — бывшие императорские сады, красиво",
+      "Прямой доступ к топовым работодателям",
+      "Самая сильная академическая среда"
+    ],
+    cons: [
+      "Сложнейший вход — нужна почти идеальная база",
+      "Технический вуз: экономика сильная, но не главный приоритет",
+      "Пекин — дорогой город для жизни",
+      "Огромная нагрузка, высокая конкуренция внутри"
+    ],
+    steps: [
+      { title: "Языковая подготовка", desc: "HSK 5 минимум, HSK 6 желательно. Начать за 1.5–2 года до поступления" },
+      { title: "Академические результаты", desc: "GPA максимально высокий. Если есть математика — большой плюс" },
+      { title: "Рекомендации", desc: "2–3 письма от преподавателей с описанием твоих достижений" },
+      { title: "Мотивационное письмо", desc: "Конкретно: почему Цинхуа, почему эта специальность, что хочешь делать после" },
+      { title: "Подача через официальный сайт", desc: "Дедлайн обычно март–апрель. Подавать параллельно на CSC" }
+    ]
+  },
+
+  nju: {
+    name: "Нанкинский университет",
+    cn: "南京大学 · Nanjing University",
+    city: "Нанкин", founded: "1902", students: "≈ 35 000",
+    rankChina: "Топ-5", rankWorld: "#103 QS (2026)",
+    tuition: "21 000–42 000", housing: "8 000–12 000",
+    site: "https://www.nju.edu.cn/en/",
+    logo: "img/logo_nju.png",
+    campus: "img/campus_nju.jpg",
+    onePlusOne: true,
+    description: "Один из старейших и самых авторитетных университетов Китая — основан в 1902 году. Входит в C9, стабильно в топ-5 национальных рейтингов. Особенно силён в гуманитарных и общественных науках, физике, химии и астрономии. НГУ принял первых иностранных студентов ещё в 1955 году — опыт работы с международными студентами один из самых долгих в Китае. Четыре кампуса, основной — исторический Гулоу в центре Нанкина.",
+    specialities: [
+      { name: "Экономика", desc: "Теоретическая и прикладная экономика, история экономической мысли" },
+      { name: "Финансы", desc: "Финансовые рынки, банковское дело, страхование" },
+      { name: "Международная торговля", desc: "ВЭД, торговая политика, международные контракты" },
+      { name: "Бухгалтерский учёт", desc: "МСФО, налогообложение, аудит" },
+      { name: "Менеджмент", desc: "Корпоративное управление, HR, стратегии развития" }
+    ],
+    partners: ["Johns Hopkins", "UC Berkeley", "Toronto", "Melbourne", "Edinburgh", "Leiden", "Hamburg", "Osaka", "KAIST", "Yonsei"],
+    grants: {
+      csc: true,
+      cscDiff: "hard",
+      cscDetail: [
+        "Тип B — университет сам отбирает кандидатов на CSC",
+        "GPA 3.5+ — минимальное требование",
+        "HSK 5 — обязателен для программ на китайском",
+        "Мотивационное письмо и исследовательский план",
+        "Конкурс высокий, но реалистичнее чем в Цинхуа"
+      ],
+      local: [
+        { name: "НГУ Стипендия для иностранных студентов", amount: "Частичное покрытие", cond: "Академические результаты" },
+        { name: "Стипендия правительства провинции Цзянсу", amount: "18 000 ¥ (разовая)", cond: "Отдельный конкурс провинции" },
+        { name: "Нанкинская городская стипендия", amount: "5 000–20 000 ¥", cond: "По итогам успеваемости" }
+      ],
+      localDiff: "hard",
+      note: "Провинция Цзянсу — одна из самых щедрых по стипендиям для иностранцев. Реально получить провинциальный грант в дополнение к университетскому"
+    },
+    pros: [
+      "Входит в C9 — элита китайского образования",
+      "Нанкин дешевле Пекина/Шанхая",
+      "Сильные общественные и гуманитарные науки",
+      "Провинция Цзянсу даёт дополнительные стипендии",
+      "Исторический красивый кампус"
+    ],
+    cons: [
+      "Менее известен за пределами Китая чем Цинхуа/ПКУ",
+      "Большинство программ на китайском",
+      "Конкурс высокий — всё же C9"
+    ],
+    steps: [
+      { title: "Языковая подготовка", desc: "HSK 5 обязателен. Нанкинский диалект похож на путунхуа — адаптация лёгкая" },
+      { title: "Документы", desc: "Аттестат/диплом, транскрипты, 2 рекомендации, личное эссе" },
+      { title: "Параллельно подать на CSC", desc: "Тип B — через университет. Контактировать с приёмной комиссией НГУ заранее" },
+      { title: "Провинциальный грант Цзянсу", desc: "Подавать отдельно на сайте провинции. Дедлайн обычно апрель" },
+      { title: "Ожидание и зачисление", desc: "Результаты обычно в мае–июне. Приезд в сентябре" }
+    ]
+  },
+
+  uibe: {
+    name: "Университет международной торговли и экономики",
+    cn: "对外经济贸易大学 · UIBE",
+    city: "Пекин", founded: "1951", students: "≈ 14 000",
+    rankChina: "Топ-50", rankWorld: "501–550 QS",
+    tuition: "49 750", housing: "8 000–12 000",
+    site: "https://english.uibe.edu.cn/",
+    logo: "img/logo_uibe.png",
+    campus: "img/campus_uibe.jpg",
+    onePlusOne: true,
+    description: "UIBE основан в 1951 году Министерством внешней торговли Китая — единственный вуз в стране, созданный специально для подготовки специалистов международной торговли и экономики. Небольшой (14 000 студентов), но очень специализированный. Единственный в Китае бизнес-вуз с четырьмя международными аккредитациями одновременно: AACSB, EQUIS, AMBA и CAMEA. Находится в районе Чаоян — деловом центре Пекина, рядом с посольствами и международными корпорациями.",
+    specialities: [
+      { name: "Международная экономика и торговля", desc: "Профильная специальность вуза — лучшая в Китае по этому направлению" },
+      { name: "Международный бизнес", desc: "Управление международными компаниями, ВЭД, межкультурные переговоры" },
+      { name: "Финансы", desc: "Корпоративные и международные финансы, рынки капитала" },
+      { name: "Маркетинг", desc: "Международный маркетинг, цифровой маркетинг, бренд-менеджмент" },
+      { name: "Бухгалтерский учёт", desc: "Международные стандарты финансовой отчётности (МСФО)" },
+      { name: "Электронная коммерция", desc: "Международная e-commerce, логистика, цифровые платформы" }
+    ],
+    partners: ["LSE", "Warwick Business School", "HEC Paris", "Maastricht University", "Vienna University of Economics", "Copenhagen Business School", "ESADE", "Erasmus Rotterdam"],
+    grants: {
+      csc: true,
+      cscDiff: "medium",
+      cscDetail: [
+        "GPA 3.2+ — стандартное требование",
+        "HSK 4–5 — достаточно для старта",
+        "Мотивационное письмо с акцентом на международную торговлю",
+        "Конкурс умеренный — вуз менее известен чем C9, но не менее ценен в нише",
+        "Реальный шанс при хорошей подготовке"
+      ],
+      local: [
+        { name: "UIBE Excellence Scholarship", amount: "Полное или частичное покрытие", cond: "Высокая успеваемость, конкурс при зачислении" },
+        { name: "UIBE Dean's Scholarship", amount: "Разовая выплата", cond: "Лучшие студенты курса" }
+      ],
+      localDiff: "medium",
+      note: "Умеренная конкуренция делает UIBE одним из лучших вузов по соотношению 'шанс на грант / престиж специальности'"
+    },
+    pros: [
+      "Лучший в Китае именно по международной торговле",
+      "4 международные аккредитации — признание везде",
+      "Деловой центр Пекина — стажировки в посольствах и МНК",
+      "Умеренная конкуренция при поступлении",
+      "Сильные связи с бизнес-школами Европы"
+    ],
+    cons: [
+      "QS рейтинг ниже C9 — за пределами специальности менее известен",
+      "Обучение дороже чем в НГУ или NUFE",
+      "Небольшой кампус без спортивного и культурного масштаба крупных вузов"
+    ],
+    steps: [
+      { title: "Языковая подготовка", desc: "HSK 4–5. Программа IUP предполагает начало с китайского языка" },
+      { title: "Подача на IUP (International Undergraduate Program)", desc: "Специальная программа для иностранцев — 1 год языка + 4 года специальности" },
+      { title: "CSC параллельно", desc: "Подать через CSC портал, выбрать UIBE как принимающий вуз. Дедлайн февраль–март" },
+      { title: "Предоплата 10 000 ¥", desc: "Невозвратный депозит при подтверждении зачисления — учитывается в стоимости" },
+      { title: "Заезд в сентябре", desc: "Языковой год начинается сразу — активное погружение в путунхуа" }
+    ]
+  },
+
+  cuhksz: {
+    name: "Китайский университет Гонконга (Шэньчжэнь)",
+    cn: "香港中文大学（深圳）· CUHK-Shenzhen",
+    city: "Шэньчжэнь", founded: "2014", students: "≈ 10 000",
+    rankChina: "Топ-40", rankWorld: "~47 QS (бренд CUHK)",
+    tuition: "140 000", housing: "10 000–20 000",
+    site: "https://intladmissions.cuhk.edu.cn/en/",
+    logo: "img/logo_cuhksz.png",
+    campus: "img/campus_cuhksz.jpg",
+    onePlusOne: true,
+    description: "CUHK-Shenzhen — молодой университет (основан в 2014), но с мощным брендом: это совместный проект Китайского университета Гонконга (QS #47) и правительства Шэньчжэня. Работает по гонконгской системе образования, обучение на английском языке. Расположен в самом молодом и технологичном городе Китая — Шэньчжэне. Кампус современный, инфраструктура на уровне лучших мировых университетов. Для иностранца — редкая возможность получить фактически гонконгское образование на материке по ценам Китая (хотя и высоким).",
+    specialities: [
+      { name: "Экономика", desc: "Программа на английском, международный стандарт преподавания" },
+      { name: "Финансы", desc: "Финансовые рынки, корпоративные финансы, Fintech" },
+      { name: "Бизнес-администрирование", desc: "Общий менеджмент, стратегия, лидерство" },
+      { name: "Международный бизнес", desc: "Глобальные операции, кросс-культурное управление" },
+      { name: "Статистика и анализ данных", desc: "Data science, финансовый анализ, машинное обучение" }
+    ],
+    partners: ["Columbia", "UC San Diego", "UC Irvine", "Warwick", "Queensland", "Syracuse"],
+    grants: {
+      csc: true,
+      cscDiff: "medium",
+      cscDetail: [
+        "Принимает CSC Type B — университет номинирует кандидатов",
+        "Обучение на английском — иностранцам проще конкурировать",
+        "Нужен хороший IELTS/TOEFL + академические результаты",
+        "HSK менее критичен — плюс для иностранцев",
+        "Конкурс умеренный — вуз молодой, квоты шире"
+      ],
+      local: [
+        { name: "Honor Scholarship", amount: "165 000 ¥/год + надбавка", cond: "Исключительные академические результаты при поступлении" },
+        { name: "Full Tuition Scholarship", amount: "140 000 ¥/год", cond: "Высокие результаты, конкурс" },
+        { name: "Half Tuition Scholarship", amount: "70 000 ¥/год", cond: "Хорошие результаты" },
+        { name: "Inspirational Scholarship", amount: "30 000 ¥ (разовая)", cond: "Дополнительные достижения" }
+      ],
+      localDiff: "easy",
+      note: "Лучшая стипендиальная система в этом списке. 30–40% иностранных студентов получают какую-либо стипендию. Honor Scholarship полностью покрывает обучение с надбавкой на жизнь"
+    },
+    pros: [
+      "Обучение на английском — для тех, кто не готов к китайскому",
+      "Лучшая стипендиальная программа — реально можно покрыть обучение",
+      "Гонконгский диплом признаётся глобально",
+      "Шэньчжэнь — технологическая столица Китая",
+      "Молодой кампус с современной инфраструктурой"
+    ],
+    cons: [
+      "Самый дорогой в списке без стипендии",
+      "Молодой вуз — история и традиции только строятся",
+      "Шэньчжэнь дорогой для жизни",
+      "Меньше студентов — меньше разнообразия"
+    ],
+    steps: [
+      { title: "Языковая подготовка", desc: "IELTS 6.0+ или TOEFL 80+ — английский важнее китайского для этого вуза" },
+      { title: "Подача на intladmissions.cuhk.edu.cn", desc: "Специальный портал для иностранных студентов. Открывается обычно в ноябре" },
+      { title: "Стипендия при подаче", desc: "Одновременно указать интерес к стипендии — она рассматривается автоматически" },
+      { title: "CSC Type B", desc: "Уточнить у приёмной комиссии квоты на CSC — их выдаёт сам университет" },
+      { title: "Заезд и ориентация", desc: "Сентябрь. Кампус в Лунган-дистрикте Шэньчжэня — транспорт до центра ~30 мин" }
+    ]
+  },
+
+  nufe: {
+    name: "Нанкинский университет финансов и экономики",
+    cn: "南京财经大学 · NUFE",
+    city: "Нанкин", founded: "1956", students: "≈ 22 000",
+    rankChina: "Топ-100 (экономика)", rankWorld: "Региональный",
+    tuition: "17 000", housing: "4 000",
+    site: "http://english.nufe.edu.cn/",
+    logo: "img/logo_nufe.png",
+    campus: "img/campus_nufe.jpg",
+    onePlusOne: true,
+    description: "NUFE основан в 1956 году. По общему рейтингу скромный, но Shanghai Ranking ставит его в топ-10 Китая по экономике — это важнее общего места. Специализируется на прикладной экономике, финансах и торговле. Известен сильным факультетом продовольственной экономики и логистики — уникальная ниша в Китае. Один из самых доступных по стоимости вузов в списке, при этом расположен в Нанкине — красивом историческом городе с хорошей студенческой атмосферой.",
+    specialities: [
+      { name: "Финансы", desc: "Банковское дело, страхование, ценные бумаги" },
+      { name: "Экономика", desc: "Прикладная экономика, промышленная экономика, аграрная экономика" },
+      { name: "Международная торговля", desc: "Таможня, ВЭД, импорт-экспорт операции" },
+      { name: "Бухгалтерский учёт", desc: "Финансовый и управленческий учёт, аудит" },
+      { name: "Логистика и управление цепочками поставок", desc: "Редкая специальность — сильнейшая программа в вузе" },
+      { name: "Электронная коммерция", desc: "Онлайн-торговля, цифровые платформы, маркетплейсы" }
+    ],
+    partners: ["Kansas State University", "TH Nürnberg (Германия)", "Universidad de Alcalá (Испания)", "Keimyung University (Корея)", "Renmin University партнёрства"],
+    grants: {
+      csc: true,
+      cscDiff: "easy",
+      cscDetail: [
+        "Один из самых доступных вузов для CSC в Китае",
+        "Меньше конкуренции — квоты шире относительно заявок",
+        "GPA 3.0+ — реалистичное требование",
+        "HSK 4 достаточно для большинства программ",
+        "Реальный шанс для студентов без топового бэкграунда"
+      ],
+      local: [
+        { name: "Freshmen Scholarship (первокурсники)", amount: "17 000 ¥ (1-й ранг) / 8 500 ¥ (2-й ранг)", cond: "70+ по китайскому, сдан HSK, интервью" },
+        { name: "Academic Scholarship (ежегодная)", amount: "17 000 ¥ / 8 500 ¥", cond: "70+ в каждом предмете (1-й ранг) или 8 предметах (2-й ранг)" },
+        { name: "Правительство провинции Цзянсу", amount: "18 000 ¥ (разовая)", cond: "Отдельный конкурс провинции" },
+        { name: "Нанкинская городская стипендия", amount: "5 000–20 000 ¥", cond: "По итогам успеваемости" }
+      ],
+      localDiff: "easy",
+      note: "Максимально доступные гранты. При 70+ успеваемости ежегодная стипендия (17 000 ¥) полностью покрывает стоимость обучения (17 000 ¥). Плюс провинция Цзянсу даёт дополнительно"
+    },
+    pros: [
+      "Самая низкая стоимость обучения в списке",
+      "Топ-10 Китая по экономике (Shanghai Ranking)",
+      "Стипендия может полностью покрыть обучение",
+      "Нанкин — красивый, дешёвый, студенческий город",
+      "Программа 1+4 с языковым годом — мягкое вхождение"
+    ],
+    cons: [
+      "Общий рейтинг QS низкий — за пределами Китая менее известен",
+      "Партнёрств с топ-вузами меньше чем у других в списке",
+      "Меньше международной среды на кампусе"
+    ],
+    steps: [
+      { title: "Поступить на программу 1+4", desc: "1 год языковой подготовки (13 000 ¥) + 4 года бакалавриата (17 000 ¥/год)" },
+      { title: "Языковой год — цель 70+", desc: "Оценка 70+ по китайскому даёт стипендию на первый год бакалавриата" },
+      { title: "CSC заявка", desc: "Подать через CSC портал с NUFE как принимающим вузом. Дедлайн февраль–март" },
+      { title: "Цзянсу грант", desc: "Отдельно подать на провинциальную стипендию — 18 000 ¥ разово" },
+      { title: "Поддерживать 70+", desc: "Ежегодная академическая стипендия возобновляется при сохранении успеваемости" }
+    ]
+  }
+};
+
+function getDiff(key) {
+  const labels = { easy: 'Легко', medium: 'Умеренно', hard: 'Сложно', veryhard: 'Очень сложно' };
+  const classes = { easy: 'diff-easy', medium: 'diff-medium', hard: 'diff-hard', veryhard: 'diff-veryhard' };
+  return `<span class="diff-badge ${classes[key]}">${labels[key]}</span>`;
+}
+
+function render(id) {
+  const u = data[id];
+  if (!u) {
+    document.getElementById('app').innerHTML = '<div style="padding:60px;text-align:center;font-size:18px;color:#64748b">Университет не найден. <a href="index.html">Назад</a></div>';
+    return;
+  }
+  document.title = u.name + ' — подробно';
+
+  document.getElementById('app').innerHTML = `
+    <div class="hero">
+      <img class="hero-img" src="${u.campus}" alt="Кампус ${u.name}">
+      <div class="hero-overlay">
+        <img class="hero-logo" src="${u.logo}" alt="Лого ${u.name}" onerror="this.style.display='none'">
+        <div class="hero-text">
+          <h1>${u.name}</h1>
+          <div class="cn">${u.cn}</div>
+          <div class="hero-badges">
+            <span class="hero-badge">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+              ${u.city}
+            </span>
+            <span class="hero-badge">Основан ${u.founded}</span>
+            <span class="hero-badge">${u.students} студентов</span>
+            <span class="hero-badge">${u.rankChina} в Китае</span>
+            <span class="hero-badge">${u.rankWorld}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="s-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+            Рейтинг Китай
+          </div>
+          <div class="s-value">${u.rankChina}</div>
+          <div class="s-sub">национальный</div>
+        </div>
+        <div class="stat-box">
+          <div class="s-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+            Рейтинг мир
+          </div>
+          <div class="s-value" style="font-size:17px">${u.rankWorld}</div>
+          <div class="s-sub">QS / международный</div>
+        </div>
+        <div class="stat-box">
+          <div class="s-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            Обучение / год
+          </div>
+          <div class="s-value">${u.tuition}</div>
+          <div class="s-sub">юаней (CNY)</div>
+        </div>
+        <div class="stat-box">
+          <div class="s-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+            Проживание / год
+          </div>
+          <div class="s-value">${u.housing}</div>
+          <div class="s-sub">юаней (CNY)</div>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <div class="section-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          О университете
+        </div>
+        <p class="desc">${u.description}</p>
+      </div>
+
+      <div class="section-block">
+        <div class="section-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+          Специальности (экономика и бизнес)
+        </div>
+        <div class="spec-grid">
+          ${u.specialities.map(s => `
+            <div class="spec-item">
+              <h4>${s.name}</h4>
+              <p>${s.desc}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="section-block">
+        <div class="section-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+          </svg>
+          Гранты и стипендии
+        </div>
+        <div class="grants-grid">
+          <div class="grant-card">
+            <h4>
+              CSC (Правительство КНР)
+              <span style="background:${u.grants.csc ? 'var(--green-bg)' : '#fef2f2'};color:${u.grants.csc ? 'var(--green)' : '#dc2626'};font-size:12px;padding:3px 10px;border-radius:6px;font-weight:700">
+                ${u.grants.csc ? 'Доступен' : 'Недоступен'}
+              </span>
+            </h4>
+            <p style="margin-bottom:10px">Сложность получения: ${getDiff(u.grants.cscDiff)}</p>
+            <div class="grant-list">
+              ${u.grants.cscDetail.map(d => `<div class="grant-item">${d}</div>`).join('')}
+            </div>
+          </div>
+          <div class="grant-card">
+            <h4>
+              Локальные стипендии
+              ${getDiff(u.grants.localDiff)}
+            </h4>
+            <div class="grant-list">
+              ${u.grants.local.map(g => `
+                <div class="grant-item">
+                  <div>
+                    <strong>${g.name}</strong><br>
+                    <span style="color:var(--accent);font-weight:600">${g.amount}</span><br>
+                    <span style="color:var(--muted);font-size:13px">${g.cond}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:14px;padding:14px 16px;background:var(--bg);border-radius:10px;font-size:14px;color:var(--muted);line-height:1.6">
+          ${u.grants.note}
+        </div>
+      </div>
+
+      <div class="section-block">
+        <div class="section-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+          Партнёры для обмена и 1+1
+        </div>
+        <div class="partners-grid">
+          ${u.partners.map(p => `<span class="partner-tag">${p}</span>`).join('')}
+        </div>
+      </div>
+
+      <div class="section-block">
+        <div class="section-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+          </svg>
+          Плюсы и минусы
+        </div>
+        <div class="pros-cons">
+          <div class="pro-block">
+            <h4>Плюсы</h4>
+            <ul>${u.pros.map(p => `<li>${p}</li>`).join('')}</ul>
+          </div>
+          <div class="con-block">
+            <h4>Минусы</h4>
+            <ul>${u.cons.map(c => `<li>${c}</li>`).join('')}</ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <div class="section-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+          Как поступить — шаги
+        </div>
+        <div class="steps">
+          ${u.steps.map((s, i) => `
+            <div class="step">
+              <div class="step-num">${i + 1}</div>
+              <div class="step-content">
+                <h4>${s.title}</h4>
+                <p>${s.desc}</p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+        <a href="${u.site}" target="_blank" class="site-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>
+          </svg>
+          Официальный сайт
+        </a>
+        <a href="index.html" style="font-size:15px;color:var(--muted);text-decoration:none;font-weight:500">← Назад к списку</a>
+      </div>
+
+    </div>
+  `;
+}
+
+const id = new URLSearchParams(window.location.search).get('id');
+render(id);
+</script>
+</body>
+</html>
