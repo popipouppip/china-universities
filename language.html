@@ -118,6 +118,7 @@
     .tag-lang { background: var(--accent-light); color: var(--accent); }
     .tag-econ { background: var(--tag-bg); color: var(--tag-color); }
     .tag-cheap { background: #fef2f2; color: #dc2626; }
+    .tag-ultra { background: #052e16; color: #4ade80; }
 
     .note { font-size: 13px; color: var(--muted); line-height: 1.55; }
     .note strong { color: var(--text); font-weight: 700; }
@@ -173,7 +174,7 @@
   <button class="filter-btn" onclick="filter('tianjin', this)">Тяньцзинь</button>
   <button class="filter-btn" onclick="filter('beijing', this)">Пекин</button>
   <button class="filter-btn" onclick="filter('small', this)">Маленькие города</button>
-  <button class="filter-btn" onclick="filter('cheap', this)">Самые дешёвые</button>
+  <button class="filter-btn" onclick="filter('ultra', this)">Всё ≤ 10 000 ¥</button>
   <span class="count" id="count"></span>
 </div>
 
@@ -275,6 +276,53 @@ const universities = [
     tuition: "18 000–22 000", housing: "8 000–15 000",
     size: "big", cheap: false, lang: true, econ: false,
     note: "В <strong>самом Пекине</strong>, но дешевле топовых вузов вроде BLCU. Один из самых популярных у иностранцев для языковых курсов. Вариант, если хочешь сразу жить в столице."
+  },
+
+  // ── ВСЁ ≤ 10 000 ¥/год (обучение + проживание) ──────────────────
+  {
+    name: "Ланфанский педагогический университет",
+    cn: "廊坊师范学院 · Ланфан",
+    region: "hebei", city: "Ланфан",
+    distance: "60 км", time: "40 мин на поезде",
+    tuition: "6 000–7 000", housing: "2 000–3 000",
+    size: "small", cheap: true, lang: true, econ: false, ultraCheap: true,
+    note: "Маленький Ланфан в 40 минутах от Пекина + педагогический профиль (хорошая методика). <strong>Обучение и общежитие вместе укладываются в 10 000 ¥.</strong> Один из лучших по соотношению цена/близость."
+  },
+  {
+    name: "Хэбэйский северный университет",
+    cn: "河北北方学院 · Чжанцзякоу",
+    region: "hebei", city: "Чжанцзякоу",
+    distance: "190 км", time: "1.5 ч на поезде",
+    tuition: "6 000–8 000", housing: "2 000–4 000",
+    size: "small", cheap: true, lang: false, econ: false, ultraCheap: true,
+    note: "<strong>Чжанцзякоу</strong> — горный северный город, место зимней Олимпиады-2022. Прохладно, чисто, чистейший путунхуа. Очень дёшево — всё вместе до 10 000 ¥."
+  },
+  {
+    name: "Таншаньский педагогический университет",
+    cn: "唐山师范学院 · Таншань",
+    region: "hebei", city: "Таншань",
+    distance: "150 км", time: "1 ч на поезде",
+    tuition: "6 000–7 000", housing: "2 000–3 000",
+    size: "mid", cheap: true, lang: true, econ: false, ultraCheap: true,
+    note: "<strong>Таншань</strong> — час от Пекина, педагогический вуз с методикой преподавания китайского. Бюджетно: обучение плюс жильё вместе в пределах 10 000 ¥."
+  },
+  {
+    name: "Хэншуйский университет",
+    cn: "衡水学院 · Хэншуй",
+    region: "hebei", city: "Хэншуй",
+    distance: "250 км", time: "2 ч на поезде",
+    tuition: "5 000–7 000", housing: "2 000–3 000",
+    size: "small", cheap: true, lang: false, econ: false, ultraCheap: true,
+    note: "<strong>Хэншуй</strong> — небольшой город, известный на весь Китай своей культурой учёбы. Спокойно, очень дёшево — одно из самых бюджетных мест, всё вместе до 10 000 ¥."
+  },
+  {
+    name: "Баодинский университет",
+    cn: "保定学院 · Баодин",
+    region: "hebei", city: "Баодин",
+    distance: "140 км", time: "1.5 ч на поезде",
+    tuition: "6 000–8 000", housing: "2 000–4 000",
+    size: "small", cheap: true, lang: true, econ: false, ultraCheap: true,
+    note: "Небольшой педагогический вуз в <strong>Баодине</strong> — дешевле большого Хэбэйского университета по соседству. Методика преподавания языка + цена за всё до 10 000 ¥."
   }
 ];
 
@@ -323,7 +371,9 @@ function render(list) {
       </div>
 
       <div class="tags">
-        ${u.cheap ? '<span class="tag tag-cheap"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Очень дёшево</span>' : ''}
+        ${u.ultraCheap
+          ? '<span class="tag tag-ultra"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Всё ≤ 10 000 ¥/год</span>'
+          : (u.cheap ? '<span class="tag tag-cheap"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Очень дёшево</span>' : '')}
         ${u.size === 'small' ? '<span class="tag tag-small">Тихий городок</span>' : ''}
         ${u.lang ? '<span class="tag tag-lang">Языковой профиль</span>' : ''}
         ${u.econ ? '<span class="tag tag-econ">Экономика рядом</span>' : ''}
@@ -343,7 +393,7 @@ function filter(type, btn) {
   if (type === 'tianjin') list = universities.filter(u => u.region === 'tianjin');
   if (type === 'beijing') list = universities.filter(u => u.region === 'beijing');
   if (type === 'small') list = universities.filter(u => u.size === 'small');
-  if (type === 'cheap') list = universities.filter(u => u.cheap);
+  if (type === 'ultra') list = universities.filter(u => u.ultraCheap);
   render(list);
 }
 
