@@ -131,14 +131,18 @@
     .lic-warn { background: var(--amber-bg); color: var(--amber); }
     .license svg { flex-shrink: 0; }
 
+    .card-links { display: flex; gap: 8px; }
     .site-link {
-      display: flex; align-items: center; justify-content: center; gap: 7px;
+      flex: 1;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
       font-size: 13px; font-weight: 700; color: var(--accent);
       background: var(--accent-light); border: 1.5px solid #a5e8f0;
-      padding: 9px 14px; border-radius: 9px;
-      text-decoration: none; transition: all 0.15s;
+      padding: 9px 12px; border-radius: 9px;
+      text-decoration: none; transition: all 0.15s; white-space: nowrap;
     }
     .site-link:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .intl-link { color: #15803d; background: #f0fdf4; border-color: #bbf7d0; }
+    .intl-link:hover { background: #15803d; color: #fff; border-color: #15803d; }
 
     .divider { height: 1px; background: var(--border); }
 
@@ -219,6 +223,7 @@ const universities = [
     name: "Северо-Китайский институт аэрокосмической промышленности",
     cn: "北华航天工业学院 · Ланфан",
     site: "https://www.nciae.edu.cn/",
+    intl: "https://international.nciae.edu.cn/",
     region: "hebei", city: "Ланфан",
     distance: "60 км", time: "40 мин на поезде",
     tuition: "8 000–12 000", housing: "3 000–6 000",
@@ -229,6 +234,7 @@ const universities = [
     name: "Хэбэйский университет",
     cn: "河北大学 · Баодин",
     site: "https://www.hbu.edu.cn/",
+    intl: "https://ciee.hbu.edu.cn/",
     region: "hebei", city: "Баодин",
     distance: "140 км", time: "1.5 ч на поезде",
     tuition: "10 000–14 000", housing: "4 000–8 000",
@@ -239,6 +245,7 @@ const universities = [
     name: "Хэбэйский университет экономики и бизнеса",
     cn: "河北经贸大学 · Шицзячжуан",
     site: "https://www.hueb.edu.cn/",
+    intl: "https://ies.hueb.edu.cn/",
     region: "hebei", city: "Шицзячжуан",
     distance: "280 км", time: "1.5 ч на поезде",
     tuition: "8 000–12 000", housing: "4 000–6 000",
@@ -249,6 +256,7 @@ const universities = [
     name: "Хэбэйский педагогический университет",
     cn: "河北师范大学 · Шицзячжуан",
     site: "https://www.hebtu.edu.cn/",
+    intl: "https://io.hebtu.edu.cn/",
     region: "hebei", city: "Шицзячжуан",
     distance: "280 км", time: "1.5 ч на поезде",
     tuition: "12 000–15 000", housing: "4 000–8 000",
@@ -259,6 +267,7 @@ const universities = [
     name: "Яньшаньский университет",
     cn: "燕山大学 · Циньхуандао",
     site: "https://www.ysu.edu.cn/",
+    intl: "https://ies.ysu.edu.cn/",
     region: "hebei", city: "Циньхуандао",
     distance: "300 км", time: "2.5 ч на поезде",
     tuition: "10 000–14 000", housing: "5 000–8 000",
@@ -269,6 +278,7 @@ const universities = [
     name: "Северо-Китайский электроэнергетический университет",
     cn: "华北电力大学 · Баодин",
     site: "https://www.ncepu.edu.cn/",
+    intl: "https://dic.ncepu.edu.cn/",
     region: "hebei", city: "Баодин",
     distance: "140 км", time: "1.5 ч на поезде",
     tuition: "9 000–13 000", housing: "4 000–8 000",
@@ -279,6 +289,7 @@ const universities = [
     name: "Тяньцзиньский педагогический университет",
     cn: "天津师范大学 · Тяньцзинь",
     site: "https://www.tjnu.edu.cn/",
+    intl: "https://gjxy.tjnu.edu.cn/",
     region: "tianjin", city: "Тяньцзинь",
     distance: "120 км", time: "30 мин на поезде",
     tuition: "12 000–16 000", housing: "5 000–10 000",
@@ -311,6 +322,7 @@ const universities = [
     name: "Ланфанский педагогический университет",
     cn: "廊坊师范学院 · Ланфан",
     site: "https://www.lfnu.edu.cn/",
+    intl: "https://lfnu.cucas.cn/",
     region: "hebei", city: "Ланфан",
     distance: "60 км", time: "40 мин на поезде",
     tuition: "6 000–7 000", housing: "2 000–3 000",
@@ -321,6 +333,7 @@ const universities = [
     name: "Хэбэйский северный университет",
     cn: "河北北方学院 · Чжанцзякоу",
     site: "https://www.hebeinu.edu.cn/",
+    intl: "https://gjjy.hebeinu.edu.cn/",
     region: "hebei", city: "Чжанцзякоу",
     distance: "190 км", time: "1.5 ч на поезде",
     tuition: "6 000–8 000", housing: "2 000–4 000",
@@ -424,13 +437,21 @@ function render(list) {
           : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Принимает иностранцев — подтверждено'}
       </div>
 
-      <a href="${u.site}" target="_blank" rel="noopener" class="site-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
-          <path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>
-        </svg>
-        Официальный сайт
-      </a>
+      <div class="card-links">
+        <a href="${u.site}" target="_blank" rel="noopener" class="site-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>
+          </svg>
+          Сайт вуза
+        </a>
+        ${u.intl ? `<a href="${u.intl}" target="_blank" rel="noopener" class="site-link intl-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+          Для иностранцев
+        </a>` : ''}
+      </div>
     </div>
   `).join('');
 }
