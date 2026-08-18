@@ -130,8 +130,19 @@
       display: flex; align-items: center; gap: 6px;
     }
 
-    .stat-box .s-value { font-size: 22px; font-weight: 900; color: var(--text); line-height: 1.1; }
+    .stat-box .s-value { font-size: 22px; font-weight: 900; color: var(--text); line-height: 1.1; white-space: nowrap; }
     .stat-box .s-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    .stat-total {
+      grid-column: 1 / -1;
+      background: var(--accent-light);
+      border-color: rgba(192, 57, 43, 0.22);
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+    .stat-total .s-label { color: var(--accent); margin-bottom: 6px; }
+    .stat-total .s-value { font-size: 30px; color: var(--accent); }
+    .stat-total .s-sub { color: var(--accent); opacity: 0.8; }
+    .stat-total .t-right { text-align: right; }
 
     /* Sections */
     .section-block {
@@ -262,11 +273,18 @@
 
     @media (max-width: 680px) {
       .back-bar { padding: 14px 20px; }
-      .hero { height: 260px; }
-      .hero-overlay { padding: 24px 20px; flex-direction: column; gap: 14px; }
+      .hero { height: 340px; }
+      .hero-overlay { padding: 20px; flex-direction: column; gap: 12px; }
+      .hero-logo { width: 54px; height: 54px; }
+      .hero-badge { font-size: 12px; padding: 4px 10px; }
       .hero-text h1 { font-size: 22px; }
       .main { padding: 24px 16px 48px; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .stat-box { padding: 14px 16px; }
+      .stat-box .s-value { font-size: 18px; }
+      .stat-total { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .stat-total .s-value { font-size: 24px; }
+      .stat-total .t-right { text-align: left; }
       .grants-grid, .pros-cons { grid-template-columns: 1fr; }
     }
   </style>
@@ -590,6 +608,26 @@ function getDiff(key) {
   return `<span class="diff-badge ${classes[key]}">${labels[key]}</span>`;
 }
 
+// Полная цена = обучение + проживание
+function parseRange(str) {
+  const nums = String(str).split(/[–—-]/)
+    .map(part => parseInt(part.replace(/[^0-9]/g, ''), 10))
+    .filter(n => !isNaN(n));
+  return nums.length ? [nums[0], nums[nums.length - 1]] : [0, 0];
+}
+const fmtNum = n => n.toLocaleString('ru-RU').replace(/\s/g, '\u00A0');
+const nbsp = str => String(str).replace(/ (?=\d)/g, '\u00A0');
+const totalText4 = u => {
+  const t = parseRange(u.tuition), h = parseRange(u.housing);
+  const min = (t[0] + h[0]) * 4, max = (t[1] + h[1]) * 4;
+  return min === max ? fmtNum(min) : `${fmtNum(min)}–${fmtNum(max)}`;
+};
+const totalText = u => {
+  const t = parseRange(u.tuition), h = parseRange(u.housing);
+  const min = t[0] + h[0], max = t[1] + h[1];
+  return min === max ? fmtNum(min) : `${fmtNum(min)}–${fmtNum(max)}`;
+};
+
 function render(id) {
   const u = data[id];
   if (!u) {
@@ -646,7 +684,7 @@ function render(id) {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
             Обучение / год
           </div>
-          <div class="s-value">${u.tuition}</div>
+          <div class="s-value">${nbsp(u.tuition)}</div>
           <div class="s-sub">юаней (CNY)</div>
         </div>
         <div class="stat-box">
@@ -654,8 +692,22 @@ function render(id) {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
             Проживание / год
           </div>
-          <div class="s-value">${u.housing}</div>
+          <div class="s-value">${nbsp(u.housing)}</div>
           <div class="s-sub">юаней (CNY)</div>
+        </div>
+        <div class="stat-box stat-total">
+          <div>
+            <div class="s-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              Полная цена / год
+            </div>
+            <div class="s-value">${totalText(u)} ¥</div>
+            <div class="s-sub">обучение + проживание</div>
+          </div>
+          <div class="t-right">
+            <div class="s-sub">за 4 года бакалавриата</div>
+            <div class="s-value" style="font-size:22px">${totalText4(u)} ¥</div>
+          </div>
         </div>
       </div>
 
