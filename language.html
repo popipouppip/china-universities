@@ -203,7 +203,7 @@
   <div class="info-strip">
     <div class="info-item">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20M2 12a10 10 0 0110-10M2 12a10 10 0 0010 10M12 2a10 10 0 010 20M12 2a10 10 0 000 20"/></svg>
-      Нанкин · Уси · Сучжоу · Ханчжоу · Шанхай · Тяньцзинь
+      Нанкин · Сучжоу · Ханчжоу · Шанхай · Тяньцзинь
     </div>
     <div class="info-item">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.3L22 9l-5 4.9 1.2 7.1L12 17.8 5.8 21 7 13.9 2 9l7.1-.7z"/></svg>
@@ -233,7 +233,7 @@
 
 <div class="disclaimer">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-  <div>Цены обучения и общежития — с официальных сайтов международных отделов вузов (проверено сентябрь 2026). У Чжэцзянского цена общежития не публикуется — только онлайн-бронирование после зачисления. У Тяньцзиньского иняза при подаче требуют справку о депозите от 20 000 ¥. У Цзяннаньского общежития для языковых студентов НЕТ — по прямому указанию на сайте вуза, жить приходится самому в городе. Эти нюансы отмечены в карточках, у каждого вуза — ссылка на страницу общежития для проверки фото и условий.</div>
+  <div>Цены обучения и общежития — с официальных сайтов международных отделов вузов, только двухместные комнаты (проверено сентябрь 2026). У Чжэцзянского, SJTU и ECNU цена именно двухместной не публикуется — общежитие есть, но с точной цифрой нужно списываться напрямую. У Тяньцзиньского иняза при подаче требуют справку о депозите от 20 000 ¥. Эти нюансы отмечены в карточках, у каждого вуза — ссылка на страницу общежития для проверки фото и условий.</div>
 </div>
 
 <div class="grid" id="grid"></div>
@@ -266,16 +266,16 @@ const universities = [
     note: "Самое дешёвое обучение из семи — языковой профиль вуза даёт сильную методику. Но единственный с требованием справки о депозите — это больше половины бюджета на всё окно."
   },
   {
-    name: "Цзяннаньский университет",
-    cn: "江南大学 · Уси",
-    site: "https://www.jiangnan.edu.cn/",
-    intl: "https://sie.jiangnan.edu.cn/",
-    landing: "https://jiangnan-beta.vercel.app",
-    region: "jiangsu", city: "Уси",
-    travel: "35 мин", time: "до Шанхая скоростным поездом",
-    tuition: "14 000", housing: "—", housingNote: "общежития для языковых студентов НЕТ — сайт вуза прямо пишет «学生需自行安排住宿» (устраиваться самому)",
-    dormOk: false, dormWarn: "Общежития для языковых студентов нет — снимать жильё в городе самостоятельно", c9: false, econ: false, lang: false,
-    note: "Между Нанкином и Шанхаем. 211 + «Двойной первый класс», пищевая наука #1 в мире 7 лет подряд. Приём круглый год — можно заехать не к началу семестра. Но общежития на языковой программе нет, это ощутимо поднимает реальную стоимость."
+    name: "Восточно-Китайский педагогический университет",
+    cn: "华东师范大学 · Шанхай",
+    site: "https://www.ecnu.edu.cn/",
+    intl: "https://lxs.ecnu.edu.cn/",
+    dorm: "http://lxs.ecnu.edu.cn/msg.php?id=797",
+    region: "shanghai", city: "Шанхай",
+    travel: "0 км", time: "ты в Шанхае",
+    tuition: "22 000", housing: "—", housingNote: "цена двухместной не публикуется — узнавать по телефону 86 21 52780889",
+    dormOk: false, dormWarn: "Общежитие есть, но цену двухместной не публикуют — узнавать по телефону при заселении", c9: false, econ: false, lang: true,
+    note: "Один из сильнейших вузов Китая по методике преподавания китайского как иностранного. Второй вуз в этом списке прямо в Шанхае — можно сравнить с SJTU напрямую."
   },
   {
     name: "Сучжоуский университет",
@@ -309,9 +309,9 @@ const universities = [
     dorm: "https://gjjyxy.hznu.edu.cn/c/2026-03-04/3176506.shtml",
     region: "zhejiang", city: "Ханчжоу",
     travel: "45 мин", time: "до Шанхая скоростным поездом",
-    tuition: "15 000", housing: "7 000", housingNote: "одноместная, от 7 000 до 14 000 ¥/год по уровню",
+    tuition: "15 000", housing: "22 500", housingNote: "75 ¥/сутки двухместная (60 ¥/сутки в трёхместной — дешевле), с 2026 языковые студенты живут в 国际交流中心宾馆",
     dormOk: true, c9: false, econ: false, lang: true,
-    note: "Дешевле Чжэцзянского при той же локации. Педагогический профиль — методика преподавания языка, только одноместные комнаты с ценой известной заранее."
+    note: "Дешевле Чжэцзянского при той же локации. Педагогический профиль — методика преподавания языка."
   },
   {
     name: "Шанхайский транспортный университет",
@@ -321,9 +321,9 @@ const universities = [
     dorm: "https://gk.sjtu.edu.cn/phone/view/1764",
     region: "shanghai", city: "Шанхай",
     travel: "0 км", time: "ты в Шанхае",
-    tuition: "21 000", housing: "13 200", housingNote: "80–155 ¥/сутки (6 600–12 600 ¥/сем за 18 недель), кампусы Миньхан и Сюйхуэй",
-    dormOk: true, c9: true, econ: true, lang: false,
-    note: "<strong>Лига C9</strong> прямо в Шанхае — крупнейшем деловом городе Китая. Общежитие обязательно для иностранцев, бронь онлайн — своё жильё искать не придётся."
+    tuition: "21 000", housing: "—", housingNote: "варианты от 80 до 155 ¥/сутки, но цена именно двухместной (AB间) отдельно не публикуется",
+    dormOk: false, dormWarn: "Общежитие обязательно для иностранцев, но цену двухместной надо уточнять при заселении", c9: true, econ: true, lang: false,
+    note: "<strong>Лига C9</strong> прямо в Шанхае — крупнейшем деловом городе Китая. Общежитие обязательно для иностранцев, своё жильё искать не придётся — но цену комнаты вуз заранее не называет."
   }
 ];
 
@@ -392,7 +392,7 @@ function render(list) {
       </div>
 
       <div class="tags">
-        ${totalMin(u) <= 22000 ? '<span class="tag tag-cheap"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Дёшево</span>' : ''}
+        ${!partial && totalMin(u) <= 22000 ? '<span class="tag tag-cheap"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Дёшево</span>' : ''}
         ${u.c9 ? '<span class="tag tag-c9"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.3L22 9l-5 4.9 1.2 7.1L12 17.8 5.8 21 7 13.9 2 9l7.1-.7z"/></svg>Лига C9</span>' : ''}
         ${u.lang ? '<span class="tag tag-lang">Языковой профиль</span>' : ''}
         ${u.econ ? '<span class="tag tag-econ">Экономика рядом</span>' : ''}
