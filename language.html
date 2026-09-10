@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Языковой год — вузы рядом с Пекином</title>
+  <title>Языковой год — вузы у Шанхая, Нанкина и Ханчжоу</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -94,7 +94,6 @@
       font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 6px; white-space: nowrap; flex-shrink: 0;
     }
 
-    /* Distance highlight */
     .distance {
       display: flex; align-items: center; gap: 10px;
       background: var(--bg); border-radius: 10px; padding: 11px 14px;
@@ -116,6 +115,8 @@
     .price-total .label { font-size: 10px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
     .price-total .value { font-size: 20px; font-weight: 800; color: var(--accent); white-space: nowrap; }
     .price-total .sub { font-size: 11px; color: var(--accent); opacity: 0.8; margin-top: 1px; }
+    .price-total.is-partial { background: var(--amber-bg); }
+    .price-total.is-partial .label, .price-total.is-partial .value, .price-total.is-partial .sub { color: var(--amber); }
 
     .sort-select {
       padding: 9px 16px;
@@ -134,11 +135,10 @@
       font-size: 12px; padding: 3px 9px; border-radius: 5px; font-weight: 600;
       display: flex; align-items: center; gap: 4px;
     }
-    .tag-small { background: var(--green-bg); color: var(--green); }
+    .tag-c9 { background: #052e16; color: #4ade80; }
     .tag-lang { background: var(--accent-light); color: var(--accent); }
     .tag-econ { background: var(--tag-bg); color: var(--tag-color); }
     .tag-cheap { background: #fef2f2; color: #dc2626; }
-    .tag-ultra { background: #052e16; color: #4ade80; }
 
     .note { font-size: 13px; color: var(--muted); line-height: 1.55; }
     .note strong { color: var(--text); font-weight: 700; }
@@ -151,7 +151,7 @@
     .lic-warn { background: var(--amber-bg); color: var(--amber); }
     .license svg { flex-shrink: 0; }
 
-    .card-links { display: flex; gap: 8px; }
+    .card-links { display: flex; gap: 8px; flex-wrap: wrap; }
     .site-link {
       flex: 1;
       display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -163,6 +163,8 @@
     .site-link:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
     .intl-link { color: #15803d; background: #f0fdf4; border-color: #bbf7d0; }
     .intl-link:hover { background: #15803d; color: #fff; border-color: #15803d; }
+    .landing-link { color: #b91c1c; background: #fef2f2; border-color: #fecaca; }
+    .landing-link:hover { background: #b91c1c; color: #fff; border-color: #b91c1c; }
 
     .divider { height: 1px; background: var(--border); }
 
@@ -190,35 +192,35 @@
 
 <header>
   <h1>
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 5h12M9 3v2m1.5 13.5L6 14l-3 3"/><path d="M12 20l4-9 4 9M17.5 17h-3"/>
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/>
     </svg>
-    Языковой год — вузы рядом с Пекином
+    Языковой год — вузы у Шанхая, Нанкина и Ханчжоу
   </h1>
-  <p>Дешёвые вузы Северного Китая для языкового года: чистый путунхуа, приём иностранцев, и до Пекина рукой подать. Маленькие города для погружения без отвлечений.</p>
+  <p>Семь вузов дельты Янцзы — самого развитого региона Китая — плюс Тяньцзиньский иняз для сравнения по цене. Реальные цены обучения и общежития с официальных сайтов международных отделов, проверено в сентябре 2026.</p>
   <div class="info-strip">
     <div class="info-item">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      Север = чистый путунхуа
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20M2 12a10 10 0 0110-10M2 12a10 10 0 0010 10M12 2a10 10 0 010 20M12 2a10 10 0 000 20"/></svg>
+      Нанкин · Уси · Сучжоу · Ханчжоу · Шанхай · Тяньцзинь
     </div>
     <div class="info-item">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-      Дёшево
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.3L22 9l-5 4.9 1.2 7.1L12 17.8 5.8 21 7 13.9 2 9l7.1-.7z"/></svg>
+      3 из 7 — вузы лиги C9
     </div>
     <div class="info-item">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      1–2 часа до Пекина
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+      Везде есть общежитие для иностранцев
     </div>
   </div>
 </header>
 
 <div class="controls">
   <button class="filter-btn active" onclick="filter('all', this)">Все</button>
-  <button class="filter-btn" onclick="filter('hebei', this)">Хэбэй</button>
+  <button class="filter-btn" onclick="filter('jiangsu', this)">Цзянсу</button>
+  <button class="filter-btn" onclick="filter('zhejiang', this)">Чжэцзян</button>
+  <button class="filter-btn" onclick="filter('shanghai', this)">Шанхай</button>
   <button class="filter-btn" onclick="filter('tianjin', this)">Тяньцзинь</button>
-  <button class="filter-btn" onclick="filter('beijing', this)">Пекин</button>
-  <button class="filter-btn" onclick="filter('small', this)">Маленькие города</button>
-  <button class="filter-btn" onclick="filter('ultra', this)">Всё ≤ 10 000 ¥</button>
+  <button class="filter-btn" onclick="filter('cheap', this)">Дёшево (≤ 22 000 ¥)</button>
   <select class="sort-select" id="sort" onchange="setSort(this.value)">
     <option value="default">Без сортировки</option>
     <option value="asc">Сначала дешёвые</option>
@@ -229,7 +231,7 @@
 
 <div class="disclaimer">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-  <div>Цены ориентировочные (типичные для региона). Точную стоимость языковой программы и условия приёма уточняй на сайте конкретного вуза — у языковых курсов цены меняются и часто не публикуются на английском.</div>
+  <div>Цены обучения и общежития — с официальных сайтов международных отделов вузов (проверено сентябрь 2026). У Чжэцзянского цена общежития не публикуется — только онлайн-бронирование после зачисления. У Тяньцзиньского иняза при подаче требуют справку о депозите от 20 000 ¥. У Цзяннаньского два документа вуза противоречат друг другу по общежитию для языковых студентов — эти нюансы отмечены в карточках.</div>
 </div>
 
 <div class="grid" id="grid"></div>
@@ -237,197 +239,108 @@
 <script>
 const universities = [
   {
-    name: "Институт нацменьшинств Хэбэя (Чэндэ)",
-    cn: "河北民族师范学院 · Чэндэ",
-    site: "https://www.hbun.edu.cn/",
-    checked: false,
-    region: "hebei", city: "Чэндэ",
-    distance: "230 км", time: "2 ч на поезде",
-    tuition: "8 000–12 000", housing: "3 000–6 000",
-    size: "small", cheap: true, lang: false, econ: false,
-    note: "Тот самый <strong>Чэндэ</strong> — небольшой исторический город, бывшая летняя резиденция императоров. Тихо, дёшево, чистейший путунхуа. Идеально для погружения без отвлечений."
-  },
-  {
-    name: "Северо-Китайский институт аэрокосмической промышленности",
-    cn: "北华航天工业学院 · Ланфан",
-    site: "https://www.nciae.edu.cn/",
-    intl: "https://international.nciae.edu.cn/",
-    region: "hebei", city: "Ланфан",
-    distance: "60 км", time: "40 мин на поезде",
-    tuition: "8 000–12 000", housing: "3 000–6 000",
-    size: "small", cheap: true, lang: false, econ: false,
-    note: "<strong>Ланфан</strong> — маленький город прямо между Пекином и Тяньцзинем. Ближе всех к столице: 40 минут. Дёшево, спокойно, при этом Пекин в любой момент."
-  },
-  {
-    name: "Хэбэйский университет",
-    cn: "河北大学 · Баодин",
-    site: "https://www.hbu.edu.cn/",
-    intl: "https://ciee.hbu.edu.cn/",
-    region: "hebei", city: "Баодин",
-    distance: "140 км", time: "1.5 ч на поезде",
-    tuition: "10 000–14 000", housing: "4 000–8 000",
-    size: "mid", cheap: false, lang: false, econ: false,
-    note: "Крупнейший вуз провинции Хэбэй в <strong>Баодине</strong>. Большой кампус, давно принимает иностранцев, развитая инфраструктура для языковых курсов."
-  },
-  {
-    name: "Хэбэйский университет экономики и бизнеса",
-    cn: "河北经贸大学 · Шицзячжуан",
-    site: "https://www.hueb.edu.cn/",
-    intl: "https://ies.hueb.edu.cn/",
-    region: "hebei", city: "Шицзячжуан",
-    distance: "280 км", time: "1.5 ч на поезде",
-    tuition: "8 000–12 000", housing: "4 000–6 000",
-    size: "mid", cheap: true, lang: false, econ: true,
-    note: "Дёшево + <strong>экономический профиль</strong>. Бонус для тебя: можно параллельно с языком набирать профильную лексику по экономике и торговле."
-  },
-  {
-    name: "Хэбэйский педагогический университет",
-    cn: "河北师范大学 · Шицзячжуан",
-    site: "https://www.hebtu.edu.cn/",
-    intl: "https://io.hebtu.edu.cn/",
-    region: "hebei", city: "Шицзячжуан",
-    distance: "280 км", time: "1.5 ч на поезде",
-    tuition: "12 000–15 000", housing: "4 000–8 000",
-    size: "mid", cheap: false, lang: true, econ: false,
-    note: "Педагогический — а значит <strong>сильная методика преподавания китайского</strong> как иностранного. Хорошая база для быстрого роста уровня."
-  },
-  {
-    name: "Яньшаньский университет",
-    cn: "燕山大学 · Циньхуандао",
-    site: "https://www.ysu.edu.cn/",
-    intl: "https://ies.ysu.edu.cn/",
-    region: "hebei", city: "Циньхуандао",
-    distance: "300 км", time: "2.5 ч на поезде",
-    tuition: "10 000–14 000", housing: "5 000–8 000",
-    size: "mid", cheap: false, lang: false, econ: false,
-    note: "<strong>Приморский город</strong> на берегу моря — мягче климат, красиво летом. Спокойнее мегаполисов, при этом хороший вуз с международным отделом."
-  },
-  {
-    name: "Северо-Китайский электроэнергетический университет",
-    cn: "华北电力大学 · Баодин",
-    site: "https://www.ncepu.edu.cn/",
-    intl: "https://dic.ncepu.edu.cn/",
-    region: "hebei", city: "Баодин",
-    distance: "140 км", time: "1.5 ч на поезде",
-    tuition: "9 000–13 000", housing: "4 000–8 000",
-    size: "mid", cheap: true, lang: false, econ: false,
-    note: "Известный технический вуз с кампусом в <strong>Баодине</strong>. Доступные языковые курсы, аккуратный кампус, недалеко от Пекина."
-  },
-  {
-    name: "Тяньцзиньский педагогический университет",
-    cn: "天津师范大学 · Тяньцзинь",
-    site: "https://www.tjnu.edu.cn/",
-    intl: "https://gjxy.tjnu.edu.cn/",
-    region: "tianjin", city: "Тяньцзинь",
-    distance: "120 км", time: "30 мин на поезде",
-    tuition: "12 000–16 000", housing: "5 000–10 000",
-    size: "big", cheap: false, lang: true, econ: false,
-    note: "<strong>Тяньцзинь в 30 минутах от Пекина.</strong> Много иностранных студентов на языковых программах, сильная школа преподавания китайского. Большой современный город дешевле столицы."
+    name: "Нанкинский университет",
+    cn: "南京大学 · Нанкин",
+    site: "https://www.nju.edu.cn/",
+    intl: "https://hwxy.nju.edu.cn/",
+    landing: "https://nanjing-university.vercel.app",
+    region: "jiangsu", city: "Нанкин",
+    travel: "1 ч 15 мин", time: "до Шанхая скоростным поездом",
+    tuition: "21 000", housing: "6 000", housingNote: "двухместный, кампус Сяньлинь; в историческом Гулоу — 52 ¥/сутки, дороже",
+    dormOk: true, c9: true, econ: true, lang: false,
+    note: "<strong>Лига C9, ARWU #70 в мире и #6 в Китае.</strong> Сильнейшая экономическая школа среди всех семи. Дороже других, но топ-вуз региона."
   },
   {
     name: "Тяньцзиньский университет иностранных языков",
     cn: "天津外国语大学 · Тяньцзинь",
     site: "https://www.tjfsu.edu.cn/",
+    intl: "https://isa.tjfsu.edu.cn/",
     region: "tianjin", city: "Тяньцзинь",
-    distance: "120 км", time: "30 мин на поезде",
-    tuition: "13 000–17 000", housing: "5 000–10 000",
-    size: "big", cheap: false, lang: true, econ: false,
-    note: "<strong>Языковой профиль</strong> — специализация на лингвистике и преподавании языков. Одно из лучших мест для интенсивного изучения китайского рядом с Пекином."
+    travel: "~5 ч", time: "до Шанхая · 30 мин до Пекина",
+    tuition: "13 400", housing: "15 000", housingNote: "50 ¥/сутки, только двухместные",
+    dormOk: false, dormWarn: "Требуют справку о депозите от 20 000 ¥ при подаче", c9: false, econ: false, lang: true,
+    note: "Самое дешёвое обучение из семи — языковой профиль вуза даёт сильную методику. Но единственный с требованием справки о депозите — это больше половины бюджета на всё окно."
   },
   {
-    name: "Столичный педагогический университет",
-    cn: "首都师范大学 · Пекин",
-    site: "https://www.cnu.edu.cn/",
-    region: "beijing", city: "Пекин",
-    distance: "0 км", time: "ты в столице",
-    tuition: "18 000–22 000", housing: "8 000–15 000",
-    size: "big", cheap: false, lang: true, econ: false,
-    note: "В <strong>самом Пекине</strong>, но дешевле топовых вузов вроде BLCU. Один из самых популярных у иностранцев для языковых курсов. Вариант, если хочешь сразу жить в столице."
-  },
-
-  // ── ВСЁ ≤ 10 000 ¥/год (обучение + проживание) ──────────────────
-  {
-    name: "Ланфанский педагогический университет",
-    cn: "廊坊师范学院 · Ланфан",
-    site: "https://www.lfnu.edu.cn/",
-    intl: "https://lfnu.cucas.cn/",
-    region: "hebei", city: "Ланфан",
-    distance: "60 км", time: "40 мин на поезде",
-    tuition: "6 000–7 000", housing: "2 000–3 000",
-    size: "small", cheap: true, lang: true, econ: false, ultraCheap: true,
-    note: "Маленький Ланфан в 40 минутах от Пекина + педагогический профиль (хорошая методика). <strong>Обучение и общежитие вместе укладываются в 10 000 ¥.</strong> Один из лучших по соотношению цена/близость."
+    name: "Цзяннаньский университет",
+    cn: "江南大学 · Уси",
+    site: "https://www.jiangnan.edu.cn/",
+    intl: "https://sie.jiangnan.edu.cn/",
+    landing: "https://jiangnan-beta.vercel.app",
+    region: "jiangsu", city: "Уси",
+    travel: "35 мин", time: "до Шанхая скоростным поездом",
+    tuition: "14 000", housing: "3 000", housingNote: "1 500 ¥/сем в общежитии для иностранцев",
+    dormOk: false, dormWarn: "Два официальных документа вуза противоречат друг другу по общежитию для языковых студентов", c9: false, econ: false, lang: false,
+    note: "Между Нанкином и Шанхаем. 211 + «Двойной первый класс», пищевая наука #1 в мире 7 лет подряд. Приём круглый год — можно заехать не к началу семестра."
   },
   {
-    name: "Хэбэйский северный университет",
-    cn: "河北北方学院 · Чжанцзякоу",
-    site: "https://www.hebeinu.edu.cn/",
-    intl: "https://gjjy.hebeinu.edu.cn/",
-    region: "hebei", city: "Чжанцзякоу",
-    distance: "190 км", time: "1.5 ч на поезде",
-    tuition: "6 000–8 000", housing: "2 000–4 000",
-    size: "small", cheap: true, lang: false, econ: false, ultraCheap: true,
-    note: "<strong>Чжанцзякоу</strong> — горный северный город, место зимней Олимпиады-2022. Прохладно, чисто, чистейший путунхуа. Очень дёшево — всё вместе до 10 000 ¥."
+    name: "Сучжоуский университет",
+    cn: "苏州大学 · Сучжоу",
+    site: "https://www.suda.edu.cn/",
+    intl: "https://oversea.suda.edu.cn/",
+    region: "jiangsu", city: "Сучжоу",
+    travel: "25 мин", time: "до Шанхая на скоростном",
+    tuition: "17 000", housing: "7 200", housingNote: "600–900 ¥/мес в зависимости от кампуса",
+    dormOk: true, c9: false, econ: false, lang: false,
+    note: "211-вуз, один из лидеров Цзянсу по числу иностранных студентов — 3000+ в год. Ближе всех к Шанхаю по электричке, тише и дешевле Нанкина."
   },
   {
-    name: "Таншаньский педагогический университет",
-    cn: "唐山师范学院 · Таншань",
-    site: "https://www.tstc.edu.cn/",
-    checked: false,
-    region: "hebei", city: "Таншань",
-    distance: "150 км", time: "1 ч на поезде",
-    tuition: "6 000–7 000", housing: "2 000–3 000",
-    size: "mid", cheap: true, lang: true, econ: false, ultraCheap: true,
-    note: "<strong>Таншань</strong> — час от Пекина, педагогический вуз с методикой преподавания китайского. Бюджетно: обучение плюс жильё вместе в пределах 10 000 ¥."
+    name: "Чжэцзянский университет",
+    cn: "浙江大学 · Ханчжоу",
+    site: "https://www.zju.edu.cn/",
+    intl: "https://iczu.zju.edu.cn/",
+    region: "zhejiang", city: "Ханчжоу",
+    travel: "45 мин", time: "до Шанхая скоростным поездом",
+    tuition: "18 000", housing: "—", housingNote: "цена не публикуется — бронь онлайн после зачисления",
+    dormOk: false, dormWarn: "Общежитие есть, но точную цену вуз не публикует — уточнять после зачисления", c9: true, econ: true, lang: false,
+    note: "<strong>Лига C9</strong>, один из пяти сильнейших вузов Китая. Кампус в Ханчжоу — одном из самых развитых и приятных для жизни городов страны."
   },
   {
-    name: "Хэншуйский университет",
-    cn: "衡水学院 · Хэншуй",
-    site: "https://www.hsnc.edu.cn/",
-    checked: false,
-    region: "hebei", city: "Хэншуй",
-    distance: "250 км", time: "2 ч на поезде",
-    tuition: "5 000–7 000", housing: "2 000–3 000",
-    size: "small", cheap: true, lang: false, econ: false, ultraCheap: true,
-    note: "<strong>Хэншуй</strong> — небольшой город, известный на весь Китай своей культурой учёбы. Спокойно, очень дёшево — одно из самых бюджетных мест, всё вместе до 10 000 ¥."
+    name: "Ханчжоуский педагогический университет",
+    cn: "杭州师范大学 · Ханчжоу",
+    site: "https://www.hznu.edu.cn/",
+    intl: "https://gjjyxy.hznu.edu.cn/",
+    region: "zhejiang", city: "Ханчжоу",
+    travel: "45 мин", time: "до Шанхая скоростным поездом",
+    tuition: "15 000", housing: "7 000", housingNote: "одноместная, от 7 000 до 14 000 ¥/год по уровню",
+    dormOk: true, c9: false, econ: false, lang: true,
+    note: "Дешевле Чжэцзянского при той же локации. Педагогический профиль — методика преподавания языка, только одноместные комнаты с ценой известной заранее."
   },
   {
-    name: "Баодинский университет",
-    cn: "保定学院 · Баодин",
-    site: "https://www.bdu.edu.cn/",
-    checked: false,
-    region: "hebei", city: "Баодин",
-    distance: "140 км", time: "1.5 ч на поезде",
-    tuition: "6 000–8 000", housing: "2 000–4 000",
-    size: "small", cheap: true, lang: true, econ: false, ultraCheap: true,
-    note: "Небольшой педагогический вуз в <strong>Баодине</strong> — дешевле большого Хэбэйского университета по соседству. Методика преподавания языка + цена за всё до 10 000 ¥."
+    name: "Шанхайский транспортный университет",
+    cn: "上海交通大学 · Шанхай",
+    site: "https://www.sjtu.edu.cn/",
+    intl: "https://liuxue.sjtu.edu.cn/",
+    region: "shanghai", city: "Шанхай",
+    travel: "0 км", time: "ты в Шанхае",
+    tuition: "21 000", housing: "7 000", housingNote: "~700 ¥/мес, 3–4-местная, кампус Цибао",
+    dormOk: true, c9: true, econ: true, lang: false,
+    note: "<strong>Лига C9</strong> прямо в Шанхае — крупнейшем деловом городе Китая. Общежитие для языковых студентов бюджетное, но не одноместное."
   }
 ];
 
-const sizeLabel = { small: 'Маленький город', mid: 'Средний город', big: 'Большой город' };
-
-// Цены: "8 000–12 000" -> [8000, 12000]
+const fmtNum = n => n.toLocaleString('ru-RU').replace(/\s/g, ' ');
 function parseRange(str) {
   const nums = String(str).split(/[–—-]/)
     .map(part => parseInt(part.replace(/[^0-9]/g, ''), 10))
     .filter(n => !isNaN(n));
-  return nums.length ? [nums[0], nums[nums.length - 1]] : [0, 0];
+  return nums.length ? [nums[0], nums[nums.length - 1]] : null;
 }
-const fmtNum = n => n.toLocaleString('ru-RU').replace(/\s/g, '\u00A0');
-const nbsp = str => String(str).replace(/ (?=\d)/g, '\u00A0');
-const totalRange = u => {
-  const t = parseRange(u.tuition), h = parseRange(u.housing);
-  return [t[0] + h[0], t[1] + h[1]];
-};
-const totalText = u => {
-  const [min, max] = totalRange(u);
-  return min === max ? fmtNum(min) : `${fmtNum(min)}–${fmtNum(max)}`;
+const nbsp = str => String(str).replace(/ (?=\d)/g, ' ');
+const hasHousingPrice = u => parseRange(u.housing) !== null;
+const totalMin = u => {
+  const t = parseRange(u.tuition)[0];
+  const h = hasHousingPrice(u) ? parseRange(u.housing)[0] : 0;
+  return t + h;
 };
 
 function render(list) {
   const grid = document.getElementById('grid');
   document.getElementById('count').textContent = `Показано: ${list.length} из ${universities.length}`;
 
-  grid.innerHTML = list.map(u => `
+  grid.innerHTML = list.map(u => {
+    const partial = !hasHousingPrice(u);
+    return `
     <div class="card">
       <div class="card-header">
         <div class="card-title">
@@ -444,19 +357,19 @@ function render(list) {
 
       <div class="distance">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/>
+          <path d="M12 19V5M5 12l7-7 7 7"/>
         </svg>
         <div>
-          <div class="d-main">${u.distance} до Пекина</div>
-          <div class="d-sub">${u.time} · ${sizeLabel[u.size]}</div>
+          <div class="d-main">${u.travel}</div>
+          <div class="d-sub">${u.time}</div>
         </div>
       </div>
 
       <div class="prices">
-        <div class="price-total">
-          <div class="label">Полная цена / год</div>
-          <div class="value">${totalText(u)} ¥</div>
-          <div class="sub">курс + проживание</div>
+        <div class="price-total ${partial ? 'is-partial' : ''}">
+          <div class="label">${partial ? 'Обучение / год (без общаги)' : 'Полная цена / год'}</div>
+          <div class="value">${partial ? nbsp(u.tuition) : fmtNum(totalMin(u))} ¥</div>
+          <div class="sub">${partial ? 'общежитие — уточнять' : 'курс + проживание, от'}</div>
         </div>
         <div class="price-box">
           <div class="label">Язык. курс / год</div>
@@ -464,17 +377,15 @@ function render(list) {
           <div class="sub">юаней (CNY)</div>
         </div>
         <div class="price-box">
-          <div class="label">Проживание / год</div>
-          <div class="value">${nbsp(u.housing)}</div>
-          <div class="sub">юаней (CNY)</div>
+          <div class="label">Общежитие</div>
+          <div class="value">${hasHousingPrice(u) ? nbsp(u.housing) + ' ¥' : 'не опубл.'}</div>
+          <div class="sub">${u.housingNote}</div>
         </div>
       </div>
 
       <div class="tags">
-        ${u.ultraCheap
-          ? '<span class="tag tag-ultra"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Всё ≤ 10 000 ¥/год</span>'
-          : (u.cheap ? '<span class="tag tag-cheap"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Очень дёшево</span>' : '')}
-        ${u.size === 'small' ? '<span class="tag tag-small">Тихий городок</span>' : ''}
+        ${totalMin(u) <= 22000 ? '<span class="tag tag-cheap"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Дёшево</span>' : ''}
+        ${u.c9 ? '<span class="tag tag-c9"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.3L22 9l-5 4.9 1.2 7.1L12 17.8 5.8 21 7 13.9 2 9l7.1-.7z"/></svg>Лига C9</span>' : ''}
         ${u.lang ? '<span class="tag tag-lang">Языковой профиль</span>' : ''}
         ${u.econ ? '<span class="tag tag-econ">Экономика рядом</span>' : ''}
       </div>
@@ -482,10 +393,10 @@ function render(list) {
       <div class="divider"></div>
       <div class="note">${u.note}</div>
 
-      <div class="license ${u.checked === false ? 'lic-warn' : 'lic-ok'}">
-        ${u.checked === false
-          ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>Приём иностранцев не подтверждён — уточни сам'
-          : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Принимает иностранцев — подтверждено'}
+      <div class="license ${u.dormOk ? 'lic-ok' : 'lic-warn'}">
+        ${u.dormOk
+          ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Общежитие подтверждено'
+          : `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>${u.dormWarn}`}
       </div>
 
       <div class="card-links">
@@ -502,9 +413,16 @@ function render(list) {
           </svg>
           Для иностранцев
         </a>` : ''}
+        ${u.landing ? `<a href="${u.landing}" target="_blank" rel="noopener" class="site-link landing-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/>
+          </svg>
+          Наш разбор
+        </a>` : ''}
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
 let curFilter = 'all', curSort = 'default';
@@ -525,15 +443,15 @@ function setSort(value) {
 function apply() {
   const type = curFilter;
   let list = universities;
-  if (type === 'hebei') list = universities.filter(u => u.region === 'hebei');
+  if (type === 'jiangsu') list = universities.filter(u => u.region === 'jiangsu');
+  if (type === 'zhejiang') list = universities.filter(u => u.region === 'zhejiang');
+  if (type === 'shanghai') list = universities.filter(u => u.region === 'shanghai');
   if (type === 'tianjin') list = universities.filter(u => u.region === 'tianjin');
-  if (type === 'beijing') list = universities.filter(u => u.region === 'beijing');
-  if (type === 'small') list = universities.filter(u => u.size === 'small');
-  if (type === 'ultra') list = universities.filter(u => u.ultraCheap);
+  if (type === 'cheap') list = universities.filter(u => totalMin(u) <= 22000);
 
   if (curSort !== 'default') {
     const dir = curSort === 'asc' ? 1 : -1;
-    list = [...list].sort((a, b) => dir * (totalRange(a)[0] - totalRange(b)[0]));
+    list = [...list].sort((a, b) => dir * (totalMin(a) - totalMin(b)));
   }
   render(list);
 }
