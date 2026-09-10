@@ -199,15 +199,15 @@
     </svg>
     Языковой год — вузы у Шанхая, Нанкина и Ханчжоу
   </h1>
-  <p>Семь вузов дельты Янцзы — самого развитого региона Китая — плюс Тяньцзиньский иняз для сравнения по цене. Реальные цены обучения и общежития с официальных сайтов международных отделов, проверено в сентябре 2026.</p>
+  <p>Семь вузов дельты Янцзы — самого развитого региона Китая — плюс Тяньцзиньский иняз и Чунцинский университет для сравнения по цене. Реальные цены обучения и общежития с официальных сайтов международных отделов, проверено в сентябре 2026.</p>
   <div class="info-strip">
     <div class="info-item">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20M2 12a10 10 0 0110-10M2 12a10 10 0 0010 10M12 2a10 10 0 010 20M12 2a10 10 0 000 20"/></svg>
-      Нанкин · Сучжоу · Ханчжоу · Шанхай · Тяньцзинь
+      Нанкин · Сучжоу · Ханчжоу · Шанхай · Тяньцзинь · Чунцин
     </div>
     <div class="info-item">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.3L22 9l-5 4.9 1.2 7.1L12 17.8 5.8 21 7 13.9 2 9l7.1-.7z"/></svg>
-      3 из 7 — вузы лиги C9
+      3 из 8 — вузы лиги C9
     </div>
     <div class="info-item">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
@@ -222,6 +222,7 @@
   <button class="filter-btn" onclick="filter('zhejiang', this)">Чжэцзян</button>
   <button class="filter-btn" onclick="filter('shanghai', this)">Шанхай</button>
   <button class="filter-btn" onclick="filter('tianjin', this)">Тяньцзинь</button>
+  <button class="filter-btn" onclick="filter('chongqing', this)">Чунцин</button>
   <button class="filter-btn" onclick="filter('cheap', this)">Дёшево (≤ 22 000 ¥)</button>
   <select class="sort-select" id="sort" onchange="setSort(this.value)">
     <option value="default">Без сортировки</option>
@@ -233,7 +234,7 @@
 
 <div class="disclaimer">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-  <div>Цены обучения и общежития — с официальных сайтов международных отделов вузов, только двухместные комнаты (проверено сентябрь 2026). У Чжэцзянского, SJTU и ECNU цена именно двухместной не публикуется — общежитие есть, но с точной цифрой нужно списываться напрямую. У Тяньцзиньского иняза при подаче требуют справку о депозите от 20 000 ¥. Эти нюансы отмечены в карточках, у каждого вуза — ссылка на страницу общежития для проверки фото и условий.</div>
+  <div>Цены обучения и общежития — с официальных сайтов международных отделов вузов, только двухместные комнаты (проверено сентябрь 2026). У Чжэцзянского, SJTU и ECNU цена именно двухместной не публикуется — общежитие есть, но с точной цифрой нужно списываться напрямую. У Тяньцзиньского иняза при подаче требуют справку о депозите от 20 000 ¥. У Чунцинского источник (CUCAS) не подписывает период платежа за общежитие чётко — цифра пересчитана по аналогии с другими вузами как «за семестр», уточнять напрямую. Эти нюансы отмечены в карточках, у каждого вуза — ссылка на страницу общежития для проверки фото и условий.</div>
 </div>
 
 <div class="grid" id="grid"></div>
@@ -324,6 +325,18 @@ const universities = [
     tuition: "21 000", housing: "—", housingNote: "варианты от 80 до 155 ¥/сутки, но цена именно двухместной (AB间) отдельно не публикуется",
     dormOk: false, dormWarn: "Общежитие обязательно для иностранцев, но цену двухместной надо уточнять при заселении", c9: true, econ: true, lang: false,
     note: "<strong>Лига C9</strong> прямо в Шанхае — крупнейшем деловом городе Китая. Общежитие обязательно для иностранцев, своё жильё искать не придётся — но цену комнаты вуз заранее не называет."
+  },
+  {
+    name: "Чунцинский университет",
+    cn: "重庆大学 · Чунцин",
+    site: "https://en.cqu.edu.cn/",
+    intl: "https://study.cqu.edu.cn/",
+    dorm: "https://cqu.cucas.cn/fee-structure/",
+    region: "chongqing", city: "Чунцин",
+    travel: "~11 ч", time: "до Шанхая скоростным (самый дальний в списке)",
+    tuition: "14 000", housing: "9 000", housingNote: "источник (CUCAS) не подписывает период чётко: 2 500–4 500 ¥ — посчитано как за семестр (по аналогии с остальными), фактически может быть и за год; уточнять на study.cqu.edu.cn",
+    dormOk: false, dormWarn: "Цифра общежития ненадёжная — источник не указывает период платежа, уточнять напрямую", c9: false, econ: true, lang: false,
+    note: "Добавлен отдельно по запросу — единственный вуз в списке вне дельты Янцзы и Тяньцзиня, далеко от остальных (Юго-Западный Китай). 985/211, но экономика не профильный факультет вуза (силён инженерией). Самая низкая стоимость жизни среди городов в этом сравнении."
   }
 ];
 
@@ -461,6 +474,7 @@ function apply() {
   if (type === 'zhejiang') list = universities.filter(u => u.region === 'zhejiang');
   if (type === 'shanghai') list = universities.filter(u => u.region === 'shanghai');
   if (type === 'tianjin') list = universities.filter(u => u.region === 'tianjin');
+  if (type === 'chongqing') list = universities.filter(u => u.region === 'chongqing');
   if (type === 'cheap') list = universities.filter(u => totalMin(u) <= 22000);
 
   if (curSort !== 'default') {
