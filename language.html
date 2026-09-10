@@ -165,6 +165,8 @@
     .intl-link:hover { background: #15803d; color: #fff; border-color: #15803d; }
     .landing-link { color: #b91c1c; background: #fef2f2; border-color: #fecaca; }
     .landing-link:hover { background: #b91c1c; color: #fff; border-color: #b91c1c; }
+    .dorm-link { color: #7c3aed; background: #f5f3ff; border-color: #ddd6fe; }
+    .dorm-link:hover { background: #7c3aed; color: #fff; border-color: #7c3aed; }
 
     .divider { height: 1px; background: var(--border); }
 
@@ -231,7 +233,7 @@
 
 <div class="disclaimer">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-  <div>Цены обучения и общежития — с официальных сайтов международных отделов вузов (проверено сентябрь 2026). У Чжэцзянского цена общежития не публикуется — только онлайн-бронирование после зачисления. У Тяньцзиньского иняза при подаче требуют справку о депозите от 20 000 ¥. У Цзяннаньского два документа вуза противоречат друг другу по общежитию для языковых студентов — эти нюансы отмечены в карточках.</div>
+  <div>Цены обучения и общежития — с официальных сайтов международных отделов вузов (проверено сентябрь 2026). У Чжэцзянского цена общежития не публикуется — только онлайн-бронирование после зачисления. У Тяньцзиньского иняза при подаче требуют справку о депозите от 20 000 ¥. У Цзяннаньского общежития для языковых студентов НЕТ — по прямому указанию на сайте вуза, жить приходится самому в городе. Эти нюансы отмечены в карточках, у каждого вуза — ссылка на страницу общежития для проверки фото и условий.</div>
 </div>
 
 <div class="grid" id="grid"></div>
@@ -244,6 +246,7 @@ const universities = [
     site: "https://www.nju.edu.cn/",
     intl: "https://hwxy.nju.edu.cn/",
     landing: "https://nanjing-university.vercel.app",
+    dorm: "https://hwxy.nju.edu.cn/lxnd/xygl/xxfy/qtfy/index.html",
     region: "jiangsu", city: "Нанкин",
     travel: "1 ч 15 мин", time: "до Шанхая скоростным поездом",
     tuition: "21 000", housing: "6 000", housingNote: "двухместный, кампус Сяньлинь; в историческом Гулоу — 52 ¥/сутки, дороже",
@@ -255,6 +258,7 @@ const universities = [
     cn: "天津外国语大学 · Тяньцзинь",
     site: "https://www.tjfsu.edu.cn/",
     intl: "https://isa.tjfsu.edu.cn/",
+    dorm: "https://isa.tjfsu.edu.cn/info/1051/1373.htm",
     region: "tianjin", city: "Тяньцзинь",
     travel: "~5 ч", time: "до Шанхая · 30 мин до Пекина",
     tuition: "13 400", housing: "15 000", housingNote: "50 ¥/сутки, только двухместные",
@@ -269,15 +273,16 @@ const universities = [
     landing: "https://jiangnan-beta.vercel.app",
     region: "jiangsu", city: "Уси",
     travel: "35 мин", time: "до Шанхая скоростным поездом",
-    tuition: "14 000", housing: "3 000", housingNote: "1 500 ¥/сем в общежитии для иностранцев",
-    dormOk: false, dormWarn: "Два официальных документа вуза противоречат друг другу по общежитию для языковых студентов", c9: false, econ: false, lang: false,
-    note: "Между Нанкином и Шанхаем. 211 + «Двойной первый класс», пищевая наука #1 в мире 7 лет подряд. Приём круглый год — можно заехать не к началу семестра."
+    tuition: "14 000", housing: "—", housingNote: "общежития для языковых студентов НЕТ — сайт вуза прямо пишет «学生需自行安排住宿» (устраиваться самому)",
+    dormOk: false, dormWarn: "Общежития для языковых студентов нет — снимать жильё в городе самостоятельно", c9: false, econ: false, lang: false,
+    note: "Между Нанкином и Шанхаем. 211 + «Двойной первый класс», пищевая наука #1 в мире 7 лет подряд. Приём круглый год — можно заехать не к началу семестра. Но общежития на языковой программе нет, это ощутимо поднимает реальную стоимость."
   },
   {
     name: "Сучжоуский университет",
     cn: "苏州大学 · Сучжоу",
     site: "https://www.suda.edu.cn/",
     intl: "https://oversea.suda.edu.cn/",
+    dorm: "http://international.suda.edu.cn/1d/63/c12677a269667/page.psp",
     region: "jiangsu", city: "Сучжоу",
     travel: "25 мин", time: "до Шанхая на скоростном",
     tuition: "17 000", housing: "7 200", housingNote: "600–900 ¥/мес в зависимости от кампуса",
@@ -289,6 +294,7 @@ const universities = [
     cn: "浙江大学 · Ханчжоу",
     site: "https://www.zju.edu.cn/",
     intl: "https://iczu.zju.edu.cn/",
+    dorm: "https://iczu.zju.edu.cn/xnzs/list.htm",
     region: "zhejiang", city: "Ханчжоу",
     travel: "45 мин", time: "до Шанхая скоростным поездом",
     tuition: "18 000", housing: "—", housingNote: "цена не публикуется — бронь онлайн после зачисления",
@@ -300,6 +306,7 @@ const universities = [
     cn: "杭州师范大学 · Ханчжоу",
     site: "https://www.hznu.edu.cn/",
     intl: "https://gjjyxy.hznu.edu.cn/",
+    dorm: "https://gjjyxy.hznu.edu.cn/c/2026-03-04/3176506.shtml",
     region: "zhejiang", city: "Ханчжоу",
     travel: "45 мин", time: "до Шанхая скоростным поездом",
     tuition: "15 000", housing: "7 000", housingNote: "одноместная, от 7 000 до 14 000 ¥/год по уровню",
@@ -311,11 +318,12 @@ const universities = [
     cn: "上海交通大学 · Шанхай",
     site: "https://www.sjtu.edu.cn/",
     intl: "https://liuxue.sjtu.edu.cn/",
+    dorm: "https://gk.sjtu.edu.cn/phone/view/1764",
     region: "shanghai", city: "Шанхай",
     travel: "0 км", time: "ты в Шанхае",
-    tuition: "21 000", housing: "7 000", housingNote: "~700 ¥/мес, 3–4-местная, кампус Цибао",
+    tuition: "21 000", housing: "13 200", housingNote: "80–155 ¥/сутки (6 600–12 600 ¥/сем за 18 недель), кампусы Миньхан и Сюйхуэй",
     dormOk: true, c9: true, econ: true, lang: false,
-    note: "<strong>Лига C9</strong> прямо в Шанхае — крупнейшем деловом городе Китая. Общежитие для языковых студентов бюджетное, но не одноместное."
+    note: "<strong>Лига C9</strong> прямо в Шанхае — крупнейшем деловом городе Китая. Общежитие обязательно для иностранцев, бронь онлайн — своё жильё искать не придётся."
   }
 ];
 
@@ -418,6 +426,12 @@ function render(list) {
             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/>
           </svg>
           Наш разбор
+        </a>` : ''}
+        ${u.dorm ? `<a href="${u.dorm}" target="_blank" rel="noopener" class="site-link dorm-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>
+          </svg>
+          Общежитие: фото
         </a>` : ''}
       </div>
     </div>
