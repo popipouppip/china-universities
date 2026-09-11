@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Языковой год — досье по пяти вузам</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter+Tight:wght@400;500;600&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --paper: #f5f3ee;
+    --card: #fffdf9;
+    --ink: #16181d;
+    --ink-2: #4a4d55;
+    --ink-3: #7a7d86;
+    --line: #e2ded4;
+    --accent: #b3261e;
+    --accent-bg: #fbeeec;
+    --ok: #1f6f43; --ok-bg: #e9f4ec;
+    --warn: #9a5b00; --warn-bg: #fbf1e0;
+    --bad: #a12626; --bad-bg: #fbe9e7;
+    --serif: 'Newsreader', 'PT Serif', Georgia, serif;
+    --sans: 'Inter Tight', 'Golos Text', -apple-system, 'Segoe UI', sans-serif;
+    --cn: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--paper); color: var(--ink); font-size: 17px; line-height: 1.6; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(179,38,30,.35); }
+  a:hover { border-bottom-color: var(--accent); }
+  .cn { font-family: var(--cn); }
+
+  .layout { display: grid; grid-template-columns: 240px minmax(0, 980px); gap: 64px; max-width: 1364px; margin: 0 auto; padding: 48px 40px 120px; }
+
+  /* nav */
+  .nav { position: sticky; top: 40px; align-self: start; }
+  .nav .back { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-3); border: 0; margin-bottom: 28px; }
+  .nav .back:hover { color: var(--accent); }
+  .nav h4 { font-family: var(--serif); font-weight: 400; font-size: 15px; color: var(--ink-3); letter-spacing: .02em; margin-bottom: 12px; }
+  .nav a.item { display: block; border: 0; padding: 8px 12px; margin-left: -12px; border-radius: 8px; color: var(--ink-2); font-size: 15px; line-height: 1.3; }
+  .nav a.item small { display: block; font-family: var(--cn); font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+  .nav a.item:hover { background: #ece9e1; color: var(--ink); }
+  .nav a.item.active { background: var(--ink); color: #fff; }
+  .nav a.item.active small { color: rgba(255,255,255,.65); }
+  .nav .legend { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-3); line-height: 1.5; }
+
+  /* header */
+  .hero h1 { font-family: var(--serif); font-weight: 300; font-size: 56px; line-height: 1.02; letter-spacing: -.02em; margin-bottom: 20px; }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero p.lead { font-size: 19px; color: var(--ink-2); max-width: 760px; margin-bottom: 14px; }
+  .hero .meta { font-size: 14px; color: var(--ink-3); }
+  .notice { background: var(--warn-bg); border: 1px solid #efd9ae; border-radius: 12px; padding: 16px 18px; font-size: 15px; color: #5d3d05; margin: 28px 0 0; display: flex; gap: 12px; }
+  .notice svg { flex-shrink: 0; margin-top: 3px; }
+  .notice b { font-weight: 600; }
+
+  /* summary table */
+  .summary { margin-top: 44px; }
+  .summary h2 { font-family: var(--serif); font-weight: 400; font-size: 30px; margin-bottom: 14px; }
+  .tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+  th, td { text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-weight: 600; color: var(--ink-3); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; background: #f9f7f2; }
+  tr:last-child td { border-bottom: 0; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+  td .cn { color: var(--ink-3); font-size: 12px; display: block; font-weight: 400; }
+  .tag { display: inline-block; padding: 3px 9px; border-radius: 6px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .tag.ok { background: var(--ok-bg); color: var(--ok); }
+  .tag.warn { background: var(--warn-bg); color: var(--warn); }
+  .tag.bad { background: var(--bad-bg); color: var(--bad); }
+  .tbl-note { font-size: 13px; color: var(--ink-3); margin-top: 10px; line-height: 1.5; }
+
+  /* sections */
+  section.uni { margin-top: 96px; padding-top: 32px; border-top: 1px solid var(--line); }
+  .uni-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 6px; }
+  .uni-head .num { font-family: var(--serif); font-weight: 300; font-size: 22px; color: var(--ink-3); }
+  .uni-head h2 { font-family: var(--serif); font-weight: 400; font-size: 44px; line-height: 1.05; letter-spacing: -.015em; }
+  .uni-sub { font-family: var(--cn); font-size: 18px; color: var(--ink-3); margin-bottom: 22px; }
+  .uni-sub span { font-family: var(--sans); margin-left: 12px; font-size: 15px; }
+
+  figure { margin: 0 0 26px; }
+  figure img { width: 100%; height: auto; display: block; border-radius: 14px; }
+  figure.hero-img img { aspect-ratio: 16 / 9; object-fit: cover; }
+  figcaption { font-size: 13px; color: var(--ink-3); margin-top: 8px; }
+
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 30px; }
+  .fact { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .fact .k { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+  .fact .v { font-family: var(--serif); font-size: 24px; line-height: 1.1; }
+  .fact .s { font-size: 13px; color: var(--ink-3); margin-top: 4px; }
+
+  h3 { font-family: var(--serif); font-weight: 400; font-size: 26px; margin: 34px 0 12px; letter-spacing: -.01em; }
+  p { margin-bottom: 12px; color: var(--ink-2); }
+  p strong, li strong { color: var(--ink); font-weight: 600; }
+  ul { padding-left: 20px; margin-bottom: 14px; color: var(--ink-2); }
+  li { margin-bottom: 6px; }
+  li::marker { color: var(--accent); }
+
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0 8px; }
+  .gallery figure { margin: 0; }
+  .gallery img { aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; }
+  .gallery.two { grid-template-columns: repeat(2, 1fr); }
+  .nophoto { border: 1px dashed var(--line); border-radius: 10px; padding: 18px; font-size: 14px; color: var(--ink-3); background: transparent; }
+
+  .pm { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+  .pm > div { border-radius: 12px; padding: 16px 18px; }
+  .pm .plus { background: var(--ok-bg); }
+  .pm .minus { background: var(--bad-bg); }
+  .pm h4 { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; }
+  .pm .plus h4 { color: var(--ok); } .pm .minus h4 { color: var(--bad); }
+  .pm ul { margin: 0; padding-left: 18px; }
+  .pm li { font-size: 15px; color: var(--ink-2); }
+
+  .cost { background: var(--ink); color: #f5f3ee; border-radius: 14px; padding: 22px 24px; margin-top: 28px; }
+  .cost h4 { font-family: var(--serif); font-weight: 400; font-size: 20px; margin-bottom: 12px; }
+  .cost table { font-size: 14px; }
+  .cost th, .cost td { border-bottom: 1px solid rgba(255,255,255,.12); color: #f5f3ee; padding: 8px 6px; }
+  .cost th { background: transparent; color: rgba(255,255,255,.6); }
+  .cost td:first-child { font-weight: 400; white-space: normal; }
+  .cost tr.total td { font-weight: 600; font-size: 16px; }
+  .cost .note { font-size: 13px; color: rgba(255,255,255,.62); margin-top: 10px; }
+
+  .contacts { margin-top: 20px; font-size: 15px; color: var(--ink-2); display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; }
+  .contacts b { color: var(--ink); }
+  .sources { margin-top: 18px; font-size: 13px; color: var(--ink-3); line-height: 1.6; }
+  .sources a { color: var(--ink-3); border-bottom-color: var(--line); }
+  .sources a:hover { color: var(--accent); }
+
+  .verdict { margin-top: 96px; padding-top: 32px; border-top: 1px solid var(--line); }
+  .verdict h2 { font-family: var(--serif); font-weight: 400; font-size: 34px; margin-bottom: 14px; }
+  .verdict ol { padding-left: 22px; color: var(--ink-2); }
+  .verdict li { margin-bottom: 10px; }
+
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside class="nav">
+  <a class="back" href="language.html">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    К сравнению цен
+  </a>
+  <h4>Досье</h4>
+  <a class="item" href="#summary">Сводная таблица</a>
+  <a class="item" href="#nju">Нанкинский университет<small>南京大学</small></a>
+  <a class="item" href="#suda">Сучжоуский университет<small>苏州大学</small></a>
+  <a class="item" href="#cqu">Чунцинский университет<small>重庆大学</small></a>
+  <a class="item" href="#tfsu">Тяньцзиньский иняз<small>天津外国语大学</small></a>
+  <a class="item" href="#hznu">Ханчжоуский педагогический<small>杭州师范大学</small></a>
+  <a class="item" href="#verdict">Что из этого следует</a>
+  <div class="legend">Все цифры и правила — с официальных страниц международных отделов, прочитаны 11.09.2026. Фото общежитий — только те, что вузы сами публикуют.</div>
+</aside>
+
+<main>
+
+<header class="hero">
+  <h1>Языковой год: пять вузов <em>без глянца</em></h1>
+  <p class="lead">Что реально написано на сайтах Нанкинского, Сучжоуского, Чунцинского университетов, Тяньцзиньского иняза и Ханчжоуского педагогического — про программу 长期汉语进修, подачу, цену, общежитие и среду. Без рекламных слов; там, где вуз чего-то не публикует, так и сказано.</p>
+  <div class="meta">Только языковой год. Бакалавриат, стипендии CSC и специальности здесь не разбираются.</div>
+  <div class="notice">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <div><b>Про даты.</b> Твой заезд — весенний семестр 2028 (или подсадка в октябре 2027). Вузы ещё не опубликовали набор 2027/2028, поэтому все сроки ниже взяты из брошюр цикла 2026/2027 <b>как образец</b>: даты повторяются из года в год, но перед подачей их надо сверить с новой брошюрой (обычно выходит в сентябре–октябре 2027). Цены за общежитие «в год» я считаю как 300 суток — два семестра с каникулами, не 365.</div>
+  </div>
+</header>
+
+<section class="summary" id="summary">
+  <h2>Сводная таблица</h2>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Вуз</th><th>Статус</th><th>Учёба / семестр</th><th>Общежитие (двухместная)</th><th>Весенний набор</th><th>Что требуют сверх обычного</th><th>Год примерно</th></tr></thead>
+    <tbody>
+      <tr><td>Нанкинский<span class="cn">南京大学</span></td><td>C9, 985</td><td>10 500 ¥</td><td>52 ¥/сутки, кампус Гулоу<br><span class="tag bad">не гарантировано</span></td><td><span class="tag ok">есть</span> подача 10.10–25.12</td><td>ничего — паспорт, диплом, мотивационное</td><td>≈ 38 000 ¥</td></tr>
+      <tr><td>Сучжоуский<span class="cn">苏州大学</span></td><td>211</td><td>8 500 ¥</td><td>800 ¥/мес (4 000 ¥/сем)<br><span class="tag warn">«по возможностям вуза»</span></td><td><span class="tag ok">есть</span> брошюра выходит осенью</td><td>ничего лишнего, оплата по приезде</td><td>≈ 27 000 ¥</td></tr>
+      <tr><td>Чунцинский<span class="cn">重庆大学</span></td><td>985</td><td>8 000 ¥</td><td>2 500–3 500 ¥/сем<br><span class="tag warn">кто первый</span></td><td><span class="tag ok">есть</span> до 30 ноября</td><td>справка о средствах ≥ 30 000 ¥, 2 рекомендации, медкомиссия, несудимость</td><td>≈ 21 000 ¥</td></tr>
+      <tr><td>Тяньцзиньский иняз<span class="cn">天津外国语大学</span></td><td>языковой профильный</td><td>6 700 ¥</td><td>50 ¥/сутки<br><span class="tag ok">без брони, обязательно</span></td><td><span class="tag ok">есть</span> до 31 декабря</td><td>депозит в банке ≥ 20 000 ¥, медкомиссия, несудимость; учёба оплачивается до выдачи приглашения</td><td>≈ 30 000 ¥</td></tr>
+      <tr><td>Ханчжоуский пед<span class="cn">杭州师范大学</span></td><td>провинциальный ключевой</td><td>7 500 ¥</td><td>75 ¥/сутки (60 — трёхместная)<br><span class="tag ok">обязательно</span></td><td><span class="tag bad">не найден</span> только осень, окно 15–30 мая</td><td>гарантийное письмо спонсора, медкомиссия, несудимость, антинаркотическое обязательство</td><td>≈ 39 000 ¥</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="tbl-note">«Год примерно» = учёба за два семестра + двухместная комната на 300 суток + взносы и страховка, без учебников, еды и перелёта. Курс для прикидки: 1 ¥ ≈ 13,35 ₽ (август 2026), то есть разброс от ~280 000 ₽ (Чунцин) до ~520 000 ₽ (Ханчжоу).</div>
+</section>
+
+<!-- ============ NJU ============ -->
+<section class="uni reveal" id="nju">
+  <div class="uni-head"><span class="num">01</span><h2>Нанкинский университет</h2></div>
+  <div class="uni-sub">南京大学 · Nanjing University <span>Нанкин, провинция Цзянсу · основан в 1902</span></div>
+
+  <figure class="hero-img"><img src="img/dorm/nju_campus1.jpg" alt="Ворота кампуса Гулоу Нанкинского университета"><figcaption>Ворота кампуса Гулоу — именно здесь идут занятия языковой программы. Фото: Wikimedia Commons.</figcaption></figure>
+
+  <div class="facts">
+    <div class="fact"><div class="k">Учёба</div><div class="v">10 500 ¥</div><div class="s">за семестр · 21 000 ¥ за год</div></div>
+    <div class="fact"><div class="k">Общежитие</div><div class="v">52 ¥/сутки</div><div class="s">двухместная, Гулоу · ≈ 7 800 ¥/сем</div></div>
+    <div class="fact"><div class="k">Часов в неделю</div><div class="v">20</div><div class="s">малые группы, срок от полугода до 2 лет</div></div>
+    <div class="fact"><div class="k">Весенний набор</div><div class="v">есть</div><div class="s">подача 10 октября — 25 декабря, «пока есть места»</div></div>
+    <div class="fact"><div class="k">Документы</div><div class="v">3</div><div class="s">паспорт, диплом, мотивационное — и всё</div></div>
+    <div class="fact"><div class="k">Иностранцев</div><div class="v">1 389</div><div class="s">на 11.10.2024, все программы</div></div>
+  </div>
+
+  <h3>Программа</h3>
+  <p>Ведёт Институт зарубежного образования (海外教育学院). 20 академических часов в неделю, учиться можно от одного семестра до двух лет. Уровни: стартовый, начальный, средний, плюс для продвинутых — «китайский +» с модулями «история Китая» и «современная экономика и торговля» (в него пускают только по результату онлайн-теста на сайте института, нужен продвинутый уровень). Группы малые, вуз пишет «因材施教» — обучение с учётом уровня каждого.</p>
+  <ul>
+    <li><strong>Языковые курсы:</strong> комплексный китайский (нач./ср./продв.), аудирование и говорение (нач./ср./продв.), письмо (ср./продв.), чтение прессы (ср./продв.).</li>
+    <li><strong>Курсы о стране:</strong> деловой китайский среднего и продвинутого уровня, китайский на компьютере, китайский через кино, иероглиф и культура, обсуждение горячих тем, классическая поэзия, краткая история Китая, современная литература.</li>
+    <li><strong>Практика:</strong> тайцзи, чайная церемония, вырезание из бумаги; поездки по Нанкину и окрестностям; общение с китайскими студентами, конкурсы чтения и речей, учебные экскурсии.</li>
+    <li><strong>Где:</strong> кампус Гулоу — исторический центр города, а не загородный Сяньлинь. Это плюс для жизни и минус для цены жилья (см. ниже).</li>
+  </ul>
+
+  <h3>Подача</h3>
+  <p>Полностью онлайн, бумаги не шлют. Весенний семестр: заявки с 10 октября по 25 декабря, но «额满为止» — приём закрывают, когда места кончились, так что тянуть до декабря нельзя. Осенний: 10 марта — 25 июня. Возраст от 18, требования по HSK не заявлены. Начало занятий — февраль и сентябрь, точная дата в приглашении.</p>
+  <ul>
+    <li><strong>Документы:</strong> скан паспорта (и китайской визы, если есть), документ о высшем образовании (не на китайском/английском — с нотариальным переводом), личное заявление по шаблону вуза. Никаких справок о деньгах, несудимости и медкомиссии на этапе подачи — самый лёгкий пакет из пяти.</li>
+    <li><strong>Как идёт:</strong> первичный ответ в течение 5 рабочих дней → оплата регистрационного взноса 500 ¥ (не возвращается) → письмо с решением → в течение месяца электронное приглашение и форма JW202/DQ для визы. Отказ тоже присылают письмом.</li>
+    <li><strong>Взносы:</strong> регистрация 500 ¥, страховка 400 ¥/семестр, учебники по факту.</li>
+    <li><strong>Подсадка в октябре:</strong> на странице краткосрочных курсов есть понедельный тариф — 2 000 ¥ за первые две недели, дальше 1 000 ¥/неделя (данные страницы 2022 года, уточнить). Это вариант заехать в октябре 2027, не дожидаясь февраля.</li>
+  </ul>
+
+  <h3>Общежитие</h3>
+  <p>У вуза три адреса для иностранцев, но языковым студентам подходят только два — оба в Гулоу: <strong>西苑</strong> (ул. Шанхай, Цзиньинь 20) и <strong>平仓巷 1, корп. 2/3</strong>. Загородный Сяньлинь (3 000 ¥/семестр) вуз прямо отдаёт дипломникам и обменным студентам — на него не рассчитывать.</p>
+  <ul>
+    <li><strong>Цена:</strong> двухместная 52 ¥/сутки за место, одноместная 67 ¥/сутки. Платить за весь срок сразу (WeChat/Alipay), при досрочном выезде удерживают 1 000 ¥ и остаток месяца. Депозит 550 ¥ за имущество + 50 ¥ за ключ — наличными. Электричество покупается отдельно.</li>
+    <li><strong>В комнате:</strong> матрас есть, постельного нет — одеяло и подушку везти или покупать.</li>
+    <li><strong>Главный риск:</strong> вуз пишет дословно «鉴于宿舍房源不足，新入境自费生将不保证都能预订到学生宿舍» — мест не хватает, новым платным студентам общежитие не гарантируют. Бронь открывается в середине января (на весну) и в начале августа (на осень) на istudy.nju.edu.cn; удалось внести бронь — место есть, не удалось — снимать самому. Вуз даже называет переходную гостиницу (古南都亦闲公馆, ул. Шанхай 160) и приложения для аренды. Съём рядом с Гулоу — 2 500–5 000 ¥/месяц.</li>
+    <li><strong>Правила:</strong> гости с 8:00 до 22:00 и только своего пола, вернуться до 24:00, готовить в комнате нельзя, электроприборы мощнее 1 кВт запрещены. Если сосед съехал — подселят нового, либо платишь за всю комнату.</li>
+  </ul>
+  <div class="nophoto">Фото комнат вуз на сайте не публикует — только адреса, цены и правила. Просить фото стоит письмом при бронировании.</div>
+
+  <h3>Среда и город</h3>
+  <p>Лига C9, ARWU 2026 — №70 в мире и №6 в Китае. Для языкового года это означает не рейтинг, а среду: в Гулоу учатся 1 389 иностранцев (октябрь 2024) со всех программ, есть Хопкинс-Нанкинский центр с американцами, крепкая библиотека. Нанкин — бывшая столица, ~9,5 млн, чистый путунхуа на улице (нанкинский говор близок к северному), до Шанхая 1 ч 15 мин скоростным. Летом жарко и влажно, зимой сыро без центрального отопления.</p>
+
+  <div class="pm">
+    <div class="plus"><h4>Что хорошо</h4><ul><li>Самый простой пакет документов и ответ за 5 дней</li><li>Занятия в центре города, а не в пригороде</li><li>Прозрачные цены и правила общежития, всё на сайте</li><li>Есть понедельный тариф для позднего заезда</li></ul></div>
+    <div class="minus"><h4>Что плохо</h4><ul><li>Самая дорогая учёба из пяти — 21 000 ¥/год</li><li>Общежитие не гарантировано, дешёвый Сяньлинь недоступен</li><li>52 ¥/сутки — это ~15 600 ¥ за 10 месяцев, дороже Сучжоу вдвое</li><li>Бронь общежития только в январе, за месяц до заезда — план Б нужен заранее</li></ul></div>
+  </div>
+
+  <div class="cost">
+    <h4>Год с февраля 2028 по январь 2029, прикидка</h4>
+    <table>
+      <tr><td>Учёба, 2 семестра</td><td>21 000 ¥</td></tr>
+      <tr><td>Двухместная в Гулоу, 300 суток × 52 ¥</td><td>15 600 ¥</td></tr>
+      <tr><td>Регистрация + страховка за год</td><td>1 300 ¥</td></tr>
+      <tr><td>Депозиты (возвращаются)</td><td>600 ¥</td></tr>
+      <tr class="total"><td>Итого без еды, учебников и перелёта</td><td>≈ 38 500 ¥ · ≈ 514 000 ₽</td></tr>
+    </table>
+    <div class="note">Если общежитие не достанется: съём 2 500–5 000 ¥/мес вместо 15 600 ¥ → 25 000–50 000 ¥ за 10 месяцев.</div>
+  </div>
+
+  <div class="contacts">
+    <div><b>Приёмная:</b> 叶老师 (Е), yerunyu@nju.edu.cn</div>
+    <div><b>Телефон:</b> +86-25-83593586</div>
+    <div><b>Адрес:</b> Нанкин, ул. Цзиньинь 18, корп. 曾宪梓楼, каб. 514</div>
+    <div><b>Бронь общежития:</b> istudy.nju.edu.cn</div>
+  </div>
+  <div class="sources">Источники: <a href="https://hwxy.nju.edu.cn/lxnd/zsxx/hyxx/zqhyjx/index.html" target="_blank" rel="noopener">страница программы 长期汉语进修</a> · <a href="https://hwxy.nju.edu.cn/lxnd/xyfw/zsbx/zs/index.html" target="_blank" rel="noopener">住宿 — цены и правила общежитий</a> · <a href="https://hwxy.nju.edu.cn/lxnd/xygl/xxfy/qtfy/index.html" target="_blank" rel="noopener">прочие сборы</a></div>
+</section>
+
+<!-- ============ SUDA ============ -->
+<section class="uni reveal" id="suda">
+  <div class="uni-head"><span class="num">02</span><h2>Сучжоуский университет</h2></div>
+  <div class="uni-sub">苏州大学 · Soochow University <span>Сучжоу, провинция Цзянсу · основан в 1900</span></div>
+
+  <figure class="hero-img"><img src="img/dorm/suda_campus1.jpg" alt="Старые ворота Сучжоуского университета"><figcaption>Исторические ворота главного кампуса (本部) с девизом вуза «养天地正气，法古今完人». Фото: Wikimedia Commons.</figcaption></figure>
+
+  <div class="facts">
+    <div class="fact"><div class="k">Учёба</div><div class="v">8 500 ¥</div><div class="s">за семестр · 17 000 ¥ за год</div></div>
+    <div class="fact"><div class="k">Общежитие</div><div class="v">800 ¥/мес</div><div class="s">двухместная, восточный кампус · 4 000 ¥/сем</div></div>
+    <div class="fact"><div class="k">Уровней</div><div class="v">7</div><div class="s">делят по HSK, выше HSK 6 — 7-й уровень</div></div>
+    <div class="fact"><div class="k">Весенний набор</div><div class="v">есть</div><div class="s">весенняя брошюра выходит осенью</div></div>
+    <div class="fact"><div class="k">Документы</div><div class="v">4</div><div class="s">паспорт, диплом, оценки, справка с учёбы/работы</div></div>
+    <div class="fact"><div class="k">Иностранцев</div><div class="v">2 000+</div><div class="s">в год, все программы</div></div>
+  </div>
+
+  <h3>Программа</h3>
+  <p>Ведёт Институт зарубежного образования (海外教育学院) — отдельное подразделение только под язык и культуру, 20 с лишним штатных преподавателей, большинство с опытом работы за рубежом. Группы малые, деление на 7 уровней по HSK: сдал HSK 3 — попадёшь в группу третьего уровня, а не «начальную для всех».</p>
+  <ul>
+    <li><strong>Обязательные:</strong> комплексный китайский (грамматика, иероглифика, письмо) и устный (аудирование, диалог). По расписанию-образцу это две пары каждое утро с понедельника по пятницу, 8:45–12:00 — 20 академических часов в неделю.</li>
+    <li><strong>По выбору:</strong> аудирование и чтение трёх ступеней, основы иероглифики, постановка произношения и тонов, география и обычаи Китая, кино, идиомы 成语 — 2–3 пары в неделю после обеда, набор меняется по семестрам.</li>
+    <li><strong>Культура:</strong> 4–6 занятий в семестр с музеями и культурными организациями; бесплатные мероприятия (готовка, праздники, «международный день Сучжоу»); поездки со скидкой — сады Сучжоу, Шанхай, Ханчжоу, Уси, Нанкин, Учжэнь.</li>
+    <li><strong>Где:</strong> главный кампус на ул. Ганьцзян Восточная 333 — центр старого Сучжоу, до восточного кампуса с общежитиями рядом.</li>
+  </ul>
+
+  <h3>Подача</h3>
+  <p>Образец — осенняя брошюра 2026: заявки 1 апреля — 30 сентября, занятия 14 сентября — 8 января. Весенние брошюры вуз тоже публикует (за весну 2026 была отдельная страница, осенью её перезаписали на осенний набор), ждать её примерно в октябре 2027 с датами на февраль 2028. Возраст 16–60, аттестат/диплом, здоровье.</p>
+  <ul>
+    <li><strong>Документы:</strong> паспорт (и виза, если уже в Китае), документ об образовании, выписка оценок, справка с места учёбы или работы. Ни депозита, ни несудимости, ни медкомиссии заранее.</li>
+    <li><strong>Как идёт:</strong> регистрация на iaa.suda.edu.cn или suda.17gz.org → проверка → электронное приглашение и форма для визы письмом → виза дома → приезд к дате из письма → <strong>взнос 500 ¥ и учёба оплачиваются на месте</strong> при регистрации (Alipay или карта UnionPay). Ничего не переводится за границу заранее — это редкость.</li>
+    <li><strong>Взносы:</strong> регистрация 500 ¥, учебники 100–260 ¥ в год. Страховка и виза в цену не входят.</li>
+  </ul>
+
+  <h3>Общежитие</h3>
+  <p>Апартаменты для иностранцев на восточном кампусе: корпуса 1 (женский), 2 (мужской), 3 (смешанный) — 164 мужских и 125 женских блоков, всего около 560 мест. В блоке одна комната и свой санузел; есть кровати, стол, кондиционер, водонагреватель, холодильник, телевизор, чайник, розетка интернета. Бесплатно в месяц: 50 кВт·ч электричества, 4 т воды, 300 часов интернета, сверх — доплата.</p>
+  <ul>
+    <li><strong>Цена:</strong> двухместная 800 ¥/месяц (в каникулы 500), или 4 000 ¥ за семестр; одноместная 1 400 ¥/месяц, 7 000 ¥/семестр. Платят раз в семестр. Если заехал раньше даты регистрации — посуточно: 40 ¥ двухместная, 60 ¥ одноместная. Депозит за ключ 200 ¥. По желанию — комплект постельного за 400 ¥ и карта кампуса за 20 ¥ (столовые, магазин, библиотека).</li>
+    <li><strong>Как получить:</strong> письмом на interdorm@suda.edu.cn — указать тип комнаты, сроки, контакты, на любом языке. Страница платежей вуза добавляет: «宿舍资源紧张，校内住宿由学校根据实际情况安排» — мест мало, распределяет вуз. Гарантии нет, но и отказа заранее нет; писать сразу после приглашения.</li>
+    <li><strong>Правила:</strong> дверь закрывают в 22:30 по будням и 23:30 в выходные — самый ранний комендантский час из пяти; готовить в комнате нельзя; сосед съехал — в течение недели подселят или платишь за второе место; продление на следующий семестр оформлять за две недели до конца, иначе комнату отдадут.</li>
+  </ul>
+  <div class="gallery two">
+    <figure><img src="img/dorm/suda_b2.jpg" alt="Комната в общежитии для иностранцев Сучжоуского университета"><figcaption>Комната: кровати, шкаф, стол, телевизор, холодильник. Фото со страницы 住宿须知 (oversea.suda.edu.cn, страница 2015 года).</figcaption></figure>
+    <figure><img src="img/dorm/suda_b1.jpg" alt="Санузел в общежитии для иностранцев Сучжоуского университета"><figcaption>Свой санузел с душевой кабиной. Тот же источник, 2015 год — актуальный вид лучше запросить.</figcaption></figure>
+  </div>
+  <div class="gallery two">
+    <figure><img src="img/dorm/suda_campus2.jpg" alt="Корпус Линъюнь на восточном кампусе"><figcaption>Восточный кампус, корпус 凌云楼 — рядом с общежитиями. Wikimedia Commons.</figcaption></figure>
+    <figure><img src="img/dorm/suda_campus3.jpg" alt="Библиотека Сучжоуского университета"><figcaption>Библиотека вуза. Wikimedia Commons.</figcaption></figure>
+  </div>
+
+  <h3>Среда и город</h3>
+  <p>Проект 211, один из старейших вузов страны (1900). Вуз пишет о себе, что входит в «десятку самых красивых кампусов Китая» — это его собственная формулировка, не рейтинг. Иностранцев принимают более 2 000 человек в год, связи с 200+ вузами в 30 странах. Сучжоу — 13 млн жителей, самая сильная экономика среди городов провинциального подчинения, 25 минут до Шанхая скоростным. На улице — сучжоуский диалект группы У, который не поймёшь даже с HSK 5; в аудитории и в городе с молодёжью — путунхуа.</p>
+
+  <div class="pm">
+    <div class="plus"><h4>Что хорошо</h4><ul><li>Самое дешёвое жильё из пяти — 4 000 ¥ за семестр в центре города</li><li>Деление на 7 уровней по HSK, а не три ступени</li><li>Никаких справок о деньгах, оплата по приезде</li><li>Ближе всех к Шанхаю</li></ul></div>
+    <div class="minus"><h4>Что плохо</h4><ul><li>Мест в общежитии ~560, распределяет вуз — писать первым</li><li>Комендантский час 22:30 по будням</li><li>Фото общежитий на сайте 2015 года — реальный вид не известен</li><li>Точные даты весеннего набора появятся только осенью 2027</li></ul></div>
+  </div>
+
+  <div class="cost">
+    <h4>Год с февраля 2028 по январь 2029, прикидка</h4>
+    <table>
+      <tr><td>Учёба, 2 семестра</td><td>17 000 ¥</td></tr>
+      <tr><td>Двухместная, 2 семестра × 4 000 ¥</td><td>8 000 ¥</td></tr>
+      <tr><td>Регистрация + учебники + страховка (~800)</td><td>≈ 1 500 ¥</td></tr>
+      <tr><td>Депозит за ключ (возвращается), постельное</td><td>600 ¥</td></tr>
+      <tr class="total"><td>Итого без еды и перелёта</td><td>≈ 27 000 ¥ · ≈ 360 000 ₽</td></tr>
+    </table>
+    <div class="note">Каникулы в общежитии дешевле — 500 ¥/мес, если оставаться на лето.</div>
+  </div>
+
+  <div class="contacts">
+    <div><b>Приёмная:</b> haiwai-zs@suda.edu.cn</div>
+    <div><b>Телефон:</b> +86-512-65223787, 65223403</div>
+    <div><b>Общежитие:</b> interdorm@suda.edu.cn</div>
+    <div><b>Подача:</b> iaa.suda.edu.cn / suda.17gz.org</div>
+  </div>
+  <div class="sources">Источники: <a href="https://oversea.suda.edu.cn/bb/ba/c11297a703418/page.htm" target="_blank" rel="noopener">брошюра осеннего набора 2026</a> · <a href="https://oversea.suda.edu.cn/d9/20/c11301a252192/page.htm" target="_blank" rel="noopener">留学生公寓及校内住宿手续</a> · <a href="https://oversea.suda.edu.cn/d9/21/c11301a252193/page.htm" target="_blank" rel="noopener">住宿须知 — правила</a> · <a href="http://apply.international.suda.edu.cn/27952/list.htm" target="_blank" rel="noopener">费用标准 международного отдела</a></div>
+</section>
+
+<!-- ============ CQU ============ -->
+<section class="uni reveal" id="cqu">
+  <div class="uni-head"><span class="num">03</span><h2>Чунцинский университет</h2></div>
+  <div class="uni-sub">重庆大学 · Chongqing University <span>Чунцин, город центрального подчинения · основан в 1929</span></div>
+
+  <figure class="hero-img"><img src="img/dorm/cqu_campus.jpg" alt="Озеро Миньчжу в кампусе Чунцинского университета"><figcaption>Озеро Миньчжу (民主湖) на кампусе A в районе Шапинба — там же корпус иностранных языков и общежития. Фото: Wikimedia Commons.</figcaption></figure>
+
+  <div class="facts">
+    <div class="fact"><div class="k">Учёба</div><div class="v">8 000 ¥</div><div class="s">за семестр · 15 000 ¥ за год</div></div>
+    <div class="fact"><div class="k">Общежитие</div><div class="v">2 500 ¥/сем</div><div class="s">двухместная, 松林坡 · 4 750 ¥ за год</div></div>
+    <div class="fact"><div class="k">Часов в неделю</div><div class="v">20</div><div class="s">+ 1–2 факультатива, 16–17 недель в семестре</div></div>
+    <div class="fact"><div class="k">Весенний набор</div><div class="v">есть</div><div class="s">подача до 30 ноября, занятия с конца февраля</div></div>
+    <div class="fact"><div class="k">Документы</div><div class="v">10</div><div class="s">включая справку о 30 000 ¥ и 2 рекомендации</div></div>
+    <div class="fact"><div class="k">Взнос за подачу</div><div class="v">600 ¥</div><div class="s">онлайн, не возвращается</div></div>
+  </div>
+
+  <h3>Программа</h3>
+  <p>Брошюра обновлена в январе 2026 — самая свежая из пяти. Курс ведёт Институт иностранных языков (外国语学院), по окончании выдают свидетельство о прохождении (结业证书). Весенний семестр — с конца февраля до начала июля, осенний — с начала сентября до середины января; 16–17 недель, из них две — экзамены. Уровень определяет входной тест.</p>
+  <ul>
+    <li><strong>Обязательные:</strong> 20 часов в неделю — комплексный китайский, устная речь, аудирование, письмо, чтение.</li>
+    <li><strong>По выбору</strong> (1–2 в семестр): каллиграфия и живопись, ушу, культура Китая, чтение новостей, <strong>подготовка к HSK</strong>, деловой китайский.</li>
+    <li><strong>Где:</strong> кампус A (沙坪坝校区, ул. Шачжэн 174) — старый центральный кампус на холме над рекой Цзялин; международный отдел в главном учебном корпусе, каб. 310.</li>
+  </ul>
+
+  <h3>Подача</h3>
+  <p>Самый тяжёлый пакет из пяти, зато сроки понятные и одинаковые каждый год: весна — до 30 ноября, осень — до 10 июня. Возраст 18–55, аттестат/диплом. Подача через cqu.17gz.org: категория «普通进修生», специальность «汉语言», взнос 600 ¥ онлайн; без оплаты заявку не рассматривают. Возможно собеседование.</p>
+  <ul>
+    <li><strong>Документы (все на китайском или английском, иначе нотариальный перевод):</strong> паспорт со сроком действия больше года; нотариально заверенный диплом; выписка оценок; <strong>подтверждение средств не меньше 30 000 ¥</strong>; медкомиссия по форме 外国人体格检查表 с анализами, ЭКГ и флюорографией (действует 6 месяцев); справка о несудимости не старше 6 месяцев; справка с учёбы или работы; <strong>два рекомендательных письма</strong> с подписью и контактами; учебный план (о себе, мотивация, цели); что-то ещё по запросу вуза. Оригиналы везти с собой и показать при регистрации.</li>
+    <li><strong>Взносы:</strong> подача 600 ¥, страховка 800 ¥/год.</li>
+    <li><strong>Стипендия</strong> Международного китайского преподавателя (国际中文教师奖学金) — покрывает учёбу, общежитие, страховку и выплаты; вуз её принимает.</li>
+  </ul>
+
+  <h3>Общежитие</h3>
+  <p>Четыре корпуса для иностранцев. На кампусе A — <strong>松林坡国际公寓</strong> и <strong>柑园村国际学生公寓</strong>, на новом кампусе Хуси — <strong>兰园6舍</strong> (он далеко, языковым он не нужен). В каждой комнате свой санузел, кондиционер, кровать с матрасом, стол, шкаф; Wi-Fi платный. На этаже общая кухня и прачечная (монеты или карта).</p>
+  <ul>
+    <li><strong>Цены (таблица вуза):</strong> 松林坡 — двухместная 2 500 ¥/семестр (4 750 ¥/год), одноместная 4 500 ¥/семестр (8 500 ¥/год); 柑园村 — двухместная малая 3 000 ¥/семестр (6 000/год), большая 3 500 ¥/семестр (7 000/год). В брошюре 2026 диапазон 2 500–4 000 ¥/семестр и пометка, что цены могут поднять.</li>
+    <li><strong>Как получить:</strong> «先申请先得» — кто первый подал, тот и живёт; стипендиатам дают бесплатно, платники подают заявку или снимают жильё. Съём разрешён, но с регистрацией: договор → в течение 24 часов в участок за 临时住宿登记 → копии в международный отдел.</li>
+    <li><strong>Что заметно на фото:</strong> 柑园村 после ремонта — светлые комнаты с новой мебелью и большой кухней; 兰园 и 松林坡 — старше и проще.</li>
+  </ul>
+  <div class="gallery">
+    <figure><img src="img/dorm/cqu_10.jpg" alt="Двухместная комната в общежитии 柑园村"><figcaption>柑园村, двухместная после ремонта: две кровати, стол на двоих, шкафы. Фото study.cqu.edu.cn.</figcaption></figure>
+    <figure><img src="img/dorm/cqu_11.jpg" alt="Общая кухня в общежитии 柑园村"><figcaption>柑园村, общая кухня на этаже. Фото study.cqu.edu.cn.</figcaption></figure>
+    <figure><img src="img/dorm/cqu_9.jpg" alt="Корпус общежития 柑园村"><figcaption>柑园村 снаружи: кондиционеры в каждом окне. Фото study.cqu.edu.cn.</figcaption></figure>
+    <figure><img src="img/dorm/cqu_4.jpg" alt="Комната в общежитии 兰园6舍"><figcaption>兰园6舍, двухместная — проще, без ремонта. Фото study.cqu.edu.cn.</figcaption></figure>
+    <figure><img src="img/dorm/cqu_7.jpg" alt="Вход в общежитие 松林坡"><figcaption>松林坡国际公寓, вход. Фото study.cqu.edu.cn.</figcaption></figure>
+    <figure><img src="img/dorm/cqu_1.jpg" alt="Корпус 兰园6舍"><figcaption>兰园6舍, кампус Хуси — для языковых не актуален. Фото study.cqu.edu.cn.</figcaption></figure>
+  </div>
+
+  <h3>Среда и город</h3>
+  <p>Проект 985 и 211, один из старейших вузов Юго-Запада. Языковой курс здесь — побочная программа большого инженерного вуза, а не отдельный институт под иностранцев, как в Нанкине или Сучжоу; число иностранцев на сайте не публикуется. Чунцин — 32 млн жителей в границах города-провинции, горы, две реки, метро-монорельс через дома, самый дешёвый по жизни из пяти городов. Лето 35–40°, влажно. На улице говорят на юго-западном мандарине — это диалект путунхуа, а не отдельный язык, понять можно, но тона и лексика заметно свои. До Шанхая — 11 часов скоростным или 2,5 часа самолётом.</p>
+
+  <div class="pm">
+    <div class="plus"><h4>Что хорошо</h4><ul><li>Самый дешёвый год из пяти — около 21 000 ¥ вместе с жильём</li><li>Понятные ежегодные дедлайны и свежая брошюра (январь 2026)</li><li>В факультативах есть подготовка к HSK</li><li>Двухместная за 2 500 ¥ в семестр с санузлом</li></ul></div>
+    <div class="minus"><h4>Что плохо</h4><ul><li>Справка о 30 000 ¥ — больше, чем у Тяньцзиня</li><li>10 документов: медкомиссия, несудимость, две рекомендации, план</li><li>Далеко от Шанхая и от остальных четырёх</li><li>Общежитие — кто первый, гарантии нет; Wi-Fi платный</li></ul></div>
+  </div>
+
+  <div class="cost">
+    <h4>Год с февраля 2028 по январь 2029, прикидка</h4>
+    <table>
+      <tr><td>Учёба, 2 семестра</td><td>15 000 ¥</td></tr>
+      <tr><td>Двухместная 松林坡, год</td><td>4 750 ¥</td></tr>
+      <tr><td>Взнос за подачу + страховка</td><td>1 400 ¥</td></tr>
+      <tr class="total"><td>Итого без еды и перелёта</td><td>≈ 21 200 ¥ · ≈ 283 000 ₽</td></tr>
+    </table>
+    <div class="note">Если 松林坡 занят и достанется 柑园村 — плюс 1 250–2 250 ¥ за год.</div>
+  </div>
+
+  <div class="contacts">
+    <div><b>Приёмная:</b> admissions@cqu.edu.cn</div>
+    <div><b>Телефон:</b> +86-23-65111001, 65111066</div>
+    <div><b>Адрес:</b> Чунцин, Шапинба, ул. Шачжэн 174, главный учебный корпус, каб. 310</div>
+    <div><b>Подача:</b> cqu.17gz.org</div>
+  </div>
+  <div class="sources">Источники: <a href="https://study.cqu.edu.cn/lxsq/zsxx/fxlxm/hyyxxm.htm" target="_blank" rel="noopener">汉语研修项目 招生简章 (обновлено 01.2026)</a> · <a href="https://study.cqu.edu.cn/info/1970/2065.htm" target="_blank" rel="noopener">住宿安排 — корпуса, цены, фото</a>. Сайт закрыт от автоматического чтения, открывать в обычном браузере.</div>
+</section>
+
+<!-- ============ TFSU ============ -->
+<section class="uni reveal" id="tfsu">
+  <div class="uni-head"><span class="num">04</span><h2>Тяньцзиньский университет иностранных языков</h2></div>
+  <div class="uni-sub">天津外国语大学 · Tianjin Foreign Studies University <span>Тяньцзинь · основан в 1964</span></div>
+
+  <figure class="hero-img"><img src="img/dorm/tjfsu_about_1.jpg" alt="Историческое здание Тяньцзиньского университета иностранных языков"><figcaption>Главное здание на Мачандао (район Удадао) — бывшие концессии, центр города. Фото со страницы «О вузе», isa.tjfsu.edu.cn.</figcaption></figure>
+
+  <div class="facts">
+    <div class="fact"><div class="k">Учёба</div><div class="v">6 700 ¥</div><div class="s">за семестр · 13 400 ¥ за год — дешевле всех</div></div>
+    <div class="fact"><div class="k">Общежитие</div><div class="v">50 ¥/сутки</div><div class="s">только двухместные · без брони, обязательно</div></div>
+    <div class="fact"><div class="k">Уровни</div><div class="v">3 × 2–3</div><div class="s">начальный, средний, продвинутый, внутри подгруппы</div></div>
+    <div class="fact"><div class="k">Весенний набор</div><div class="v">есть</div><div class="s">подача до 31 декабря, регистрация в начале марта</div></div>
+    <div class="fact"><div class="k">Депозит</div><div class="v">20 000 ¥</div><div class="s">справка из банка, свой или поручителя</div></div>
+    <div class="fact"><div class="k">Иностранцев</div><div class="v">2 000+</div><div class="s">в год из 60+ стран, 80% — стипендиаты</div></div>
+  </div>
+
+  <h3>Программа</h3>
+  <p>Профильный языковой вуз: один из восьми «традиционных иностранных» университетов страны, 31 иностранный язык, 10 Институтов Конфуция за рубежом (в том числе в России). Языковой курс — семестр или год, семестр 16–18 недель. Три ступени, каждая разбита на 2–3 подгруппы; распределение по письменному и устному тесту при заезде. Количество часов в неделю в брошюре не указано.</p>
+  <ul>
+    <li><strong>Начальный:</strong> ~1 000 слов и 180 грамматических тем; интенсивное чтение, разговор, аудирование, чтение, иероглифика.</li>
+    <li><strong>Средний:</strong> ~3 000 слов и 280 тем; те же предметы среднего уровня — сюда попадёшь с HSK 3–4.</li>
+    <li><strong>Продвинутый:</strong> ~5 000 слов и 380 тем; плюс аудиовизуальный курс, письмо, перевод на общие темы.</li>
+    <li><strong>Факультативы:</strong> каллиграфия, тайцзи, ушу, пекинская опера, обычаи, резьба печатей, вэньянь для начинающих, новая история Китая, перевод классики, современная литература, деловой китайский.</li>
+  </ul>
+
+  <h3>Подача</h3>
+  <p>Образец — весенняя брошюра 2026: заявки до 31 декабря, регистрация в начале марта. Возраст 18–60. Портал tfsu.at0086.cn. Порядок необычный: заявка → проверка → <strong>оплата учёбы</strong> → только потом приглашение и JW202 → виза → приезд. То есть 6 700 ¥ переводятся до того, как ты получишь приглашение; все взносы не возвращаются.</p>
+  <ul>
+    <li><strong>Документы:</strong> паспорт, действующий дольше 15 сентября года заезда; медкомиссия по форме; справка о несудимости; <strong>справка из банка о вкладе не меньше 20 000 ¥</strong> — своём или поручителя. Не на китайском/английском — нотариальный перевод.</li>
+    <li><strong>Взносы:</strong> регистрация 500 ¥, страховка 400 ¥/семестр или 800 ¥/год.</li>
+    <li><strong>Виза:</strong> вуз напоминает, что X2 (до 180 дней) нельзя превратить в вид на жительство — на полный год нужна X1 и медосмотр в Китае.</li>
+  </ul>
+
+  <h3>Общежитие</h3>
+  <p>Международный центр (国际交流中心) на 600+ мест, построен в 2011. Все комнаты двухместные, стандартные: спальня и санузел, центральный кондиционер, бесплатный интернет (роутер покупаешь сам, ставит комендант), телефон, стол, стул, шкаф, душ с горячей водой круглосуточно. На этажах кухня и прачечная, на первом этаже — холл с Wi-Fi. Кровать 1,2 × 2 м; постельное дают: подушка, одеяло, матрас, простыня.</p>
+  <ul>
+    <li><strong>Цена:</strong> 50 ¥/сутки с человека для тех, кто на семестр и дольше — ≈ 7 500 ¥ за семестр, ≈ 15 000 ¥ за 10 месяцев.</li>
+    <li><strong>Бронь не нужна</strong> — зачисленный просто заселяется. Обратная сторона: «原则上需校内住宿» — жить в общежитии обязательно, новичкам снимать не разрешают.</li>
+    <li><strong>Фото:</strong> вуз показывает только холл первого этажа; фото комнат на сайте нет.</li>
+  </ul>
+  <div class="gallery">
+    <figure><img src="img/dorm/tjfsu_1.jpg" alt="Холл первого этажа общежития 国际交流中心"><figcaption>Холл первого этажа Международного центра — единственное фото общежития на сайте. isa.tjfsu.edu.cn.</figcaption></figure>
+    <figure><img src="img/dorm/tjfsu_about_5.jpg" alt="Корпус Тяньцзиньского университета иностранных языков"><figcaption>Корпус вуза. Фото со страницы «О вузе», isa.tjfsu.edu.cn.</figcaption></figure>
+    <figure><img src="img/dorm/tjfsu_about_4.jpg" alt="Кампус Тяньцзиньского университета иностранных языков с высоты"><figcaption>Кампус с высоты — озеро и спортплощадки. Фото со страницы «О вузе».</figcaption></figure>
+  </div>
+
+  <h3>Среда и город</h3>
+  <p>Два кампуса: Удадао — три двора среди исторических особняков бывших концессий, самый центр (адрес международного отдела — Мачандао 117, значит языковые там); Биньхай — новый, в 50 км, в портовом районе. Более 10 000 своих студентов, 700+ преподавателей, у 60% опыт работы за рубежом. Иностранцев 2 000+ в год, больше половины из стран «Пояса и пути», 80% на стипендиях — то есть платников, как ты, меньшинство. Тяньцзинь — 13,6 млн, порт, 30 минут до Пекина скоростным; местный говор шумный, но это северный диалект, ближе к путунхуа, чем любой из четырёх других городов.</p>
+
+  <div class="pm">
+    <div class="plus"><h4>Что хорошо</h4><ul><li>Дешевле всех учёба — 13 400 ¥/год</li><li>Общежитие гарантировано, без брони, с постельным</li><li>Языковой вуз: преподавание китайского как иностранного — основной профиль</li><li>Север — самый чистый путунхуа на улице</li></ul></div>
+    <div class="minus"><h4>Что плохо</h4><ul><li>Справка о 20 000 ¥ на счету обязательна</li><li>Учёбу платят до приглашения и не возвращают</li><li>Жильё 50 ¥/сутки — дороже Сучжоу и Чунцина, съезжать нельзя</li><li>Часы в неделю не опубликованы; фото комнат нет</li></ul></div>
+  </div>
+
+  <div class="cost">
+    <h4>Год с марта 2028 по январь 2029, прикидка</h4>
+    <table>
+      <tr><td>Учёба, 2 семестра</td><td>13 400 ¥</td></tr>
+      <tr><td>Двухместная, 300 суток × 50 ¥</td><td>15 000 ¥</td></tr>
+      <tr><td>Регистрация + страховка за год</td><td>1 300 ¥</td></tr>
+      <tr class="total"><td>Итого без еды и перелёта</td><td>≈ 29 700 ¥ · ≈ 397 000 ₽</td></tr>
+    </table>
+    <div class="note">Плюс на счету должно лежать 20 000 ¥ (≈ 267 000 ₽) на момент подачи — это не расход, но деньги должны быть.</div>
+  </div>
+
+  <div class="contacts">
+    <div><b>Приёмная:</b> foreignstudents@tjfsu.edu.cn, tfsulb@tjfsu.edu.cn</div>
+    <div><b>Телефон:</b> +86-22-23286974</div>
+    <div><b>Адрес:</b> Тяньцзинь, Хэси, Мачандао 117, Международный центр, 1 этаж</div>
+    <div><b>Подача:</b> tfsu.at0086.cn</div>
+  </div>
+  <div class="sources">Источники: <a href="https://isa.tjfsu.edu.cn/info/1039/1624.htm" target="_blank" rel="noopener">брошюра весеннего набора 2026 (образец)</a> · <a href="https://isa.tjfsu.edu.cn/info/1051/1373.htm" target="_blank" rel="noopener">留学生宿舍</a> · <a href="https://isa.tjfsu.edu.cn/info/1039/1628.htm" target="_blank" rel="noopener">FAQ (обновлён 28.03.2026)</a> · <a href="https://isa.tjfsu.edu.cn/info/1038/1796.htm" target="_blank" rel="noopener">关于天外 — о вузе</a></div>
+</section>
+
+<!-- ============ HZNU ============ -->
+<section class="uni reveal" id="hznu">
+  <div class="uni-head"><span class="num">05</span><h2>Ханчжоуский педагогический университет</h2></div>
+  <div class="uni-sub">杭州师范大学 · Hangzhou Normal University <span>Ханчжоу, провинция Чжэцзян</span></div>
+
+  <figure class="hero-img"><img src="img/dorm/hznu_campus1.jpg" alt="Библиотека Ханчжоуского педагогического университета, кампус Цанцянь"><figcaption>Кампус Цанцянь (仓前) — здесь Институт международного образования и общежитие для иностранцев. Фото: Wikimedia Commons.</figcaption></figure>
+
+  <div class="facts">
+    <div class="fact"><div class="k">Учёба</div><div class="v">7 500 ¥</div><div class="s">за семестр · 15 000 ¥ за год</div></div>
+    <div class="fact"><div class="k">Общежитие</div><div class="v">75 ¥/сутки</div><div class="s">двухместная · 60 ¥ трёхместная · вода и свет включены</div></div>
+    <div class="fact"><div class="k">Часов в неделю</div><div class="v">—</div><div class="s">в брошюре не указано</div></div>
+    <div class="fact"><div class="k">Весенний набор</div><div class="v">нет</div><div class="s">2024, 2025, 2026 — только осень</div></div>
+    <div class="fact"><div class="k">Окно подачи</div><div class="v">2 недели</div><div class="s">15–30 мая на осень</div></div>
+    <div class="fact"><div class="k">Иностранцев</div><div class="v">≈ 400</div><div class="s">сейчас; 6 000+ за всё время из 60 стран</div></div>
+  </div>
+
+  <h3>Программа</h3>
+  <p>Ведёт Институт международного образования (国际教育学院, с 2008 года). Про сам курс брошюра говорит мало: программа «长期汉语言进修生», семестр или год, малые группы; в описании института — весь преподавательский состав с докторскими степенями и опыт с 1993 года. Часы, уровни, список предметов не опубликованы — это надо спрашивать письмом.</p>
+  <ul>
+    <li><strong>Где:</strong> кампус Цанцянь, район Юйхан, Юйхантанлу 2318 — новая часть города, около 20 км от Западного озера и центра; корпус института 2013 года с мультимедийными классами, центром самоподготовки, библиотекой — и общежитием для иностранцев внутри.</li>
+    <li><strong>Формальность визы:</strong> на год выдают JW202 (виза X1), на семестр — DQ (X2).</li>
+  </ul>
+
+  <h3>Подача</h3>
+  <p><strong>Главная проблема:</strong> в открытых документах за три года — 2024, 2025 и 2026 — есть только осенние наборы. Брошюра 2026: подача с 15 по 30 мая, регистрация в начале сентября. Для заезда в феврале 2028 этот вуз пока не подходит — если только письмом не подтвердят весенний приём. Возраст 18–35 (единственный вуз с верхней планкой 35).</p>
+  <ul>
+    <li><strong>Документы (только через international.hznu.edu.cn, по почте не принимают):</strong> паспорт со сроком от 6 месяцев; справка о несудимости не старше 6 месяцев; медкомиссия с флюорографией и анализом крови; <strong>антинаркотическое обязательство</strong> с подписью от руки; <strong>гарантийное письмо спонсора</strong> по форме вуза (не банковская справка, а подписанная форма); аттестат и оценки за школу. После отправки дослать ничего нельзя.</li>
+    <li><strong>Как идёт:</strong> проверка → предварительное зачисление → в течение недели оплатить взнос 400 ¥, иначе снимут → электронное приглашение в системе (с июня для осени) → учёба 7 500 ¥ оплачивается в течение недели после регистрации, не возвращается.</li>
+    <li><strong>Взносы:</strong> подача 400 ¥, страховка 400 ¥/семестр или 800 ¥/год.</li>
+  </ul>
+
+  <h3>Общежитие</h3>
+  <p>Вуз принимает «только тех, кто согласен жить в кампусе». С 2026 года всех новых языковых студентов селят в <strong>гостиницу Международного центра (国际交流中心宾馆)</strong>: двухместная 75 ¥/сутки с человека, трёхместная 60 ¥/сутки; вода и электричество включены, платят сразу за семестр или год. В описании института: в комнатах холодильник, кондиционер, Wi-Fi, свой санузел, есть служба сопровождения. Это самое дорогое жильё из пяти — 22 500 ¥ за 10 месяцев в двухместной.</p>
+  <div class="nophoto">Фото комнат и самой гостиницы вуз не публикует. На Wikimedia есть только кампус — ниже. Фото жилья запрашивать письмом.</div>
+  <figure style="margin-top:14px"><img src="img/dorm/hznu_campus2.jpg" alt="Новые корпуса кампуса Цанцянь"><figcaption>Новые корпуса кампуса Цанцянь. Wikimedia Commons.</figcaption></figure>
+
+  <h3>Среда и город</h3>
+  <p>Провинциальный ключевой вуз, 32 491 студент, из них около 650 иностранцев на дипломных программах и ~400 иностранцев всего на данный момент — самая маленькая иностранная община из пяти. Ханчжоу — 12 млн, Западное озеро, штаб-квартира Alibaba, 45 минут до Шанхая. Но кампус Цанцянь стоит в пригороде: до центра — час на метро. На улице ханчжоуский говор группы У, в вузе — путунхуа.</p>
+
+  <div class="pm">
+    <div class="plus"><h4>Что хорошо</h4><ul><li>Учёба 15 000 ¥ — вторая по дешевизне</li><li>Общежитие гарантировано, свет и вода включены</li><li>Малые группы, преподаватели с докторскими степенями</li><li>Ханчжоу — удобный и богатый город</li></ul></div>
+    <div class="minus"><h4>Что плохо</h4><ul><li>Весеннего набора нет — под твой заезд не подходит без письма</li><li>Окно подачи две недели и только в мае</li><li>Самое дорогое жильё — 75 ¥/сутки, 22 500 ¥ за год</li><li>Кампус в пригороде, иностранцев мало, программа не описана</li></ul></div>
+  </div>
+
+  <div class="cost">
+    <h4>Год с сентября 2028 по июль 2029 — если ждать осени</h4>
+    <table>
+      <tr><td>Учёба, 2 семестра</td><td>15 000 ¥</td></tr>
+      <tr><td>Двухместная, 300 суток × 75 ¥</td><td>22 500 ¥</td></tr>
+      <tr><td>Подача + страховка за год</td><td>1 200 ¥</td></tr>
+      <tr class="total"><td>Итого без еды и перелёта</td><td>≈ 38 700 ¥ · ≈ 517 000 ₽</td></tr>
+    </table>
+    <div class="note">В трёхместной — 18 000 ¥ за жильё, итого ≈ 34 200 ¥.</div>
+  </div>
+
+  <div class="contacts">
+    <div><b>Приёмная:</b> Lcai@hznu.edu.cn</div>
+    <div><b>Телефон/факс:</b> +86-571-28865041</div>
+    <div><b>Адрес:</b> Ханчжоу, Юйхан, Юйхантанлу 2318, корп. 恕园 3</div>
+    <div><b>Подача:</b> international.hznu.edu.cn</div>
+  </div>
+  <div class="sources">Источники: <a href="https://gjjyxy.hznu.edu.cn/c/2026-03-04/3176506.shtml" target="_blank" rel="noopener">申请指南 2026 для языковых</a> · <a href="https://gjjyxy.hznu.edu.cn/c/2024-05-28/2965038.shtml" target="_blank" rel="noopener">学院概况 — об институте</a> · <a href="https://gjjyxy.hznu.edu.cn/zsgz/sqzn/" target="_blank" rel="noopener">список брошюр (только осенние)</a></div>
+</section>
+
+<section class="verdict reveal" id="verdict">
+  <h2>Что из этого следует</h2>
+  <ol>
+    <li><strong>Под заезд в феврале 2028 подходят четыре из пяти.</strong> Ханчжоуский пед набирает только осенью, и окно подачи там две недели в мае — либо написать и получить письменный ответ про весну, либо убрать его из плана.</li>
+    <li><strong>Деньги на счету нужны в двух вузах:</strong> Чунцин просит подтверждение 30 000 ¥, Тяньцзинь — банковскую справку на 20 000 ¥. Нанкин и Сучжоу не спрашивают ни о чём, кроме диплома.</li>
+    <li><strong>Общежитие гарантировано только в Тяньцзине и Ханчжоу</strong> (там оно обязательно). Нанкин прямо пишет «не гарантируем», Сучжоу и Чунцин — «по возможности / кто первый». Значит, в Нанкине и Сучжоу писать про жильё в тот же день, что придёт приглашение.</li>
+    <li><strong>По деньгам за год:</strong> Чунцин ≈ 21 000 ¥ → Сучжоу ≈ 27 000 → Тяньцзинь ≈ 30 000 → Нанкин ≈ 38 500 → Ханчжоу ≈ 38 700. Разница между самым дешёвым и самым дорогим — почти 250 000 ₽.</li>
+    <li><strong>Единственный, где всё расписано до предметов и часов, — Сучжоу</strong> (7 уровней по HSK, расписание, состав факультативов) и Чунцин (20 часов, HSK-подготовка). Нанкин даёт 20 часов и список курсов; Тяньцзинь — уровни без часов; Ханчжоу — почти ничего.</li>
+    <li><strong>Дедлайны на весну 2028 по образцу:</strong> Чунцин — 30 ноября 2027, Нанкин — 25 декабря (или раньше, если мест нет), Тяньцзинь — 31 декабря, Сучжоу — ждать брошюру в октябре. Все новые брошюры проверить в сентябре–октябре 2027.</li>
+  </ol>
+</section>
+
+</main>
+</div>
+
+<script>
+  const items = document.querySelectorAll('.nav a.item');
+  const targets = [...items].map(a => document.querySelector(a.getAttribute('href')));
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        items.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  targets.forEach(t => t && spy.observe(t));
+
+  const rev = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); rev.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => rev.observe(el));
+</script>
+</body>
+</html>
