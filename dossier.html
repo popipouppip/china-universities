@@ -75,6 +75,10 @@
   .uni-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 6px; }
   .uni-head .num { font-family: var(--serif); font-weight: 300; font-size: 22px; color: var(--ink-3); }
   .uni-head h2 { font-family: var(--serif); font-weight: 400; font-size: 44px; line-height: 1.05; letter-spacing: -.015em; }
+  .abbr { display: inline-block; font-family: var(--sans); font-weight: 600; font-size: 13px; letter-spacing: .08em; color: var(--accent); background: var(--accent-bg); border-radius: 6px; padding: 4px 9px; vertical-align: middle; margin-left: 4px; }
+  .nav a.item .abbr { font-size: 11px; padding: 2px 6px; margin-left: 6px; }
+  .nav a.item.active .abbr { background: rgba(255,255,255,.18); color: #fff; }
+  td .abbr { font-size: 11px; padding: 2px 6px; margin-left: 6px; }
   .uni-sub { font-family: var(--cn); font-size: 18px; color: var(--ink-3); margin-bottom: 22px; }
   .uni-sub span { font-family: var(--sans); margin-left: 12px; font-size: 15px; }
 
@@ -145,11 +149,11 @@
   </a>
   <h4>Досье</h4>
   <a class="item" href="#summary">Сводная таблица</a>
-  <a class="item" href="#nju">Нанкинский университет<small>南京大学</small></a>
-  <a class="item" href="#suda">Сучжоуский университет<small>苏州大学</small></a>
-  <a class="item" href="#cqu">Чунцинский университет<small>重庆大学</small></a>
-  <a class="item" href="#tfsu">Тяньцзиньский иняз<small>天津外国语大学</small></a>
-  <a class="item" href="#hznu">Ханчжоуский педагогический<small>杭州师范大学</small></a>
+  <a class="item" href="#nju">Нанкинский университет<span class="abbr">NJU</span><small>南京大学</small></a>
+  <a class="item" href="#suda">Сучжоуский университет<span class="abbr">SUDA</span><small>苏州大学</small></a>
+  <a class="item" href="#cqu">Чунцинский университет<span class="abbr">CQU</span><small>重庆大学</small></a>
+  <a class="item" href="#tfsu">Тяньцзиньский иняз<span class="abbr">TFSU</span><small>天津外国语大学</small></a>
+  <a class="item" href="#hznu">Ханчжоуский педагогический<span class="abbr">HZNU</span><small>杭州师范大学</small></a>
   <a class="item" href="#verdict">Что из этого следует</a>
   <div class="legend">Все цифры и правила — с официальных страниц международных отделов, прочитаны 11.09.2026. Фото общежитий — только те, что вузы сами публикуют.</div>
 </aside>
@@ -172,11 +176,11 @@
   <table>
     <thead><tr><th>Вуз</th><th>Статус</th><th>Учёба / семестр</th><th>Общежитие (двухместная)</th><th>Весенний набор</th><th>Что требуют сверх обычного</th><th>Год примерно</th></tr></thead>
     <tbody>
-      <tr><td>Нанкинский<span class="cn">南京大学</span></td><td>C9, 985</td><td>10 500 ¥</td><td>52 ¥/сутки, кампус Гулоу<br><span class="tag bad">не гарантировано</span></td><td><span class="tag ok">есть</span> подача 10.10–25.12</td><td>ничего — паспорт, диплом, мотивационное</td><td>≈ 38 000 ¥</td></tr>
-      <tr><td>Сучжоуский<span class="cn">苏州大学</span></td><td>211</td><td>8 500 ¥</td><td>800 ¥/мес (4 000 ¥/сем)<br><span class="tag warn">«по возможностям вуза»</span></td><td><span class="tag ok">есть</span> брошюра выходит осенью</td><td>ничего лишнего, оплата по приезде</td><td>≈ 27 000 ¥</td></tr>
-      <tr><td>Чунцинский<span class="cn">重庆大学</span></td><td>985</td><td>8 000 ¥</td><td>2 500–3 500 ¥/сем<br><span class="tag warn">кто первый</span></td><td><span class="tag ok">есть</span> до 30 ноября</td><td>справка о средствах ≥ 30 000 ¥, 2 рекомендации, медкомиссия, несудимость</td><td>≈ 21 000 ¥</td></tr>
-      <tr><td>Тяньцзиньский иняз<span class="cn">天津外国语大学</span></td><td>языковой профильный</td><td>6 700 ¥</td><td>50 ¥/сутки<br><span class="tag ok">без брони, обязательно</span></td><td><span class="tag ok">есть</span> до 31 декабря</td><td>депозит в банке ≥ 20 000 ¥, медкомиссия, несудимость; учёба оплачивается до выдачи приглашения</td><td>≈ 30 000 ¥</td></tr>
-      <tr><td>Ханчжоуский пед<span class="cn">杭州师范大学</span></td><td>провинциальный ключевой</td><td>7 500 ¥</td><td>75 ¥/сутки (60 — трёхместная)<br><span class="tag ok">обязательно</span></td><td><span class="tag bad">не найден</span> только осень, окно 15–30 мая</td><td>гарантийное письмо спонсора, медкомиссия, несудимость, антинаркотическое обязательство</td><td>≈ 39 000 ¥</td></tr>
+      <tr><td>Нанкинский<span class="abbr">NJU</span><span class="cn">南京大学</span></td><td>C9, 985</td><td>10 500 ¥</td><td>52 ¥/сутки, кампус Гулоу<br><span class="tag bad">не гарантировано</span></td><td><span class="tag ok">есть</span> подача 10.10–25.12</td><td>ничего — паспорт, диплом, мотивационное</td><td>≈ 38 000 ¥</td></tr>
+      <tr><td>Сучжоуский<span class="abbr">SUDA</span><span class="cn">苏州大学</span></td><td>211</td><td>8 500 ¥</td><td>800 ¥/мес (4 000 ¥/сем)<br><span class="tag warn">«по возможностям вуза»</span></td><td><span class="tag ok">есть</span> брошюра выходит осенью</td><td>ничего лишнего, оплата по приезде</td><td>≈ 27 000 ¥</td></tr>
+      <tr><td>Чунцинский<span class="abbr">CQU</span><span class="cn">重庆大学</span></td><td>985</td><td>8 000 ¥</td><td>2 500–3 500 ¥/сем<br><span class="tag warn">кто первый</span></td><td><span class="tag ok">есть</span> до 30 ноября</td><td>справка о средствах ≥ 30 000 ¥, 2 рекомендации, медкомиссия, несудимость</td><td>≈ 21 000 ¥</td></tr>
+      <tr><td>Тяньцзиньский иняз<span class="abbr">TFSU</span><span class="cn">天津外国语大学</span></td><td>языковой профильный</td><td>6 700 ¥</td><td>50 ¥/сутки<br><span class="tag ok">без брони, обязательно</span></td><td><span class="tag ok">есть</span> до 31 декабря</td><td>депозит в банке ≥ 20 000 ¥, медкомиссия, несудимость; учёба оплачивается до выдачи приглашения</td><td>≈ 30 000 ¥</td></tr>
+      <tr><td>Ханчжоуский пед<span class="abbr">HZNU</span><span class="cn">杭州师范大学</span></td><td>провинциальный ключевой</td><td>7 500 ¥</td><td>75 ¥/сутки (60 — трёхместная)<br><span class="tag ok">обязательно</span></td><td><span class="tag bad">не найден</span> только осень, окно 15–30 мая</td><td>гарантийное письмо спонсора, медкомиссия, несудимость, антинаркотическое обязательство</td><td>≈ 39 000 ¥</td></tr>
     </tbody>
   </table>
   </div>
@@ -185,7 +189,7 @@
 
 <!-- ============ NJU ============ -->
 <section class="uni reveal" id="nju">
-  <div class="uni-head"><span class="num">01</span><h2>Нанкинский университет</h2></div>
+  <div class="uni-head"><span class="num">01</span><h2>Нанкинский университет</h2><span class="abbr">NJU</span></div>
   <div class="uni-sub">南京大学 · Nanjing University <span>Нанкин, провинция Цзянсу · основан в 1902</span></div>
 
   <figure class="hero-img"><img src="img/dorm/nju_campus1.jpg" alt="Ворота кампуса Гулоу Нанкинского университета"><figcaption>Ворота кампуса Гулоу — именно здесь идут занятия языковой программы. Фото: Wikimedia Commons.</figcaption></figure>
@@ -258,7 +262,7 @@
 
 <!-- ============ SUDA ============ -->
 <section class="uni reveal" id="suda">
-  <div class="uni-head"><span class="num">02</span><h2>Сучжоуский университет</h2></div>
+  <div class="uni-head"><span class="num">02</span><h2>Сучжоуский университет</h2><span class="abbr">SUDA</span></div>
   <div class="uni-sub">苏州大学 · Soochow University <span>Сучжоу, провинция Цзянсу · основан в 1900</span></div>
 
   <figure class="hero-img"><img src="img/dorm/suda_campus1.jpg" alt="Старые ворота Сучжоуского университета"><figcaption>Исторические ворота главного кампуса (本部) с девизом вуза «养天地正气，法古今完人». Фото: Wikimedia Commons.</figcaption></figure>
@@ -336,7 +340,7 @@
 
 <!-- ============ CQU ============ -->
 <section class="uni reveal" id="cqu">
-  <div class="uni-head"><span class="num">03</span><h2>Чунцинский университет</h2></div>
+  <div class="uni-head"><span class="num">03</span><h2>Чунцинский университет</h2><span class="abbr">CQU</span></div>
   <div class="uni-sub">重庆大学 · Chongqing University <span>Чунцин, город центрального подчинения · основан в 1929</span></div>
 
   <figure class="hero-img"><img src="img/dorm/cqu_campus.jpg" alt="Озеро Миньчжу в кампусе Чунцинского университета"><figcaption>Озеро Миньчжу (民主湖) на кампусе A в районе Шапинба — там же корпус иностранных языков и общежития. Фото: Wikimedia Commons.</figcaption></figure>
@@ -412,7 +416,7 @@
 
 <!-- ============ TFSU ============ -->
 <section class="uni reveal" id="tfsu">
-  <div class="uni-head"><span class="num">04</span><h2>Тяньцзиньский университет иностранных языков</h2></div>
+  <div class="uni-head"><span class="num">04</span><h2>Тяньцзиньский университет иностранных языков</h2><span class="abbr">TFSU</span></div>
   <div class="uni-sub">天津外国语大学 · Tianjin Foreign Studies University <span>Тяньцзинь · основан в 1964</span></div>
 
   <figure class="hero-img"><img src="img/dorm/tjfsu_about_1.jpg" alt="Историческое здание Тяньцзиньского университета иностранных языков"><figcaption>Главное здание на Мачандао (район Удадао) — бывшие концессии, центр города. Фото со страницы «О вузе», isa.tjfsu.edu.cn.</figcaption></figure>
@@ -486,7 +490,7 @@
 
 <!-- ============ HZNU ============ -->
 <section class="uni reveal" id="hznu">
-  <div class="uni-head"><span class="num">05</span><h2>Ханчжоуский педагогический университет</h2></div>
+  <div class="uni-head"><span class="num">05</span><h2>Ханчжоуский педагогический университет</h2><span class="abbr">HZNU</span></div>
   <div class="uni-sub">杭州师范大学 · Hangzhou Normal University <span>Ханчжоу, провинция Чжэцзян</span></div>
 
   <figure class="hero-img"><img src="img/dorm/hznu_campus1.jpg" alt="Библиотека Ханчжоуского педагогического университета, кампус Цанцянь"><figcaption>Кампус Цанцянь (仓前) — здесь Институт международного образования и общежитие для иностранцев. Фото: Wikimedia Commons.</figcaption></figure>
