@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Весна 2027 — один семестр в Китае</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter+Tight:wght@400;500;600&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  [hidden] { display: none !important; }
+  :root {
+    --paper: #f5f3ee;
+    --card: #fffdf9;
+    --ink: #16181d;
+    --ink-2: #4a4d55;
+    --ink-3: #7a7d86;
+    --line: #e2ded4;
+    --accent: #b3261e;
+    --accent-bg: #fbeeec;
+    --ok: #1f6f43; --ok-bg: #e9f4ec;
+    --warn: #9a5b00; --warn-bg: #fbf1e0;
+    --bad: #a12626; --bad-bg: #fbe9e7;
+    --serif: 'Newsreader', 'PT Serif', Georgia, serif;
+    --sans: 'Inter Tight', 'Golos Text', -apple-system, 'Segoe UI', sans-serif;
+    --cn: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--paper); color: var(--ink); font-size: 17px; line-height: 1.6; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(179,38,30,.35); }
+  a:hover { border-bottom-color: var(--accent); }
+  a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  .cn { font-family: var(--cn); }
+  svg.i { width: 18px; height: 18px; flex-shrink: 0; }
+
+  .layout { display: grid; grid-template-columns: 240px minmax(0, 980px); gap: 64px; max-width: 1364px; margin: 0 auto; padding: 48px 40px 120px; }
+
+  /* nav */
+  .nav { position: sticky; top: 40px; align-self: start; }
+  .nav .back { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-3); border: 0; margin-bottom: 28px; }
+  .nav .back:hover { color: var(--accent); }
+  .nav h4 { font-family: var(--serif); font-weight: 400; font-size: 15px; color: var(--ink-3); letter-spacing: .02em; margin-bottom: 12px; }
+  .nav a.item { display: block; border: 0; padding: 8px 12px; margin-left: -12px; border-radius: 8px; color: var(--ink-2); font-size: 15px; line-height: 1.3; transition: background .15s ease, color .15s ease; }
+  .nav a.item small { display: block; font-family: var(--cn); font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+  .nav a.item:hover { background: #ece9e1; color: var(--ink); }
+  .nav a.item.active { background: var(--ink); color: #fff; }
+  .nav a.item.active small { color: rgba(255,255,255,.65); }
+  .nav .legend { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-3); line-height: 1.5; }
+  .nav .legend a { color: var(--ink-2); border-bottom-color: var(--line); }
+  .nav .legend a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* header */
+  .hero .kicker { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .hero h1 { font-family: var(--serif); font-weight: 300; font-size: 60px; line-height: 1.02; letter-spacing: -.02em; margin-bottom: 20px; }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero p.lead { font-size: 19px; color: var(--ink-2); max-width: 780px; margin-bottom: 14px; }
+  .hero .meta { font-size: 14px; color: var(--ink-3); }
+  .notice { background: var(--warn-bg); border: 1px solid #efd9ae; border-radius: 12px; padding: 16px 18px; font-size: 15px; color: #5d3d05; margin: 28px 0 0; display: flex; gap: 12px; }
+  .notice svg { flex-shrink: 0; margin-top: 3px; }
+  .notice b { font-weight: 600; }
+
+  /* short verdict */
+  .block { margin-top: 56px; }
+  .block > h2, .summary h2 { font-family: var(--serif); font-weight: 400; font-size: 30px; margin-bottom: 14px; }
+  .block > p.sub { margin-top: -6px; }
+  .status-list { border: 1px solid var(--line); border-radius: 14px; background: var(--card); overflow: hidden; }
+  .st { display: grid; grid-template-columns: 30px 240px minmax(0,1fr) 176px; gap: 18px; align-items: start; padding: 18px 22px; border: 0; border-bottom: 1px solid var(--line); color: var(--ink); transition: background .15s ease; }
+  .st:last-child { border-bottom: 0; }
+  .st:hover { background: #f8f5ee; border-bottom-color: var(--line); }
+  .st .ico { margin-top: 2px; }
+  .st.ok .ico { color: var(--ok); } .st.warn .ico { color: var(--warn); } .st.bad .ico { color: var(--bad); }
+  .st .ico svg { width: 26px; height: 26px; }
+  .st-name { font-family: var(--serif); font-size: 22px; line-height: 1.15; }
+  .st-name small { display: block; font-family: var(--cn); font-size: 13px; color: var(--ink-3); margin-top: 4px; }
+  .st-text { font-size: 15px; color: var(--ink-2); line-height: 1.5; }
+  .st-text b { color: var(--ink); font-weight: 600; }
+  .st-num { text-align: right; font-family: var(--serif); font-size: 22px; line-height: 1.1; white-space: nowrap; }
+  .st-num small { display: block; font-family: var(--sans); font-size: 12px; color: var(--ink-3); margin-top: 4px; white-space: normal; }
+  .st.bad .st-num, .st.warn .st-num { color: var(--ink-3); }
+
+  .advice { margin-top: 18px; border-left: 3px solid var(--accent); background: var(--card); border-radius: 0 14px 14px 0; padding: 20px 24px; }
+  .advice h3 { margin: 0 0 10px; font-size: 22px; }
+  .advice ol { padding-left: 20px; margin: 0; color: var(--ink-2); }
+  .advice li { margin-bottom: 8px; font-size: 16px; }
+  .advice li:last-child { margin-bottom: 0; }
+
+  /* summary table */
+  .summary { margin-top: 56px; }
+  .tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { text-align: left; padding: 10px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-weight: 600; color: var(--ink-3); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; background: #f9f7f2; }
+  tr:last-child td { border-bottom: 0; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+  td .cn { color: var(--ink-3); font-size: 12px; display: block; font-weight: 400; }
+  .tag { display: inline-block; padding: 3px 9px; border-radius: 6px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .tag.ok { background: var(--ok-bg); color: var(--ok); }
+  .tag.warn { background: var(--warn-bg); color: var(--warn); }
+  .tag.bad { background: var(--bad-bg); color: var(--bad); }
+  .tag.big { font-size: 13px; padding: 5px 11px; }
+  .summary td:last-child { white-space: nowrap; font-weight: 600; color: var(--ink); }
+  .tbl-note { font-size: 13px; color: var(--ink-3); margin-top: 10px; line-height: 1.5; }
+
+  /* timeline */
+  .tl { position: relative; margin-top: 8px; }
+  .tl::before { content: ''; position: absolute; left: 187px; top: 14px; bottom: 14px; width: 1px; background: var(--line); }
+  .tl-item { display: grid; grid-template-columns: 164px 46px minmax(0,1fr); padding: 14px 0; }
+  .tl-date { text-align: right; }
+  .tl-date b { display: block; font-family: var(--serif); font-weight: 400; font-size: 21px; line-height: 1.15; }
+  .tl-date .when { display: inline-block; margin-top: 5px; font-size: 12px; font-weight: 600; color: var(--ink-3); }
+  .tl-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--paper); border: 2px solid var(--ink-3); justify-self: center; margin-top: 9px; position: relative; z-index: 1; }
+  .tl-body h4 { font-size: 17px; font-weight: 600; line-height: 1.35; margin-top: 2px; }
+  .tl-body p { font-size: 15px; margin: 4px 0 0; }
+  .tl-item.now .tl-dot { background: var(--ink); border-color: var(--ink); }
+  .tl-item.next .tl-dot { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 5px var(--accent-bg); }
+  .tl-item.next .when { color: var(--accent); }
+  .tl-item.past { opacity: .45; }
+
+  /* sections */
+  section.uni { margin-top: 96px; padding-top: 32px; border-top: 1px solid var(--line); }
+  .uni-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 6px; flex-wrap: wrap; }
+  .uni-head .num { font-family: var(--serif); font-weight: 300; font-size: 22px; color: var(--ink-3); }
+  .uni-head h2 { font-family: var(--serif); font-weight: 400; font-size: 44px; line-height: 1.05; letter-spacing: -.015em; }
+  .abbr { display: inline-block; font-family: var(--sans); font-weight: 600; font-size: 13px; letter-spacing: .08em; color: var(--accent); background: var(--accent-bg); border-radius: 6px; padding: 4px 9px; vertical-align: middle; margin-left: 4px; }
+  .nav a.item .abbr { font-size: 11px; padding: 2px 6px; margin-left: 6px; }
+  .nav a.item.active .abbr { background: rgba(255,255,255,.18); color: #fff; }
+  td .abbr, .st-name .abbr { font-size: 11px; padding: 2px 6px; margin-left: 6px; }
+  .uni-sub { font-family: var(--cn); font-size: 18px; color: var(--ink-3); margin-bottom: 14px; }
+  .uni-sub span { font-family: var(--sans); margin-left: 12px; font-size: 15px; }
+  .uni-status { margin-bottom: 22px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 15px; color: var(--ink-2); }
+
+  figure { margin: 0 0 26px; }
+  figure img { width: 100%; height: auto; display: block; border-radius: 14px; }
+  figure.hero-img img { aspect-ratio: 21 / 9; object-fit: cover; }
+  figcaption { font-size: 13px; color: var(--ink-3); margin-top: 8px; }
+  .gallery { display: grid; grid-template-columns: 1.6fr 1fr; gap: 12px; margin: 0 0 26px; align-items: start; }
+  .gallery figure { margin: 0; }
+  .gallery img { height: 360px; object-fit: cover; }
+
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 30px; }
+  .fact { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .fact .k { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+  .fact .v { font-family: var(--serif); font-size: 24px; line-height: 1.1; }
+  .fact .s { font-size: 13px; color: var(--ink-3); margin-top: 4px; }
+  .fact.hl { border-color: var(--accent); }
+  .fact.hl .v { color: var(--accent); }
+
+  h3 { font-family: var(--serif); font-weight: 400; font-size: 26px; margin: 34px 0 12px; letter-spacing: -.01em; }
+  p { margin-bottom: 12px; color: var(--ink-2); }
+  p strong, li strong { color: var(--ink); font-weight: 600; }
+  ul { padding-left: 20px; margin-bottom: 14px; color: var(--ink-2); }
+  li { margin-bottom: 6px; }
+  li::marker { color: var(--accent); }
+  .agent { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--warn); background: var(--warn-bg); border-radius: 5px; padding: 1px 6px; vertical-align: 2px; }
+
+  .cost { background: var(--ink); color: #f5f3ee; border-radius: 14px; padding: 22px 24px; margin-top: 28px; }
+  .cost h4 { font-family: var(--serif); font-weight: 400; font-size: 20px; margin-bottom: 12px; }
+  .cost table { font-size: 14px; }
+  .cost th, .cost td { border-bottom: 1px solid rgba(255,255,255,.12); color: #f5f3ee; padding: 8px 6px; }
+  .cost td:first-child { font-weight: 400; white-space: normal; }
+  .cost td:last-child { text-align: right; white-space: nowrap; }
+  .cost tr.total td { font-weight: 600; font-size: 16px; border-bottom: 0; }
+  .cost .note { font-size: 13px; color: rgba(255,255,255,.62); margin-top: 10px; }
+
+  .more { margin-top: 18px; font-size: 15px; }
+  .contacts { margin-top: 20px; font-size: 15px; color: var(--ink-2); display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; }
+  .contacts b { color: var(--ink); }
+  .sources { margin-top: 18px; font-size: 13px; color: var(--ink-3); line-height: 1.6; }
+  .sources a { color: var(--ink-3); border-bottom-color: var(--line); }
+  .sources a:hover { color: var(--accent); }
+
+  /* docs */
+  .docs td:first-child { white-space: normal; width: 30%; }
+  .docs td { font-size: 14px; color: var(--ink-2); }
+  .docs td:first-child { color: var(--ink); }
+  .yes, .no { display: inline-flex; align-items: flex-start; gap: 6px; }
+  .yes svg { color: var(--ok); width: 16px; height: 16px; margin-top: 2px; }
+  .no { color: var(--ink-3); }
+
+  /* letters */
+  .signbox { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; margin-bottom: 18px; }
+  .signbox label { display: block; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+  .signbox input { width: 100%; font: 15px var(--sans); color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; transition: border-color .15s ease, background .15s ease; }
+  .signbox input:hover { border-color: #cfc9bb; }
+  .signbox input:focus { outline: none; border-color: var(--ink); background: #fff; }
+  .signbox .hint { grid-column: 1 / -1; font-size: 13px; color: var(--ink-3); }
+  .letter { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; margin-bottom: 14px; }
+  .letter-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+  .letter-to { font-size: 15px; color: var(--ink-2); }
+  .letter-to b { color: var(--ink); font-weight: 600; }
+  .letter-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 7px; font: 500 14px var(--sans); border-radius: 999px; padding: 8px 15px; cursor: pointer; border: 1px solid var(--line); background: var(--card); color: var(--ink); transition: background .15s ease, border-color .15s ease, color .15s ease, transform .1s ease; }
+  .btn svg { width: 16px; height: 16px; }
+  .btn:hover { border-color: var(--ink); }
+  .btn:active { transform: translateY(1px); }
+  .btn.primary { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .btn.primary:hover { background: #2b2e36; }
+  .btn.done { background: var(--ok-bg); border-color: var(--ok-bg); color: var(--ok); }
+  a.btn { border-bottom: 1px solid var(--ink); }
+  .letter-subj { font-size: 15px; color: var(--ink); background: #f9f7f2; border-radius: 8px; padding: 8px 12px; margin-bottom: 10px; }
+  .letter-subj span { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); margin-right: 8px; }
+  .letter-body { font-family: var(--cn); font-size: 15px; line-height: 1.8; color: var(--ink); white-space: pre-wrap; background: #f9f7f2; border-radius: 8px; padding: 14px 16px; }
+  .letter-body .sig { color: var(--accent); }
+  .letter details { margin-top: 10px; }
+  .letter summary { cursor: pointer; font-size: 14px; color: var(--ink-2); display: inline-flex; align-items: center; gap: 6px; list-style: none; }
+  .letter summary::-webkit-details-marker { display: none; }
+  .letter summary::before { content: ''; width: 7px; height: 7px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); transition: transform .15s ease; margin-right: 4px; }
+  .letter details[open] summary::before { transform: rotate(45deg); }
+  .letter summary:hover { color: var(--accent); }
+  .letter .ru { font-size: 15px; color: var(--ink-2); padding: 10px 2px 0; }
+  .letter .ru p { margin-bottom: 6px; }
+
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside class="nav">
+  <a class="back" href="language.html">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    К сравнению цен
+  </a>
+  <h4>Весна 2027</h4>
+  <a class="item" href="#short">Коротко</a>
+  <a class="item" href="#summary">Сводная таблица</a>
+  <a class="item" href="#plan">Календарь</a>
+  <a class="item" href="#nju">Нанкинский университет<span class="abbr">NJU</span><small>南京大学</small></a>
+  <a class="item" href="#cqu">Чунцинский университет<span class="abbr">CQU</span><small>重庆大学</small></a>
+  <a class="item" href="#nnu">Нанкинский педагогический<span class="abbr">NNU</span><small>南京师范大学</small></a>
+  <a class="item" href="#njust">Нанкинский политех<span class="abbr">NJUST</span><small>南京理工大学</small></a>
+  <a class="item" href="#docs">Документы</a>
+  <a class="item" href="#letters">Письма в вузы</a>
+  <div class="legend">Цифры и сроки — с официальных страниц вузов, прочитаны 28.09.2026. Где данные от посредников, это помечено. Курс ЦБ на 26.09.2026: 1 ¥ = 12,54 ₽.<br><br>Основной план — заезд в октябре 2027 — в <a href="dossier.html">досье по пяти вузам</a>.</div>
+</aside>
+
+<main>
+
+<header class="hero">
+  <div class="kicker">Запасной план</div>
+  <h1>Весна 2027: <em>один семестр</em></h1>
+  <p class="lead">Заезд в Китай в феврале 2027, учёба с 22 февраля до начала июля, всё за свой счёт. Разобрал четыре вуза, которые ты назвал: где весенний набор действительно есть, до какого числа подавать, сколько стоит семестр и что собрать уже сейчас.</p>
+  <div class="meta">Только языковая программа на один семестр. Стипендии, бакалавриат и специальности здесь не разбираются.</div>
+  <div class="notice">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <div><b>Про даты.</b> Весенний семестр 2027 — вторая половина 2026–2027 учебного года. Поэтому здесь брошюры и цены 2026 года — не образец, как в досье, а действующие правила. Основной план (октябрь 2027) остаётся в досье и не меняется.</div>
+  </div>
+</header>
+
+<!-- ============ КОРОТКО ============ -->
+<section class="block reveal" id="short">
+  <h2>Коротко: весной берут два вуза из четырёх</h2>
+  <div class="status-list">
+    <a class="st ok" href="#nju">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg></span>
+      <span class="st-name">Нанкинский<span class="abbr">NJU</span><small>南京大学</small></span>
+      <span class="st-text"><b>Весенний набор есть.</b> Подача с 10 октября по 25 декабря 2026, но приём закрывают, когда кончаются места. Документы самые простые. Общежитие вуз не гарантирует.</span>
+      <span class="st-num">≈ 231 000 ₽<small>за семестр, 18 420 ¥</small></span>
+    </a>
+    <a class="st ok" href="#cqu">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg></span>
+      <span class="st-name">Чунцинский<span class="abbr">CQU</span><small>重庆大学</small></span>
+      <span class="st-text"><b>Весенний набор есть.</b> Подача до 30 ноября 2026. Самый дешёвый семестр, но самый тяжёлый пакет: справка о 30 000 ¥ на счету, медкомиссия, несудимость, две рекомендации.</span>
+      <span class="st-num">≈ 149 000 ₽<small>за семестр, 11 900 ¥</small></span>
+    </a>
+    <a class="st warn" href="#nnu">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"/></svg></span>
+      <span class="st-name">Нанкинский педагогический<span class="abbr">NNU</span><small>南京师范大学</small></span>
+      <span class="st-text"><b>Весну вуз не публикует.</b> В официальном графике 2026 года только осенний набор. Весенний старт показывают лишь посредники. Без ответа на письмо план на него не строить.</span>
+      <span class="st-num">≈ 153–189 тыс. ₽<small>если весну подтвердят</small></span>
+    </a>
+    <a class="st bad" href="#njust">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg></span>
+      <span class="st-name">Нанкинский политех<span class="abbr">NJUST</span><small>南京理工大学</small></span>
+      <span class="st-text"><b>Не подходит.</b> Языковая программа 2026 года — только с заездом в сентябре. Общежитие дают лишь тем, кто раньше не учился в Китае, а ты был на курсах в BLCU.</span>
+      <span class="st-num">—<small>весной не берёт</small></span>
+    </a>
+  </div>
+
+  <div class="advice">
+    <h3>Что я советую</h3>
+    <ol>
+      <li><strong>Сегодня–завтра:</strong> отправить четыре письма — они готовы <a href="#letters">внизу страницы</a>, с темой крупно «2027年春季学期», чтобы опять не ответили про прошлый набор.</li>
+      <li><strong>10–12 октября:</strong> подать в Нанкинский. Пакет из трёх документов, первичный ответ за 5 рабочих дней, а места уходят в порядке очереди.</li>
+      <li><strong>Параллельно собирать пакет для Чунцина</strong> — это запасной вариант до 30 ноября. Если главное для тебя деньги, поменяй порядок: Чунцин дешевле Нанкина примерно на 82 000 ₽ за семестр.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ ТАБЛИЦА ============ -->
+<section class="summary reveal" id="summary">
+  <h2>Сводная таблица</h2>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Вуз</th><th>Весна 2027</th><th>Подача</th><th>Учёба / семестр</th><th>Двухместная / семестр</th><th>Что требуют сверх обычного</th><th>Семестр итого</th></tr></thead>
+    <tbody>
+      <tr><td>Нанкинский<span class="abbr">NJU</span><span class="cn">南京大学</span></td><td><span class="tag ok">есть, официально</span></td><td>10.10–25.12.2026<br><span class="tag warn">пока есть места</span></td><td>10 500 ¥</td><td>52 ¥/сутки ≈ 7 020 ¥<br><span class="tag bad">не гарантировано</span></td><td>ничего: паспорт, диплом, личное заявление</td><td>≈ 18 420 ¥<br>≈ 231 000 ₽</td></tr>
+      <tr><td>Чунцинский<span class="abbr">CQU</span><span class="cn">重庆大学</span></td><td><span class="tag ok">есть, официально</span></td><td>до 30.11.2026</td><td>8 000 ¥</td><td>2 500 ¥, корпус 松林坡<br><span class="tag warn">кто первый</span></td><td>справка о 30 000 ¥, медкомиссия, несудимость, 2 рекомендации</td><td>≈ 11 900 ¥<br>≈ 149 000 ₽</td></tr>
+      <tr><td>Нанкинский пед<span class="abbr">NNU</span><span class="cn">南京师范大学</span></td><td><span class="tag warn">не опубликована</span></td><td>официально только осень: 01.04–01.06.2026</td><td>8 300 ¥</td><td>3 500–6 000 ¥<br><span class="tag warn">только диапазон</span></td><td>для языковых не расписано</td><td>≈ 12 200–15 100 ¥<br>≈ 153–189 тыс. ₽</td></tr>
+      <tr><td>Нанкинский политех<span class="abbr">NJUST</span><span class="cn">南京理工大学</span></td><td><span class="tag bad">нет</span></td><td>01.01–15.06.2026, заезд в сентябре</td><td>8 000 ¥</td><td>4 500 ¥<br><span class="tag bad">не для бывавших в Китае</span></td><td>медкомиссия, несудимость, онлайн-собеседование</td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="tbl-note">«Семестр итого» = учёба + двухместная комната + взносы и страховка, без еды, учебников, перелёта и визы. Нанкин считаю за 135 суток — с 20 февраля по 5 июля 2027. Рубли — по курсу ЦБ на 26.09.2026 (1 ¥ = 12,54 ₽); в банке юани обычно дороже.</div>
+</section>
+
+<!-- ============ КАЛЕНДАРЬ ============ -->
+<section class="block reveal" id="plan">
+  <h2>Календарь до заезда</h2>
+  <p class="sub">Даты занятий — по календарям Нанкинского и Чунцинского на 2026–2027 год. Счётчик дней обновляется сам.</p>
+  <div class="tl">
+    <div class="tl-item now">
+      <div class="tl-date"><b>Сейчас</b><span class="when">эта неделя</span></div>
+      <div class="tl-dot"></div>
+      <div class="tl-body"><h4>Письма, паспорт, перевод диплома</h4><p>Отправить четыре письма. Проверить срок загранпаспорта: Чунцин просит, чтобы он действовал больше года. Заказать нотариальный перевод диплома на английский — он нужен обоим вузам. Если в игре Чунцин — сразу заказать справку о несудимости на Госуслугах (делают до 30 дней) и найти двух рекомендателей.</p></div>
+    </div>
+    <div class="tl-item" data-date="2026-10-10">
+      <div class="tl-date"><b>10 октября</b><span class="when"></span></div>
+      <div class="tl-dot"></div>
+      <div class="tl-body"><h4>Открывается подача в Нанкинский</h4><p>На istudy.nju.edu.cn. Подавать в первые дни — приём идёт, «пока есть места». Первичный ответ — до 5 рабочих дней, потом взнос 500 ¥ и решение; приглашение и форма JW202 для визы — в течение месяца.</p></div>
+    </div>
+    <div class="tl-item" data-date="2026-11-30">
+      <div class="tl-date"><b>30 ноября</b><span class="when"></span></div>
+      <div class="tl-dot"></div>
+      <div class="tl-body"><h4>Последний день подачи в Чунцинский</h4><p>На cqu.17gz.org, взнос 600 ¥ сразу — без оплаты заявку не смотрят. Медкомиссия действует 6 месяцев: сделанная в октябре–ноябре доживёт до заезда.</p></div>
+    </div>
+    <div class="tl-item" data-date="2026-12-25">
+      <div class="tl-date"><b>25 декабря</b><span class="when"></span></div>
+      <div class="tl-dot"></div>
+      <div class="tl-body"><h4>Нанкинский закрывает подачу</h4><p>Если места к этому дню ещё останутся. Рассчитывать на последний день не стоит.</p></div>
+    </div>
+    <div class="tl-item" data-date="2027-01-11">
+      <div class="tl-date"><b>11 января</b><span class="when"></span></div>
+      <div class="tl-dot"></div>
+      <div class="tl-body"><h4>У китайских вузов каникулы</h4><p>У Нанкинского — с 11 января по 21 февраля, а 6 февраля китайский Новый год. Все вопросы по приглашению закрыть до этой даты.</p></div>
+    </div>
+    <div class="tl-item" data-date="2027-01-15">
+      <div class="tl-date"><b>Середина января</b><span class="when"></span></div>
+      <div class="tl-dot"></div>
+      <div class="tl-body"><h4>Бронь общежития в Нанкинском</h4><p>Открывается на istudy.nju.edu.cn. Успел внести бронь — место есть; не успел — жильё ищешь сам.</p></div>
+    </div>
+    <div class="tl-item" data-date="2027-01-25">
+      <div class="tl-date"><b>Конец января</b><span class="when"></span></div>
+      <div class="tl-dot"></div>
+      <div class="tl-body"><h4>Виза X2</h4><p>Учебная виза на срок до 180 дней, оформляется по приглашению вуза. По данным визовых агентств — 4–7 рабочих дней, однократная от ~6 300 ₽.</p></div>
+    </div>
+    <div class="tl-item" data-date="2027-02-20">
+      <div class="tl-date"><b>20 февраля</b><span class="when"></span></div>
+      <div class="tl-dot"></div>
+      <div class="tl-body"><h4>Регистрация</h4><p>В Чунцине — 20 февраля по календарю вуза. В Нанкине точная дата будет в приглашении.</p></div>
+    </div>
+    <div class="tl-item" data-date="2027-02-22">
+      <div class="tl-date"><b>22 февраля</b><span class="when"></span></div>
+      <div class="tl-dot"></div>
+      <div class="tl-body"><h4>Первый день занятий</h4><p>И в Нанкинском, и в Чунцинском — по их календарям на 2026–2027 год.</p></div>
+    </div>
+    <div class="tl-item" data-date="2027-07-04">
+      <div class="tl-date"><b>4 июля</b><span class="when"></span></div>
+      <div class="tl-dot"></div>
+      <div class="tl-body"><h4>Конец семестра</h4><p>Нанкин — 4 июля, Чунцин — начало июля. Около 135 дней в Китае — в визу X2 (до 180 дней) укладывается.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NJU ============ -->
+<section class="uni reveal" id="nju">
+  <div class="uni-head"><span class="num">01</span><h2>Нанкинский университет</h2><span class="abbr">NJU</span></div>
+  <div class="uni-sub">南京大学 · Nanjing University <span>Нанкин, кампус Гулоу</span></div>
+  <div class="uni-status"><span class="tag ok big">Весенний набор есть — официально</span> правило вуза: «每年10月10日至12月25日前，额满为止»</div>
+
+  <figure class="hero-img"><img src="img/dorm/nju_campus1.jpg" alt="Ворота кампуса Гулоу Нанкинского университета"><figcaption>Ворота кампуса Гулоу — здесь идут занятия языковой программы. Фото: Wikimedia Commons.</figcaption></figure>
+
+  <div class="facts">
+    <div class="fact hl"><div class="k">Подача на весну</div><div class="v">10.10–25.12</div><div class="s">2026 год · закрывают, когда кончатся места</div></div>
+    <div class="fact"><div class="k">Занятия</div><div class="v">22.02–04.07</div><div class="s">2027 год · 19 недель по календарю вуза</div></div>
+    <div class="fact"><div class="k">Учёба</div><div class="v">10 500 ¥</div><div class="s">за один семестр</div></div>
+    <div class="fact"><div class="k">Общежитие</div><div class="v">52 ¥/сутки</div><div class="s">двухместная в Гулоу · ≈ 7 020 ¥ за 135 суток</div></div>
+    <div class="fact"><div class="k">Часов в неделю</div><div class="v">20</div><div class="s">малые группы по уровням</div></div>
+    <div class="fact"><div class="k">Документы</div><div class="v">3</div><div class="s">паспорт, диплом с переводом, личное заявление</div></div>
+  </div>
+
+  <h3>Что важно для весны</h3>
+  <ul>
+    <li><strong>Окно ежегодное.</strong> Вуз пишет правило без года: весенний семестр — с 10 октября по 25 декабря. Значит, для весны 2027 окно — 10 октября — 25 декабря 2026. Начало занятий — в феврале, точная дата в приглашении.</li>
+    <li><strong>Один семестр можно:</strong> «申报一学期者缴纳10500元» — кто подаёт на семестр, платит 10 500 ¥.</li>
+    <li><strong>Порядок:</strong> всё онлайн на istudy.nju.edu.cn, бумаги не шлют → первичный ответ в течение 5 рабочих дней → взнос 500 ¥ (не возвращается) → решение → в течение месяца электронное приглашение и JW202.</li>
+    <li><strong>Главный риск — жильё.</strong> Дословно: «新入境自费生将不保证都能预订到学生宿舍» — новым платникам общежитие не гарантируют. Бронь на весну открывается в середине января. Депозит 550 ¥ + 50 ¥ за ключ, возвращается. На случай, если места не будет, вуз сам называет временную гостиницу: 古南都亦闲公馆, ул. Шанхай 160, +86-25-85202626.</li>
+    <li><strong>Страховка</strong> — 400 ¥ за семестр.</li>
+  </ul>
+
+  <div class="cost">
+    <h4>Один семестр, прикидка</h4>
+    <table>
+      <tr><td>Учёба, 1 семестр</td><td>10 500 ¥</td></tr>
+      <tr><td>Двухместная в Гулоу, 135 суток × 52 ¥</td><td>7 020 ¥</td></tr>
+      <tr><td>Регистрационный взнос</td><td>500 ¥</td></tr>
+      <tr><td>Страховка</td><td>400 ¥</td></tr>
+      <tr class="total"><td>Итого без еды, учебников, перелёта и визы</td><td>≈ 18 420 ¥ · ≈ 231 000 ₽</td></tr>
+    </table>
+    <div class="note">Депозит за общежитие 600 ¥ не входит — его возвращают при выезде. Без общежития учёба со взносами — 11 400 ¥ (≈ 143 000 ₽), жильё тогда ищешь сам.</div>
+  </div>
+
+  <div class="more">Программа, правила общежития и город подробно — в <a href="dossier.html#nju">досье</a>.</div>
+  <div class="contacts">
+    <div><b>Приёмная:</b> 叶老师 (Е), yerunyu@nju.edu.cn</div>
+    <div><b>Телефон:</b> +86-25-83593586</div>
+    <div><b>Подача:</b> istudy.nju.edu.cn</div>
+    <div><b>Бронь общежития:</b> там же, с середины января</div>
+  </div>
+  <div class="sources">Источники: <a href="https://hwxy.nju.edu.cn/lxnd/zsxx/hyxx/zqhyjx/index.html" target="_blank" rel="noopener">长期汉语进修 — сроки, цена, документы</a> · <a href="https://hwxy.nju.edu.cn/English/StudyatNJU/Admissions/ChineseLanguageTraining/LongtermTrainings/index.html" target="_blank" rel="noopener">то же на английском</a> · <a href="https://hwxy.nju.edu.cn/lxnd/xyfw/zsbx/zs/index.html" target="_blank" rel="noopener">住宿 — общежитие и бронь</a> · <a href="https://nj.bendibao.com/news/2026721/182055.shtm" target="_blank" rel="noopener">календарь 2026–2027 (перепечатка 南京本地宝)</a></div>
+</section>
+
+<!-- ============ CQU ============ -->
+<section class="uni reveal" id="cqu">
+  <div class="uni-head"><span class="num">02</span><h2>Чунцинский университет</h2><span class="abbr">CQU</span></div>
+  <div class="uni-sub">重庆大学 · Chongqing University <span>Чунцин, кампус A в Шапинба</span></div>
+  <div class="uni-status"><span class="tag ok big">Весенний набор есть — официально</span> правило вуза: «春季学期入学：每年11月30日»</div>
+
+  <figure class="hero-img"><img src="img/dorm/cqu_campus.jpg" alt="Озеро Миньчжу в кампусе Чунцинского университета"><figcaption>Озеро Миньчжу на кампусе A — там же общежития для иностранцев. Фото: Wikimedia Commons.</figcaption></figure>
+
+  <div class="facts">
+    <div class="fact hl"><div class="k">Подача на весну</div><div class="v">до 30.11</div><div class="s">2026 год · срок одинаковый каждый год</div></div>
+    <div class="fact"><div class="k">Занятия</div><div class="v">с 22.02</div><div class="s">2027 · регистрация 20.02, конец — начало июля</div></div>
+    <div class="fact"><div class="k">Учёба</div><div class="v">8 000 ¥</div><div class="s">за семестр · цены действуют с осени 2026</div></div>
+    <div class="fact"><div class="k">Общежитие</div><div class="v">2 500 ¥</div><div class="s">двухместная 松林坡 за семестр</div></div>
+    <div class="fact"><div class="k">Часов в неделю</div><div class="v">20</div><div class="s">+ 1–2 факультатива, есть подготовка к HSK</div></div>
+    <div class="fact"><div class="k">Документы</div><div class="v">10</div><div class="s">включая справку о 30 000 ¥ и 2 рекомендации</div></div>
+  </div>
+
+  <h3>Что важно для весны</h3>
+  <ul>
+    <li><strong>Всё официально и свежо:</strong> брошюра обновлена в январе 2026, таблица цен — «从2026年秋季学期执行», то есть действует и на весну 2027. Весенний семестр по брошюре — с конца февраля до начала июля, 16–17 недель вместе с экзаменами.</li>
+    <li><strong>Подача:</strong> cqu.17gz.org → категория «普通进修生», специальность «汉语言», взнос 600 ¥ онлайн сразу. Возможно собеседование. Бумаги не шлют, оригиналы везёшь на регистрацию.</li>
+    <li><strong>Самое тяжёлое — документы</strong> (полный список в разделе <a href="#docs">«Документы»</a>): подтверждение средств не меньше 30 000 ¥ — это ≈ 376 000 ₽, их надо показать на счету, тратить не нужно; медкомиссия по форме 外国人体格检查表; справка о несудимости; две рекомендации. Паспорт должен действовать больше года.</li>
+    <li><strong>Общежитие</strong> — «先申请先得», кто первый подал, тот и живёт. 松林坡: двухместная 2 500 ¥ за семестр. 柑园村 после ремонта: 3 000–3 500 ¥. Вода, электричество, Wi-Fi и постельное — отдельно.</li>
+    <li><strong>Про их ответ «набор в этом году закрыт».</strong> Похоже, речь была об осени 2026 — её срок истёк 10 июня. Про весну 2027 вуз ничего не закрывал: по брошюре подача открыта до 30 ноября. Уточняющее письмо — <a href="#letters">ниже</a>.</li>
+  </ul>
+
+  <div class="cost">
+    <h4>Один семестр, прикидка</h4>
+    <table>
+      <tr><td>Учёба, 1 семестр</td><td>8 000 ¥</td></tr>
+      <tr><td>Двухместная 松林坡, семестр</td><td>2 500 ¥</td></tr>
+      <tr><td>Взнос за подачу</td><td>600 ¥</td></tr>
+      <tr><td>Страховка — вуз указывает 800 ¥ за год, сколько за семестр, не сказано</td><td>800 ¥</td></tr>
+      <tr class="total"><td>Итого без еды, учебников, перелёта и визы</td><td>≈ 11 900 ¥ · ≈ 149 000 ₽</td></tr>
+    </table>
+    <div class="note">Если достанется 柑园村 — плюс 500–1 000 ¥. И отдельно: 30 000 ¥ (≈ 376 000 ₽) на счету к моменту подачи — это не расход, а условие.</div>
+  </div>
+
+  <div class="more">Фото комнат и кухни, программа и город — в <a href="dossier.html#cqu">досье</a>.</div>
+  <div class="contacts">
+    <div><b>Приёмная:</b> admissions@cqu.edu.cn</div>
+    <div><b>Телефон:</b> +86-23-65111001, 65111066</div>
+    <div><b>Подача:</b> cqu.17gz.org</div>
+    <div><b>Адрес:</b> Шапинба, ул. Шачжэн 174, главный учебный корпус, каб. 310</div>
+  </div>
+  <div class="sources">Источники: <a href="https://study.cqu.edu.cn/lxsq/zsxx/fxlxm/hyyxxm.htm" target="_blank" rel="noopener">汉语研修项目 — брошюра, обновлена 01.2026</a> · <a href="https://study.cqu.edu.cn/lxsq/fybz.htm" target="_blank" rel="noopener">费用标准 — цены с осени 2026</a> · <a href="https://jwc.cqu.edu.cn/xl/a2026_2027xn.htm" target="_blank" rel="noopener">校历 2026–2027, второй семестр</a>. Сайт вуза закрыт от автоматического чтения — открывать в обычном браузере.</div>
+</section>
+
+<!-- ============ NNU ============ -->
+<section class="uni reveal" id="nnu">
+  <div class="uni-head"><span class="num">03</span><h2>Нанкинский педагогический</h2><span class="abbr">NNU</span></div>
+  <div class="uni-sub">南京师范大学 · Nanjing Normal University <span>Нанкин · «211» · основан в 1902</span></div>
+  <div class="uni-status"><span class="tag warn big">Весна не опубликована — нужен ответ вуза</span></div>
+
+  <div class="gallery">
+    <figure><img src="img/spring/nnu_suiyuan_100.jpg" alt="Корпус 100 в кампусе Суйюань Нанкинского педагогического университета"><figcaption>Корпус 100 в кампусе Суйюань — вуз называет этот кампус «самым красивым на Востоке». Фото: Kinden Kuo, Wikimedia Commons, CC BY-SA 2.0.</figcaption></figure>
+    <figure><img src="img/spring/nnu_suiyuan_autumn.jpg" alt="Гинкго поздней осенью в кампусе Суйюань"><figcaption>Суйюань поздней осенью. Фото: Guomuxing, Wikimedia Commons, CC BY-SA 4.0.</figcaption></figure>
+  </div>
+
+  <div class="facts">
+    <div class="fact"><div class="k">Весна 2027</div><div class="v">не опубл.</div><div class="s">в официальном графике только осень</div></div>
+    <div class="fact"><div class="k">Подача, официально</div><div class="v">01.04–01.06</div><div class="s">2026 год, платники, старт в сентябре</div></div>
+    <div class="fact"><div class="k">Учёба</div><div class="v">8 300 ¥</div><div class="s">за семестр · 16 600 ¥ за год</div></div>
+    <div class="fact"><div class="k">Общежитие</div><div class="v">3 500–6 000 ¥</div><div class="s">за семестр, вуз даёт только диапазон</div></div>
+    <div class="fact"><div class="k">Страховка</div><div class="v">800 ¥</div><div class="s">за учебный год</div></div>
+    <div class="fact"><div class="k">Для языковых</div><div class="v cn" style="font-size:19px">iso@njnu.edu.cn</div><div class="s">+86-25-83598326</div></div>
+  </div>
+
+  <h3>Что известно и от кого</h3>
+  <ul>
+    <li><strong>От вуза:</strong> руководство для иностранцев на 2026 год (от 28.11.2025) и график подачи (от 03.12.2025). Для платников — подача с 1 апреля по 1 июня 2026, занятия с начала сентября 2026. Весеннего набора в этих документах нет.</li>
+    <li><span class="agent">посредник</span> <strong>CUCAS</strong> показывает у вуза «семестровую программу» со стартом 15 февраля 2027; другой посредник пишет, что на весну подают в сентябре–ноябре, а учёба с марта. Возможно, это правда, но на сайте вуза подтверждения нет.</li>
+    <li><strong>Цена:</strong> вуз публикует для языковых студентов гуманитарного профиля (普通进修生) 16 600 ¥ в год — это 8 300 ¥ за семестр; посредники называют ту же цифру.</li>
+    <li><strong>Общежитие:</strong> официально — 3 500–6 000 ¥ за семестр, без разбивки по типам. <span class="agent">посредник</span> SICAS называет двухместную 4 500–4 800 ¥. Где учатся языковые — в Суйюане или загородном Сяньлине — на сайте не сказано, посредники пишут по-разному.</li>
+    <li><strong>Из-за границы сайты вуза не открываются</strong> — всё выше прочитано через веб-архив, копии от июня 2026. Подача — через njnu.17gz.org.</li>
+    <li><strong>Сильная сторона:</strong> вуз официально входит в государственные «базы преподавания китайского как иностранного» (对外汉语教学基地) — для языкового семестра это профиль, а не побочная программа.</li>
+  </ul>
+
+  <div class="cost">
+    <h4>Один семестр, прикидка — если весну подтвердят</h4>
+    <table>
+      <tr><td>Учёба, 1 семестр</td><td>8 300 ¥</td></tr>
+      <tr><td>Общежитие, официальный диапазон</td><td>3 500–6 000 ¥</td></tr>
+      <tr><td>Страховка — 800 ¥ за год, сколько за семестр, не сказано</td><td>400–800 ¥</td></tr>
+      <tr class="total"><td>Итого без еды, учебников, перелёта и визы</td><td>≈ 12 200–15 100 ¥ · ≈ 153–189 тыс. ₽</td></tr>
+    </table>
+    <div class="note">Взнос за подачу на сайте вуза не указан.</div>
+  </div>
+
+  <div class="contacts">
+    <div><b>Языковые программы:</b> iso@njnu.edu.cn</div>
+    <div><b>Телефон:</b> +86-25-83598326</div>
+    <div><b>Общая приёмная:</b> studyinnnu@njnu.edu.cn</div>
+    <div><b>Подача:</b> njnu.17gz.org</div>
+  </div>
+  <div class="sources">Источники: <a href="https://web.archive.org/web/20260616083359/http://en.njnu.edu.cn/admissions/2026-application-guide-for-international-students" target="_blank" rel="noopener">2026 Application Guide (копия веб-архива)</a> · <a href="https://web.archive.org/web/20260612074833/https://en.njnu.edu.cn/admissions/application-procedure" target="_blank" rel="noopener">Application Procedure — график подачи</a> · <a href="https://web.archive.org/web/20200106075649/http://www.njnu.edu.cn/info/1207/10995.htm" target="_blank" rel="noopener">страница вуза о статусе и базах (2019)</a> · посредники: <a href="https://nnu.cucas.cn/program/Chinese-Language-Program-55814.html" target="_blank" rel="noopener">CUCAS</a>, <a href="https://www.sicas.com.cn/School/243/Nanjing-Normal-University/14055/Chinese-Language-Program(1-year)" target="_blank" rel="noopener">SICAS</a></div>
+</section>
+
+<!-- ============ NJUST ============ -->
+<section class="uni reveal" id="njust">
+  <div class="uni-head"><span class="num">04</span><h2>Нанкинский политех</h2><span class="abbr">NJUST</span></div>
+  <div class="uni-sub">南京理工大学 · Nanjing University of Science and Technology <span>Нанкин, ул. Сяолинвэй 200</span></div>
+  <div class="uni-status"><span class="tag bad big">Весной не берёт</span> «入学时间均为2026年9月» — заезд в обоих вариантах только в сентябре</div>
+
+  <figure class="hero-img"><img src="img/spring/njust_yifu.jpg" alt="Площадь у корпуса Ифу и библиотеки Нанкинского политеха"><figcaption>Кампус NJUST: площадь у корпуса Ифу и библиотеки. Фото: Phenolla, Wikimedia Commons, CC BY-SA 4.0.</figcaption></figure>
+
+  <div class="facts">
+    <div class="fact"><div class="k">Весна 2027</div><div class="v">нет</div><div class="s">семестр только сентябрь — январь</div></div>
+    <div class="fact"><div class="k">Подача</div><div class="v">01.01–15.06</div><div class="s">2026 год · плюс онлайн-собеседование в июне</div></div>
+    <div class="fact"><div class="k">Учёба</div><div class="v">8 000 ¥</div><div class="s">за семестр · 16 000 ¥ за год</div></div>
+    <div class="fact"><div class="k">Часов в неделю</div><div class="v">25–30</div><div class="s">больше всех · около 400 часов за семестр</div></div>
+    <div class="fact"><div class="k">Общежитие</div><div class="v">4 500 ¥</div><div class="s">двухместная, 9 000 ¥ за год — не для тебя</div></div>
+    <div class="fact"><div class="k">Документы</div><div class="v">4</div><div class="s">паспорт, диплом, медкомиссия, несудимость</div></div>
+  </div>
+
+  <h3>Почему не подходит</h3>
+  <ul>
+    <li><strong>Только сентябрь.</strong> В брошюре 2026 два варианта: семестр с сентября 2026 по январь 2027 или год с сентября 2026 по июнь 2027. Весенний семестр у вуза когда-то был — в описании 2022 года «春季学期为2月至6月», — но из нынешней брошюры он пропал. Письмо на всякий случай готово, шансы малы.</li>
+    <li><strong>Жильё не дадут.</strong> Дословно: общежитие только для тех, «who have never studied or worked in China previously», остальным — снимать квартиру. Курсы в BLCU в 2025 году формально делают тебя «учившимся в Китае».</li>
+    <li><strong>Учёбу платят в день регистрации.</strong> Бросил в первый месяц — возвращают всё, позже — ничего.</li>
+    <li><strong>На заметку для основного плана:</strong> при языковой программе здесь есть платные курсы математики и физики к экзамену CSCA — по 1 000 ¥ за предмет. Математику к вступительным языковые программы обычно не дают.</li>
+  </ul>
+
+  <div class="contacts">
+    <div><b>Языковая программа:</b> language@njust.edu.cn</div>
+    <div><b>Телефон:</b> +86-25-84303136</div>
+    <div><b>Подача:</b> njust.17gz.org</div>
+    <div><b>Сайт:</b> sie.njust.edu.cn</div>
+  </div>
+  <div class="sources">Источники: <a href="https://sie.njust.edu.cn/4496/list.htm" target="_blank" rel="noopener">汉语课程 — брошюра 2026</a> · <a href="https://study.njust.edu.cn/whinesewanguage/list.htm" target="_blank" rel="noopener">Chinese Language — то же на английском, условие про общежитие</a> · <a href="https://sie.njust.edu.cn/7d/89/c4503a294281/page.htm" target="_blank" rel="noopener">汉语培训 — описание 2022 года с весенним семестром</a></div>
+</section>
+
+<!-- ============ ДОКУМЕНТЫ ============ -->
+<section class="uni reveal" id="docs">
+  <div class="uni-head"><h2>Документы: Нанкин и Чунцин рядом</h2></div>
+  <p>Все бумаги — на китайском или английском, русские — с нотариальным переводом. По почте ничего не шлют: подаёшь сканы, оригиналы везёшь на регистрацию.</p>
+  <div class="tbl-wrap docs">
+  <table>
+    <thead><tr><th>Документ</th><th>Нанкинский <span class="abbr">NJU</span></th><th>Чунцинский <span class="abbr">CQU</span></th></tr></thead>
+    <tbody>
+      <tr><td>Загранпаспорт</td><td><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>скан + китайские визы, если были</span></td><td><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>скан; действует больше года</span></td></tr>
+      <tr><td>Диплом колледжа</td><td><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>с переводом на китайский или английский</span></td><td><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>нотариально заверенный, с переводом</span></td></tr>
+      <tr><td>Выписка оценок</td><td><span class="no">не нужна</span></td><td><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>приложение к диплому с переводом</span></td></tr>
+      <tr><td>Текст о себе</td><td><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>личное заявление по шаблону вуза</span></td><td><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>учебный план: о себе, мотивация, цели</span></td></tr>
+      <tr><td>Подтверждение средств</td><td><span class="no">не нужно</span></td><td><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>не меньше 30 000 ¥ (≈ 376 000 ₽)</span></td></tr>
+      <tr><td>Медкомиссия <span class="cn" style="display:inline;font-weight:400">外国人体格检查表</span></td><td><span class="no">не нужна при подаче</span></td><td><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>с анализами, ЭКГ и флюорографией; действует 6 месяцев</span></td></tr>
+      <tr><td>Справка о несудимости</td><td><span class="no">не нужна</span></td><td><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>не старше 6 месяцев на день подачи</span></td></tr>
+      <tr><td>Справка с учёбы или работы</td><td><span class="no">не нужна</span></td><td><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>нужна; чем заменить, если её нет, — вопрос в письме</span></td></tr>
+      <tr><td>Рекомендательные письма</td><td><span class="no">не нужны</span></td><td><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>два, с подписью и контактами, датой не раньше сентября 2024</span></td></tr>
+      <tr><td>Взнос</td><td>500 ¥ после первичной проверки</td><td>600 ¥ сразу при подаче</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="tbl-note">Нанкинский педагогический требования для языковых студентов отдельно не публикует — они войдут в ответ на письмо. NJUST просит паспорт, диплом с выпиской, медкомиссию и справку о несудимости.</div>
+</section>
+
+<!-- ============ ПИСЬМА ============ -->
+<section class="uni reveal" id="letters">
+  <div class="uni-head"><h2>Письма в вузы</h2></div>
+  <p>Короткие, на китайском, по два-три вопроса. В теме и в первых строках крупно «2027年春季学期» — чтобы не ответили про прошлый набор. Впиши свои данные один раз — они подставятся во все четыре письма и запомнятся в этом браузере.</p>
+
+  <div class="signbox">
+    <div><label for="f-name">Имя латиницей, как в паспорте</label><input id="f-name" type="text" autocomplete="name" placeholder="IVANOV IVAN"></div>
+    <div><label for="f-pass">Номер загранпаспорта</label><input id="f-pass" type="text" autocomplete="off" placeholder="00 0000000"></div>
+    <div><label for="f-mail">Твоя почта</label><input id="f-mail" type="email" autocomplete="email" placeholder="name@mail.ru"></div>
+    <div class="hint">«Открыть в почте» создаст готовое письмо с адресом и темой. Или скопируй тему и текст по отдельности.</div>
+  </div>
+
+  <article class="letter" data-to="yerunyu@nju.edu.cn">
+    <div class="letter-head">
+      <div class="letter-to"><span class="abbr">NJU</span> <b>Нанкинский</b> → yerunyu@nju.edu.cn</div>
+      <div class="letter-actions">
+        <a class="btn primary mail" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>Открыть в почте</a>
+        <button class="btn copy" data-what="subj" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75"/></svg><span>Тема</span></button>
+        <button class="btn copy" data-what="body" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75"/></svg><span>Текст</span></button>
+      </div>
+    </div>
+    <div class="letter-subj cn"><span>Тема</span><em class="subj" style="font-style:normal">咨询：2027年春季学期长期汉语进修（一学期，自费）</em></div>
+<pre class="letter-body">叶老师，您好！
+
+我是俄罗斯公民，已通过HSK三级和HSKK考试。我打算申请贵院2027年春季学期（2027年2月开学）的长期汉语进修项目，只学习一个学期，自费。想请教几个问题：
+
+1. 2027年春季学期的网上申请是不是从2026年10月10日开始？目前还有名额吗？
+2. 2027年春季学期的报到日期是哪一天？
+3. 新入境的自费生什么时候可以在istudy.nju.edu.cn预订鼓楼的双人间？如果订不到宿舍，学院能否提供住宿方面的帮助？
+
+非常感谢！
+
+此致
+敬礼！
+
+<span class="sig sig-name">[姓名]</span>
+护照号：<span class="sig sig-pass">[护照号]</span>
+邮箱：<span class="sig sig-mail">[邮箱]</span></pre>
+    <details><summary>Перевод на русский</summary><div class="ru">
+      <p><b>Тема:</b> Вопрос: весенний семестр 2027, длительная программа китайского (один семестр, за свой счёт)</p>
+      <p>Здравствуйте, преподаватель Е! Я гражданин России, сдал HSK 3 и HSKK. Хочу подать заявку на длительную программу китайского на весенний семестр 2027 года (начало в феврале 2027), только на один семестр, за свой счёт. Несколько вопросов:</p>
+      <p>1. Онлайн-подача на весенний семестр 2027 открывается 10 октября 2026? Места ещё есть?<br>2. Какого числа регистрация на весенний семестр 2027?<br>3. Когда новые платные студенты могут забронировать двухместную комнату в Гулоу на istudy.nju.edu.cn? Если места не будет — поможет ли институт с жильём?</p>
+      <p>Большое спасибо! С уважением, имя, номер паспорта, почта.</p>
+    </div></details>
+  </article>
+
+  <article class="letter" data-to="admissions@cqu.edu.cn">
+    <div class="letter-head">
+      <div class="letter-to"><span class="abbr">CQU</span> <b>Чунцинский</b> → admissions@cqu.edu.cn</div>
+      <div class="letter-actions">
+        <a class="btn primary mail" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>Открыть в почте</a>
+        <button class="btn copy" data-what="subj" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75"/></svg><span>Тема</span></button>
+        <button class="btn copy" data-what="body" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75"/></svg><span>Текст</span></button>
+      </div>
+    </div>
+    <div class="letter-subj cn"><span>Тема</span><em class="subj" style="font-style:normal">咨询：2027年春季学期汉语进修生申请（不是2026年秋季）</em></div>
+<pre class="letter-body">老师，您好！
+
+我是俄罗斯公民，已通过HSK三级和HSKK考试。我想申请贵校汉语研修项目（普通进修生），2027年春季学期（2027年2月底开学）入学，只学习一个学期，自费。
+请注意：我咨询的是2027年春季学期，不是2026年秋季学期。
+
+1. 2027年春季学期现在还接受申请吗？截止日期是2026年11月30日吗？
+2. 只学习一个学期，资金证明是否仍需不低于30,000元人民币？可以提供父母的银行存款证明吗？
+3. 如果申请人目前既不在读也没有工作，申请材料第7项“在读证明或工作证明”可以用毕业证书代替吗？
+
+非常感谢！
+
+此致
+敬礼！
+
+<span class="sig sig-name">[姓名]</span>
+护照号：<span class="sig sig-pass">[护照号]</span>
+邮箱：<span class="sig sig-mail">[邮箱]</span></pre>
+    <details><summary>Перевод на русский</summary><div class="ru">
+      <p><b>Тема:</b> Вопрос: заявка на языковую программу, весенний семестр 2027 (не осень 2026)</p>
+      <p>Здравствуйте! Я гражданин России, сдал HSK 3 и HSKK. Хочу поступить на вашу языковую программу (普通进修生) с весеннего семестра 2027 года (начало в конце февраля 2027), только на один семестр, за свой счёт. Обратите внимание: я спрашиваю про весенний семестр 2027, а не про осенний 2026.</p>
+      <p>1. Идёт ли ещё приём заявок на весенний семестр 2027? Крайний срок — 30 ноября 2026?<br>2. Если учиться один семестр, всё равно нужно подтверждение средств не меньше 30 000 юаней? Можно ли выписку со счёта родителей?<br>3. Если заявитель сейчас не учится и не работает, можно ли вместо пункта 7 («справка с учёбы или работы») приложить диплом?</p>
+      <p>Большое спасибо! С уважением, имя, номер паспорта, почта.</p>
+    </div></details>
+  </article>
+
+  <article class="letter" data-to="iso@njnu.edu.cn">
+    <div class="letter-head">
+      <div class="letter-to"><span class="abbr">NNU</span> <b>Нанкинский педагогический</b> → iso@njnu.edu.cn</div>
+      <div class="letter-actions">
+        <a class="btn primary mail" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>Открыть в почте</a>
+        <button class="btn copy" data-what="subj" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75"/></svg><span>Тема</span></button>
+        <button class="btn copy" data-what="body" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75"/></svg><span>Текст</span></button>
+      </div>
+    </div>
+    <div class="letter-subj cn"><span>Тема</span><em class="subj" style="font-style:normal">咨询：汉语进修项目2027年春季学期入学（一学期，自费）</em></div>
+<pre class="letter-body">老师，您好！
+
+我是俄罗斯公民，已通过HSK三级和HSKK考试。我想申请贵校的汉语进修项目，2027年春季学期入学，只学习一个学期，自费。在贵校网站上我只找到了秋季入学的信息，所以想确认一下：
+
+1. 汉语进修项目2027年春季学期招生吗？申请截止日期是哪天？是在njnu.17gz.org上申请吗？
+2. 一个学期的学费是8,300元吗？需要提交哪些申请材料？
+3. 语言生在哪个校区上课？双人间宿舍一个学期多少钱？
+
+非常感谢！
+
+此致
+敬礼！
+
+<span class="sig sig-name">[姓名]</span>
+护照号：<span class="sig sig-pass">[护照号]</span>
+邮箱：<span class="sig sig-mail">[邮箱]</span></pre>
+    <details><summary>Перевод на русский</summary><div class="ru">
+      <p><b>Тема:</b> Вопрос: языковая программа, начало с весеннего семестра 2027 (один семестр, за свой счёт)</p>
+      <p>Здравствуйте! Я гражданин России, сдал HSK 3 и HSKK. Хочу поступить на вашу языковую программу с весеннего семестра 2027, только на один семестр, за свой счёт. На вашем сайте я нашёл только сведения об осеннем наборе, поэтому хочу уточнить:</p>
+      <p>1. Есть ли набор на языковую программу на весенний семестр 2027? До какого числа подавать? Подача через njnu.17gz.org?<br>2. Стоимость одного семестра — 8 300 юаней? Какие документы нужны?<br>3. На каком кампусе учатся языковые студенты? Сколько стоит двухместная комната за семестр?</p>
+      <p>Большое спасибо! С уважением, имя, номер паспорта, почта.</p>
+    </div></details>
+  </article>
+
+  <article class="letter" data-to="language@njust.edu.cn">
+    <div class="letter-head">
+      <div class="letter-to"><span class="abbr">NJUST</span> <b>Нанкинский политех</b> → language@njust.edu.cn</div>
+      <div class="letter-actions">
+        <a class="btn primary mail" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>Открыть в почте</a>
+        <button class="btn copy" data-what="subj" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75"/></svg><span>Тема</span></button>
+        <button class="btn copy" data-what="body" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75"/></svg><span>Текст</span></button>
+      </div>
+    </div>
+    <div class="letter-subj cn"><span>Тема</span><em class="subj" style="font-style:normal">咨询：汉语进修项目是否有2027年春季学期入学</em></div>
+<pre class="letter-body">老师，您好！
+
+我是俄罗斯公民，已通过HSK三级和HSKK考试。贵院网站上的汉语进修项目只写了2026年9月入学，想请问：
+
+1. 有没有2027年春季学期（2027年2月开学）入学、学习一个学期的汉语进修项目？如果有，申请截止日期是哪天？
+2. 我2025年8月在北京语言大学参加过短期汉语课程，这种情况还可以申请校内宿舍吗？
+
+非常感谢！
+
+此致
+敬礼！
+
+<span class="sig sig-name">[姓名]</span>
+护照号：<span class="sig sig-pass">[护照号]</span>
+邮箱：<span class="sig sig-mail">[邮箱]</span></pre>
+    <details><summary>Перевод на русский</summary><div class="ru">
+      <p><b>Тема:</b> Вопрос: есть ли набор на языковую программу с весеннего семестра 2027</p>
+      <p>Здравствуйте! Я гражданин России, сдал HSK 3 и HSKK. На сайте вашего института у языковой программы указан только заезд в сентябре 2026. Хочу спросить:</p>
+      <p>1. Есть ли набор на один семестр с весеннего семестра 2027 (начало в феврале 2027)? Если есть — до какого числа подавать?<br>2. В августе 2025 я проходил короткий курс китайского в Пекинском университете языка и культуры (BLCU). Могу ли я в таком случае получить место в общежитии?</p>
+      <p>Большое спасибо! С уважением, имя, номер паспорта, почта.</p>
+    </div></details>
+  </article>
+</section>
+
+</main>
+</div>
+
+<script>
+  /* подсветка пункта меню и появление блоков — как в досье */
+  const items = document.querySelectorAll('.nav a.item');
+  const targets = [...items].map(a => document.querySelector(a.getAttribute('href')));
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        items.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  targets.forEach(t => t && spy.observe(t));
+
+  const rev = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); rev.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => rev.observe(el));
+
+  /* календарь: сколько дней осталось */
+  function plural(n, one, few, many) {
+    const m10 = n % 10, m100 = n % 100;
+    if (m10 === 1 && m100 !== 11) return one;
+    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
+    return many;
+  }
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  let nextMarked = false;
+  document.querySelectorAll('.tl-item[data-date]').forEach(item => {
+    const [y, m, d] = item.dataset.date.split('-').map(Number);
+    const days = Math.round((new Date(y, m - 1, d) - today) / 86400000);
+    const when = item.querySelector('.when');
+    if (days < 0) { item.classList.add('past'); when.textContent = 'прошло'; return; }
+    when.textContent = days === 0 ? 'сегодня' : days === 1 ? 'завтра' : 'через ' + days + ' ' + plural(days, 'день', 'дня', 'дней');
+    if (!nextMarked) { item.classList.add('next'); nextMarked = true; }
+  });
+
+  /* письма: подпись, копирование, ссылка в почту */
+  const fields = { name: document.getElementById('f-name'), pass: document.getElementById('f-pass'), mail: document.getElementById('f-mail') };
+  const blank = { name: '[姓名]', pass: '[护照号]', mail: '[邮箱]' };
+  try {
+    const saved = JSON.parse(localStorage.getItem('vesna-sign') || '{}');
+    Object.keys(fields).forEach(k => { if (saved[k]) fields[k].value = saved[k]; });
+  } catch (e) {}
+
+  function letterText(letter) {
+    return {
+      subj: letter.querySelector('.subj').textContent.trim(),
+      body: letter.querySelector('.letter-body').textContent.trim()
+    };
+  }
+  function refresh() {
+    Object.keys(fields).forEach(k => {
+      const v = fields[k].value.trim() || blank[k];
+      document.querySelectorAll('.sig-' + k).forEach(s => { s.textContent = v; });
+    });
+    document.querySelectorAll('.letter').forEach(letter => {
+      const t = letterText(letter);
+      letter.querySelector('.mail').href = 'mailto:' + letter.dataset.to + '?subject=' + encodeURIComponent(t.subj) + '&body=' + encodeURIComponent(t.body);
+    });
+    try {
+      localStorage.setItem('vesna-sign', JSON.stringify({ name: fields.name.value.trim(), pass: fields.pass.value.trim(), mail: fields.mail.value.trim() }));
+    } catch (e) {}
+  }
+  Object.values(fields).forEach(f => f.addEventListener('input', refresh));
+  refresh();
+
+  async function copyText(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch (e) {}
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) {}
+    ta.remove();
+    return ok;
+  }
+  document.querySelectorAll('.btn.copy').forEach(btn => {
+    const label = btn.querySelector('span');
+    const initial = label.textContent;
+    btn.addEventListener('click', async () => {
+      const t = letterText(btn.closest('.letter'));
+      const ok = await copyText(btn.dataset.what === 'subj' ? t.subj : t.body);
+      label.textContent = ok ? 'Скопировано' : 'Не вышло';
+      btn.classList.toggle('done', ok);
+      setTimeout(() => { label.textContent = initial; btn.classList.remove('done'); }, 1800);
+    });
+  });
+</script>
+</body>
+</html>
